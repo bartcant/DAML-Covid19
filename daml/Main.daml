@@ -1,7 +1,10 @@
 -- Copyright (c) 2020 Rethink Ledgers LLC. All rights reserved.
 
-import DA.Date as D
+-- What Imports are generally recommended ?
+
+import DA.Date as D 
 import DA.Time as T
+
 
 module Main where
 
@@ -16,7 +19,7 @@ data Testresult = Positive | Negative | Pending
 
 template Covid19Test
   with
-    healthprovider : Party
+    healthprovider : Party  -- when to use Party versus [Party]
     citizen  : Party
     statehealth : Party
     testtype : Text
@@ -24,7 +27,7 @@ template Covid19Test
     testresult : Testresult
     testdate : Date
     locationstate : Locationstate
-    testupdate : Date
+    testupdate : Date  -- or should this be D or D.Date ?
   where
     signatory healthprovider
     observer citizen
@@ -36,7 +39,7 @@ template Covid19Test
     maintainer key._1
 
 
-    choice InitiateTest : ( ContractID CovidTest19)
+    choice InitiateTest : ( ContractID CovidTest19)  --With this Choice and Next Choice I assume they are both linked to the same Contract
      with
       citizen : Party
       healthprovider : Party
@@ -44,12 +47,24 @@ template Covid19Test
 
     controller healthprovider
       do
-          let testdate = D
+          let testdate = D -- Is this the right format ? 
           create CovidTest19 with healthprovider; citizen; statehealth; testtype ; testdate ;  locationstate
           
+          -- Do I need to include all the fields that are defined above ?
+
+          -- When the DAML is built in the Navigator does it now offer the items form the list for eg. locationstate ? 
+          
+          -- How do I limit the parties to a specific subset ? In my case I have Citizens and Healthproviders. 
+          -- I like to limit for instance the healthproviders to a list of only healthproviders
+
         return (CovidTest19)
+            -- is the return action, basically the "Save" Action
   
-   choice UpdateTest : ( ContractID CovidTest19)
+   choice UpdateTest : ( ContractID CovidTest19)  
+   
+        -- Here I want to give an opportunity to update a previous specific Contract with new information
+        -- How do preserve (and display) previous information and allow for some fields to be updated ?
+
      with 
       citizen : Party
       healthprovider : Party
@@ -57,13 +72,17 @@ template Covid19Test
 
     controller healthprovider
       do
-          let testupdate = D.Date
+          let testupdate = D.Date  -- This needs to be the current date
           update CovidTest19 with healthprovider; citizen; statehealth; testtype ; testupdate ; locationstate
           
         return (CovidTest19)  
 
+
+
+
 data QuarantineType =  14dayMandatory | 14dayOptional | Optional
-  deriving (Eq, Show)
+  deriving (Eq, Show)  -- what is the difference if I add Ord to this ?
+
 
 Template Quarantine
   with
@@ -71,7 +90,7 @@ Template Quarantine
      issuedate : D.Date
      issueparty : Party
      citizen : Party
-     enddate : D.Date + 14
+     enddate : D.Date + 14   -- I want to add 14 days to the current date
      reason : Text
      location : Locationstate
      trackingID : Text
@@ -80,7 +99,10 @@ Template Quarantine
     observer citizen
 
 
-type Citizen = ContractId CitizenDetails
+-- The following section is intended for the Party (Citizen) to self record some information about them selves that could be useful in the rest of the application
+-- Again this will need to allow for an initial creation and update function
+
+type Citizen = ContractId CitizenDetails   
 
 template CitizenRegistration
   with
@@ -120,6 +142,20 @@ template CitizenRegistration
     citizeninsuranceid,citizeninsurance,citizenlocationid
           
         return (CitizenDetails)
+
+
+
+-- I want to setup the following scenarios:
+
+
+-- 0. All parties get initialized
+-- 1. Citizen submits Self Party Informatio
+-- 2. Health Provider submits Covid19 test
+-- 3. Health Provider updates Covid19 test to "Positive"
+-- 4. State Agency creates Immunity Proof "Positive"
+-- 5. State Agency create Quarantine Notice
+-- 6. State Agency lifts Qurantine Notice
+-- 7.  State Agency creates Immunity Proof "Negative"
 
 
 setup = scenario do

@@ -1,0 +1,148 @@
+-- Copyright (c) 2020 Rethink Ledgers LLC. All rights reserved.
+
+import DA.Date as D
+import DA.Time as T
+
+module Main where
+
+type CovidTest19Key = ( Party, Int )
+
+
+data Locationstate = NC | SC | GA  | FL
+  deriving (Eq, Show)
+data Testresult = Positive | Negative | Pending
+  deriving (Eq, Show)
+
+
+template Covid19Test
+  with
+    healthprovider : Party
+    citizen  : Party
+    statehealth : Party
+    testtype : Text
+    testnumber : Int
+    testresult : Testresult
+    testdate : Date
+    locationstate : Locationstate
+    testupdate : Date
+  where
+    signatory healthprovider
+    observer citizen
+    observer statehealth
+
+    agreement that describes a test initiated and updated by a healtprovider for a specific citizen
+
+    key (healthprovider, testnumber) : CovidTest19Key
+    maintainer key._1
+
+
+    choice InitiateTest : ( ContractID CovidTest19)
+     with
+      citizen : Party
+      healthprovider : Party
+      statehealth : Party
+
+    controller healthprovider
+      do
+          let testdate = D
+          create CovidTest19 with healthprovider; citizen; statehealth; testtype ; testdate ;  locationstate
+          
+        return (CovidTest19)
+  
+   choice UpdateTest : ( ContractID CovidTest19)
+     with 
+      citizen : Party
+      healthprovider : Party
+      statehealth : Party
+
+    controller healthprovider
+      do
+          let testupdate = D.Date
+          update CovidTest19 with healthprovider; citizen; statehealth; testtype ; testupdate ; locationstate
+          
+        return (CovidTest19)  
+
+data QuarantineType =  14dayMandatory | 14dayOptional | Optional
+  deriving (Eq, Show)
+
+Template Quarantine
+  with
+     quarantinetype : QuarantineType
+     issuedate : D.Date
+     issueparty : Party
+     citizen : Party
+     enddate : D.Date + 14
+     reason : Text
+     location : Locationstate
+     trackingID : Text
+  where
+    signatory statehealth
+    observer citizen
+
+
+type Citizen = ContractId CitizenDetails
+
+template CitizenRegistration
+  with
+    citizen  : Party
+    citizenSSID : Text
+    citizenVC : Text
+    citizenfirstname : Text
+    citizenlastname : Text
+    citizenSSN : Text
+    citizeninsuranceid : Text
+    citizeninsurance : Party
+    citizenlocationid : Text
+  where
+    signatory citizen
+  
+   key (citizen, citizenSSN) :  ( Party, Text )
+  maintainer key._1
+
+  choice InitiateCitizenRegistration : ( ContractID CitizenDetails )
+     with
+      citizen : Party
+
+    controller citizen
+      do
+          create CitizenDetails with citizen, citizenSSID, citizenVC, citizenfirstname,citizenlastname, citizenSSN,
+    citizeninsuranceid,citizeninsurance,citizenlocationid
+          
+        return (CitizenDetails)
+
+  choice UpdateCitizenRegistration : ( ContractID CitizenDetails )
+     with
+      citizen : Party
+
+    controller citizen
+      do
+          update CitizenDetails with citizen, citizenSSID, citizenVC, citizenfirstname,citizenlastname, citizenSSN,
+    citizeninsuranceid,citizeninsurance,citizenlocationid
+          
+        return (CitizenDetails)
+
+
+setup = scenario do
+  alice <- getParty "Alice"
+  atriumhealth <- getParty "AtriumHealth"
+  ncgovhealth <- getParty "NCGovHealth"
+  bcbsinsurance <- getParty "BCBSInsurance"
+  google <- getParty "Google-geo-location"
+
+
+
+
+
+
+  CovidtestAlicePositive <- submit atriumhealth do
+    create CovidTest19 with
+      issuedby = atriumhealth
+      issuedfor = alice
+      statehealth = ncgovhealth
+      testtype = "Abbott"
+      testresult = "Positive"
+      revokestatus = "No"
+      locationstate = "NC"
+
+      
+

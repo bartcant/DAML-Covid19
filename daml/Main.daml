@@ -1,14 +1,10 @@
 -- Copyright (c) 2020 Rethink Ledgers LLC. All rights reserved.
 
-
-
 module Main where
 
 -- what imports are generally recommended ? 
 
 import DA.Date as D 
-
-type CovidTest19Key = ( Party, Int )
 
 
 data Locationstate = NC | SC | GA  | FL
@@ -35,19 +31,19 @@ template Covid19Test
 
     agreement that describes a test initiated and updated by a healtprovider for a specific citizen
 
-    key (healthprovider, testnumber) : CovidTest19Key
+    key (healthprovider, testnumber) : ( Party, Int )
     maintainer key._1
 
 
-    choice InitiateTest : (ContractID CovidTest19)  --With this Choice and Next Choice I assume they are both linked to the same Contract
+    choice InitiateTest : ContractId Covidtest  --With this Choice and Next Choice I assume they are both linked to the same Contract
      with
-      citizen : Party
-      healthprovider : Party
-      statehealth : Party
+       citizen : Party
+       healthprovider : Party
+       statehealth : Party
 
      controller healthprovider
       do 
-          create CovidTest19 with healthprovider; citizen; statehealth; testtype ; testdate ;  locationstate
+          create Covidtest with healthprovider; citizen; statehealth; testtype ; testdate ;  locationstate
           
           -- Do I need to include all the fields that are defined above ?
 
@@ -56,10 +52,10 @@ template Covid19Test
           -- How do I limit the parties to a specific subset ? In my case I have Citizens and Healthproviders. 
           -- I like to limit for instance the healthproviders to a list of only healthproviders
 
-          return (CovidTest19)
+          return (Covidtest)
             -- is the return action, basically the "Save" Action
   
-    choice UpdateTest : ( ContractID CovidTest19)  
+    choice UpdateTest : ContractId Covidtest
    
         -- Here I want to give an opportunity to update a previous specific Contract with new information
         -- How do preserve (and display) previous information and allow for some fields to be updated ?
@@ -71,9 +67,9 @@ template Covid19Test
 
      controller healthprovider
       do
-        update CovidTest19 with healthprovider; citizen; statehealth; testtype ; testupdate ; locationstate
+        update Covidtest with healthprovider; citizen; statehealth; testtype ; testupdate ; locationstate
           
-        return (CovidTest19)  
+        return (Covidtest)  
 
 
 
@@ -107,7 +103,7 @@ template Quarantine
     maintainer key._1
 
 
-    choice InitiateQuarantine : ( ContractID Quarantine)
+    choice InitiateQuarantine : ( ContractId Quarantine)
      with
       citizen : Party
       statehealth : Party
@@ -143,7 +139,7 @@ template CitizenRegistration
     key (citizen, citizenSSN) :  ( Party, Text )
     maintainer key._1
 
-    choice InitiateCitizenRegistration : ( ContractID CitizenDetails )
+    choice InitiateCitizenRegistration : ( ContractId CitizenDetails )
      with
       citizen : Party
 
@@ -153,7 +149,7 @@ template CitizenRegistration
           
           return (CitizenDetails)
 
-    choice UpdateCitizenRegistration : ( ContractID CitizenDetails )
+    choice UpdateCitizenRegistration : ( ContractId CitizenDetails )
      with
       citizen : Party
 
@@ -186,7 +182,7 @@ setup = scenario do
   google <- getParty "Google-geo-location"
 
   CovidtestAlicePositive <- submit atriumhealth do
-    create CovidTest19 with
+    create Covidtest with
       issuedby = atriumhealth
       issuedfor = alice
       statehealth = ncgovhealth
@@ -194,7 +190,7 @@ setup = scenario do
       testresult = "Positive"
       locationstate = "NC"
       testdate = D.date  2020 Apr 22
+return (Covidtest)
 
-  return()
       
 

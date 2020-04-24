@@ -4,7 +4,9 @@ source: daml
 init-script: Setup:initialize
 parties:
   - Alice
-  - Bob
+  - NCHealth
+  - AtriumHealth
+  - BCBSHealth
 version: 0.0.1
 dependencies:
   - daml-prim

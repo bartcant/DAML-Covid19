@@ -7,7 +7,7 @@ module Main where
 import DA.Date as D 
 
 
-data Locationstate = NC | SC | GA  | FL
+data Locationstate = NC | SC | GA  | FL  -- Can I use a Map function here ? 
   deriving (Eq, Show)
 data Testresult = Positive | Negative | Pending
   deriving (Eq, Show)
@@ -21,9 +21,9 @@ template Covid19Test
     testtype : Text
     testnumber : Int
     testresult : Testresult
-    testdate : Date
+    testdate : Date -- or should this be D or D.date ?
     locationstate : Locationstate
-    testupdate : Date  -- or should this be D or D.Date ?
+    testupdate : Date  -- or should this be D or D.date ?
   where
     signatory healthprovider
     observer citizen
@@ -34,26 +34,22 @@ template Covid19Test
     key (healthprovider, testnumber) : ( Party, Int )
     maintainer key._1
 
-
-    choice InitiateTest : ContractId Covidtest  --With this Choice and Next Choice I assume they are both linked to the same Contract
-     with
+    choice InitiateTest : ContractId Covidtest  -- I like to implement actions: create (first choice action ) and update  (second choice action)
+     -- current code is generating multiple errors " Not in scope: type constructor or call 'Covidtest' "
+      with
        citizen : Party
        healthprovider : Party
        statehealth : Party
-
-     controller healthprovider
-      do 
-          create Covidtest with healthprovider; citizen; statehealth; testtype ; testdate ;  locationstate
+      controller healthprovider
+       do
+        create Covidtest with healthprovider ; citizen; statehealth; testnumber; testtype ; testdate ; testresult;  locationstate ; testupdate
           
           -- Do I need to include all the fields that are defined above ?
 
-          -- When the DAML is built in the Navigator does it now offer the items form the list for eg. locationstate ? 
+          -- When the DAML is built in the Navigator does it now offer the items from the list for eg. locationstate ? 
           
           -- How do I limit the parties to a specific subset ? In my case I have Citizens and Healthproviders. 
           -- I like to limit for instance the healthproviders to a list of only healthproviders
-
-          return (Covidtest)
-            -- is the return action, basically the "Save" Action
   
     choice UpdateTest : ContractId Covidtest
    
@@ -61,17 +57,12 @@ template Covid19Test
         -- How do preserve (and display) previous information and allow for some fields to be updated ?
 
      with 
-      citizen : Party
-      healthprovider : Party
-      statehealth : Party
-
-     controller healthprovider
-      do
-        update Covidtest with healthprovider; citizen; statehealth; testtype ; testupdate ; locationstate
-          
-        return (Covidtest)  
-
-
+       citizen : Party
+       healthprovider : Party
+       statehealth : Party
+      controller healthprovider
+       do
+        update Covidtest with testnumber; healthprovider; citizen; statehealth; testtype ; testdate ; testresult; locationstate ; testupdate
 
 
 data QuarantineType = Mandatory | Optional
@@ -113,14 +104,10 @@ template Quarantine
           create Quarantine with quarantineorder; issuedate;  issueparty;  citizen; enddate;  reason;  location;  trackingID
           return (Quarantine)
   
-  
-
-
 
 -- The following section is intended for the Party (Citizen) to self record some information about them selves that could be useful in the rest of the application
 -- Again this will need to allow for an initial creation and update function
 
-type Citizen = ContractId CitizenDetails   
 
 template CitizenRegistration
   with
@@ -139,7 +126,7 @@ template CitizenRegistration
     key (citizen, citizenSSN) :  ( Party, Text )
     maintainer key._1
 
-    choice InitiateCitizenRegistration : ( ContractId CitizenDetails )
+    choice InitiateCitizenRegistration :  ContractId CitizenDetails 
      with
       citizen : Party
 
@@ -149,7 +136,7 @@ template CitizenRegistration
           
           return (CitizenDetails)
 
-    choice UpdateCitizenRegistration : ( ContractId CitizenDetails )
+    choice UpdateCitizenRegistration : ContractId CitizenDetails
      with
       citizen : Party
 
@@ -165,7 +152,7 @@ template CitizenRegistration
 
 
 -- 0. All parties get initialized
--- 1. Citizen submits Self Party Informatio
+-- 1. Citizen submits Self Party Information
 -- 2. Health Provider submits Covid19 test
 -- 3. Health Provider updates Covid19 test to "Positive"
 -- 4. State Agency creates Immunity Proof "Positive"
@@ -174,23 +161,15 @@ template CitizenRegistration
 -- 7.  State Agency creates Immunity Proof "Negative"
 
 
-setup = scenario do
-  alice <- getParty "Alice"
-  atriumhealth <- getParty "AtriumHealth"
-  ncgovhealth <- getParty "NCGovHealth"
-  bcbsinsurance <- getParty "BCBSInsurance"
-  google <- getParty "Google-geo-location"
+-- Scenario 2 : 
 
-  CovidtestAlicePositive <- submit atriumhealth do
-    create Covidtest with
-      issuedby = atriumhealth
-      issuedfor = alice
-      statehealth = ncgovhealth
-      testtype = "Abbott"
-      testresult = "Positive"
-      locationstate = "NC"
-      testdate = D.date  2020 Apr 22
-return (Covidtest)
-
-      
-
+--setup = 
+--  scenario do
+--   alice <- getParty "Alice"
+--   atriumhealth <- getParty "AtriumHealth"
+--   ncgovhealth <- getParty "NCGovHealth"
+--   AlicePositive <- submit atriumhealth do 
+--    create Covid19Test with
+--      healthprovider = atriumhealth; citizen = alice; statehealth = ncgovhealth; testnumber = 1; testtype = "Abbott" ; testdate =D.date 2020 Apr 22; testresult = "Positive" ; locationstate = "NC"
+--    submit atriumhealth do
+--      exercise  AlicePositive InitiateTest

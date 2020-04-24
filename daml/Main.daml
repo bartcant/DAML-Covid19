@@ -1,12 +1,12 @@
 -- Copyright (c) 2020 Rethink Ledgers LLC. All rights reserved.
 
--- What Imports are generally recommended ?
-
-import DA.Date as D 
-import DA.Time as T
 
 
 module Main where
+
+-- what imports are generally recommended ? 
+
+import DA.Date as D 
 
 type CovidTest19Key = ( Party, Int )
 
@@ -39,15 +39,14 @@ template Covid19Test
     maintainer key._1
 
 
-    choice InitiateTest : ( ContractID CovidTest19)  --With this Choice and Next Choice I assume they are both linked to the same Contract
+    choice InitiateTest : (ContractID CovidTest19)  --With this Choice and Next Choice I assume they are both linked to the same Contract
      with
       citizen : Party
       healthprovider : Party
       statehealth : Party
 
-    controller healthprovider
-      do
-          let testdate = D -- Is this the right format ? 
+     controller healthprovider
+      do 
           create CovidTest19 with healthprovider; citizen; statehealth; testtype ; testdate ;  locationstate
           
           -- Do I need to include all the fields that are defined above ?
@@ -57,10 +56,10 @@ template Covid19Test
           -- How do I limit the parties to a specific subset ? In my case I have Citizens and Healthproviders. 
           -- I like to limit for instance the healthproviders to a list of only healthproviders
 
-        return (CovidTest19)
+          return (CovidTest19)
             -- is the return action, basically the "Save" Action
   
-   choice UpdateTest : ( ContractID CovidTest19)  
+    choice UpdateTest : ( ContractID CovidTest19)  
    
         -- Here I want to give an opportunity to update a previous specific Contract with new information
         -- How do preserve (and display) previous information and allow for some fields to be updated ?
@@ -70,33 +69,56 @@ template Covid19Test
       healthprovider : Party
       statehealth : Party
 
-    controller healthprovider
+     controller healthprovider
       do
-          let testupdate = D.Date  -- This needs to be the current date
-          update CovidTest19 with healthprovider; citizen; statehealth; testtype ; testupdate ; locationstate
+        update CovidTest19 with healthprovider; citizen; statehealth; testtype ; testupdate ; locationstate
           
         return (CovidTest19)  
 
 
 
 
-data QuarantineType =  14dayMandatory | 14dayOptional | Optional
+data QuarantineType = Mandatory | Optional
   deriving (Eq, Show)  -- what is the difference if I add Ord to this ?
+  -- I wanted to add option for "14DayManadatory" but the parser identified this as a problem
 
 
-Template Quarantine
+type QuarantineKey = ( Party, Party, Int )
+
+
+template Quarantine
   with
+     quarantineordernumber: Int
      quarantinetype : QuarantineType
-     issuedate : D.Date
+     issuedate : Date
      issueparty : Party
      citizen : Party
-     enddate : D.Date + 14   -- I want to add 14 days to the current date
+     enddate : Date  -- I want to add 14 days to the current date
      reason : Text
      location : Locationstate
      trackingID : Text
   where
     signatory statehealth
     observer citizen
+
+    agreement that describes a state agency orders a specific Quarantine for a citizen who has tested positive
+
+    key (statehealth, citizen, quarantineordernumber) : QuarantineKey
+    maintainer key._1
+
+
+    choice InitiateQuarantine : ( ContractID Quarantine)
+     with
+      citizen : Party
+      statehealth : Party
+
+     controller statehealth
+      do
+          create Quarantine with quarantineorder; issuedate;  issueparty;  citizen; enddate;  reason;  location;  trackingID
+          return (Quarantine)
+  
+  
+
 
 
 -- The following section is intended for the Party (Citizen) to self record some information about them selves that could be useful in the rest of the application
@@ -118,30 +140,28 @@ template CitizenRegistration
   where
     signatory citizen
   
-   key (citizen, citizenSSN) :  ( Party, Text )
-  maintainer key._1
+    key (citizen, citizenSSN) :  ( Party, Text )
+    maintainer key._1
 
-  choice InitiateCitizenRegistration : ( ContractID CitizenDetails )
+    choice InitiateCitizenRegistration : ( ContractID CitizenDetails )
      with
       citizen : Party
 
-    controller citizen
+     controller citizen
       do
-          create CitizenDetails with citizen, citizenSSID, citizenVC, citizenfirstname,citizenlastname, citizenSSN,
-    citizeninsuranceid,citizeninsurance,citizenlocationid
+          create CitizenDetails with citizen;  citizenSSID;  citizenVC;  citizenfirstname ; citizenlastname ;  citizenSSN ; citizeninsuranceid ; citizeninsurance ; citizenlocationid
           
-        return (CitizenDetails)
+          return (CitizenDetails)
 
-  choice UpdateCitizenRegistration : ( ContractID CitizenDetails )
+    choice UpdateCitizenRegistration : ( ContractID CitizenDetails )
      with
       citizen : Party
 
-    controller citizen
-      do
-          update CitizenDetails with citizen, citizenSSID, citizenVC, citizenfirstname,citizenlastname, citizenSSN,
-    citizeninsuranceid,citizeninsurance,citizenlocationid
+       controller citizen
+        do
+          update CitizenDetails with citizen;  citizenSSID;  citizenVC;  citizenfirstname ; citizenlastname;  citizenSSN ; citizeninsuranceid; citizeninsurance ; citizenlocationid
           
-        return (CitizenDetails)
+          return (CitizenDetails)
 
 
 
@@ -165,11 +185,6 @@ setup = scenario do
   bcbsinsurance <- getParty "BCBSInsurance"
   google <- getParty "Google-geo-location"
 
-
-
-
-
-
   CovidtestAlicePositive <- submit atriumhealth do
     create CovidTest19 with
       issuedby = atriumhealth
@@ -177,8 +192,9 @@ setup = scenario do
       statehealth = ncgovhealth
       testtype = "Abbott"
       testresult = "Positive"
-      revokestatus = "No"
       locationstate = "NC"
+      testdate = D.date  2020 Apr 22
 
+  return()
       
 

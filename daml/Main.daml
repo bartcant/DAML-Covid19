@@ -63,7 +63,7 @@ template Covid19Test
        statehealth : Party
       controller healthprovider
        do
-        update Covidtest with testnumber healthprovider, citizen, statehealth, testtype, testdate, testresult, locationstate, testupdate
+        update Covidtest with testnumber, healthprovider, citizen, statehealth, testtype, testdate, testresult, locationstate, testupdate
 
 
 data QuarantineType = Mandatory | Optional
@@ -80,7 +80,6 @@ template ImmunityProofTemplate
      covidtest19: [CovidTest19]
      statehealth : Party
      proofvaliduntil : Date
-     revokestatus : Text
      location : Locationstate
      communitytest : [Communitytest]
      qrcode : Text
@@ -103,7 +102,7 @@ template ImmunityProofTemplate
 
      controller statehealth
       do
-          create ImmunityProof with Immunityproofid, citizen, covidtest19, statehealth, proofvaliduntil,  location, communitytest, qrcode, revokestatus, revokestatusdate
+          create ImmunityProof with immunityproofid, citizen, covidtest19, statehealth, proofvaliduntil,  location, communitytest, qrcode, revokestatus, revokestatusdate
           return ImmunityProof
   
 
@@ -172,16 +171,16 @@ template CitizenRegistration
       citizen : Party
 
      controller citizen
-      do
-          create CitizenDetails with citizen,  citizenSSID,  citizenVC,  citizenSSN, citizenfirstname, citizenlastname,  citizenSSN, citizeninsuranceid, citizeninsurance, citizenlocationid
+       do
+        create CitizenDetails with citizen,  citizenSSID,  citizenVC,  citizenSSN, citizenfirstname, citizenlastname,  citizenSSN, citizeninsuranceid, citizeninsurance, citizenlocationid
           
-          return (CitizenDetails)
+        return (CitizenDetails)
 
     choice UpdateCitizenRegistration : ContractId CitizenDetails
-     with
-      citizen : Party
+      with
+       citizen : Party
 
-       controller citizen
+      controller citizen
         do
           update CitizenDetails with citizen;  citizenSSID;  citizenVC;  citizenfirstname ; citizenlastname;  citizenSSN ; citizeninsuranceid; citizeninsurance ; citizenlocationid
           

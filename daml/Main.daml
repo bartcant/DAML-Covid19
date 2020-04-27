@@ -6,6 +6,7 @@ module Main where
 
 import DA.Date as D 
 
+-- CovidTest19 Template
 
 data Locationstate = NC | SC | GA  | FL  -- Can I use a Map function here ? 
   deriving (Eq, Show)
@@ -15,15 +16,15 @@ data Testresult = Positive | Negative | Pending
 
 template Covid19Test
   with
-    healthprovider : Party  -- when to use Party versus [Party]
-    citizen  : Party
-    statehealth : Party
-    testtype : Text
-    testnumber : Int
-    testresult : Testresult
-    testdate : Date -- or should this be D or D.date ?
-    locationstate : Locationstate
-    testupdate : Date  -- or should this be D or D.date ?
+    healthprovider: Party  -- when to use Party versus [Party]
+    citizen: Party
+    statehealth: Party
+    testtype: Text
+    testnumber: Int
+    testresult: Testresult
+    testdate: Date -- or should this be D or D.date ?
+    locationstate: Locationstate
+    testupdate: Date  -- or should this be D or D.date ?
   where
     signatory healthprovider
     observer citizen
@@ -34,7 +35,7 @@ template Covid19Test
     key (healthprovider, testnumber) : ( Party, Int )
     maintainer key._1
 
-    choice InitiateTest : ContractId Covidtest  -- I like to implement actions: create (first choice action ) and update  (second choice action)
+    choice InitiateTest : ContractId Covidtest -- I like to implement actions: create (first choice action ) and update  (second choice action)
      -- current code is generating multiple errors " Not in scope: type constructor or call 'Covidtest' "
       with
        citizen : Party
@@ -42,7 +43,7 @@ template Covid19Test
        statehealth : Party
       controller healthprovider
        do
-        create Covidtest with healthprovider ; citizen; statehealth; testnumber; testtype ; testdate ; testresult;  locationstate ; testupdate
+        create Covidtest with healthprovider, citizen, statehealth, testnumber, testtype, testdate, testresult, locationstate, testupdate
           
           -- Do I need to include all the fields that are defined above ?
 
@@ -62,13 +63,53 @@ template Covid19Test
        statehealth : Party
       controller healthprovider
        do
-        update Covidtest with testnumber; healthprovider; citizen; statehealth; testtype ; testdate ; testresult; locationstate ; testupdate
+        update Covidtest with testnumber healthprovider, citizen, statehealth, testtype, testdate, testresult, locationstate, testupdate
 
 
 data QuarantineType = Mandatory | Optional
   deriving (Eq, Show)  -- what is the difference if I add Ord to this ?
-  -- I wanted to add option for "14DayManadatory" but the parser identified this as a problem
+  -- I wanted to add option for "14DayMandatory" but the parser identified this as a problem
 
+
+-- ImmunityProof Template
+
+template ImmunityProofTemplate
+  with
+     immunityproofid : Int
+     citizen : Party
+     covidtest19: [CovidTest19]
+     statehealth : Party
+     proofvaliduntil : Date
+     revokestatus : Text
+     location : Locationstate
+     communitytest : [Communitytest]
+     qrcode : Text
+     revokestatus: Text
+     revokestatusdate : Date
+  where
+    signatory statehealth
+    observer citizen
+
+    agreement that describes a state agency provides an Immunity Proof for a citizen
+
+    key (statehealth, citizen, immunityProofid) :  ( Party, Party, Int)
+    maintainer key._1
+
+
+    choice InitiateImmunityProof : ( ContractId ImmunityProof )
+     with
+      citizen : Party
+      statehealth : Party
+
+     controller statehealth
+      do
+          create ImmunityProof with Immunityproofid, citizen, covidtest19, statehealth, proofvaliduntil,  location, communitytest, qrcode, revokestatus, revokestatusdate
+          return ImmunityProof
+  
+
+
+
+-- Quarantine Template
 
 type QuarantineKey = ( Party, Party, Int )
 
@@ -76,14 +117,14 @@ type QuarantineKey = ( Party, Party, Int )
 template Quarantine
   with
      quarantineordernumber: Int
-     quarantinetype : QuarantineType
-     issuedate : Date
-     issueparty : Party
-     citizen : Party
-     enddate : Date  -- I want to add 14 days to the current date
-     reason : Text
-     location : Locationstate
-     trackingID : Text
+     quarantinetype: QuarantineType
+     issuedate: Date
+     issueparty: Party
+     citizen: Party
+     enddate: Date  -- I want to add 14 days to the current date
+     reason: Text
+     location: Locationstate
+     trackingID: Text
   where
     signatory statehealth
     observer citizen
@@ -101,7 +142,7 @@ template Quarantine
 
      controller statehealth
       do
-          create Quarantine with quarantineorder; issuedate;  issueparty;  citizen; enddate;  reason;  location;  trackingID
+          create Quarantine with quarantineorder, issuedate,  issueparty, citizen, enddate,  reason,  location, trackingID
           return (Quarantine)
   
 
@@ -132,7 +173,7 @@ template CitizenRegistration
 
      controller citizen
       do
-          create CitizenDetails with citizen;  citizenSSID;  citizenVC;  citizenfirstname ; citizenlastname ;  citizenSSN ; citizeninsuranceid ; citizeninsurance ; citizenlocationid
+          create CitizenDetails with citizen,  citizenSSID,  citizenVC,  citizenSSN, citizenfirstname, citizenlastname,  citizenSSN, citizeninsuranceid, citizeninsurance, citizenlocationid
           
           return (CitizenDetails)
 
@@ -156,9 +197,9 @@ template CitizenRegistration
 -- 2. Health Provider submits Covid19 test
 -- 3. Health Provider updates Covid19 test to "Positive"
 -- 4. State Agency creates Immunity Proof "Positive"
--- 5. State Agency create Quarantine Notice
+-- 5. State Agency creates Quarantine Notice
 -- 6. State Agency lifts Qurantine Notice
--- 7.  State Agency creates Immunity Proof "Negative"
+-- 7. State Agency creates Immunity Proof "Negative"
 
 
 -- Scenario 2 : 

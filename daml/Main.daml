@@ -30,20 +30,19 @@ template Covid19Test
     observer citizen
     observer statehealth
 
-    agreement that describes a test initiated and updated by a healtprovider for a specific citizen
+    -- agreement that describes a test initiated and updated by a healtprovider for a specific citizen
 
     key (healthprovider, testnumber) : ( Party, Int )
     maintainer key._1
 
-    choice InitiateTest : ContractId Covidtest -- I like to implement actions: create (first choice action ) and update  (second choice action)
-     -- current code is generating multiple errors " Not in scope: type constructor or call 'Covidtest' "
+    choice InitiateTest : ContractId Covid19Test
       with
-       citizen : Party
-       healthprovider : Party
-       statehealth : Party
+     --  healthprovider: Party
+     --  citizen: Citizen
+     --  statehealth: Party
       controller healthprovider
        do
-        create Covidtest with healthprovider, citizen, statehealth, testnumber, testtype, testdate, testresult, locationstate, testupdate
+        create Covid19Test with healthprovider, citizen, statehealth, testnumber, testtype, testdate, testresult, locationstate, testupdate
           
           -- Do I need to include all the fields that are defined above ?
 
@@ -52,36 +51,143 @@ template Covid19Test
           -- How do I limit the parties to a specific subset ? In my case I have Citizens and Healthproviders. 
           -- I like to limit for instance the healthproviders to a list of only healthproviders
   
-    choice UpdateTest : ContractId Covidtest
+    choice UpdateTest : ContractId Covid19Test
    
         -- Here I want to give an opportunity to update a previous specific Contract with new information
         -- How do preserve (and display) previous information and allow for some fields to be updated ?
 
      with 
-       citizen : Party
-       healthprovider : Party
-       statehealth : Party
+     --  citizen: Citizen
+     --  healthprovider: Party
+     --  statehealth: Party
       controller healthprovider
        do
-        update Covidtest with testnumber, healthprovider, citizen, statehealth, testtype, testdate, testresult, locationstate, testupdate
+        
+        update Covid19Test
+        with testnumber, healthprovider, citizen, statehealth, testtype, testdate, testresult, locationstate, testupdate
+
+-- This currently creates a compile error
+-- Do I need to do a search on Contract ID first  ?
 
 
-data QuarantineType = Mandatory | Optional
-  deriving (Eq, Show)  -- what is the difference if I add Ord to this ?
-  -- I wanted to add option for "14DayMandatory" but the parser identified this as a problem
+-- sample code from Broadcast.daml example
+
+
+{- 
+module Broadcast where
+
+import DA.Action
+
+data Something = Something with
+  deriving (Eq, Show)
+
+data BroadcastKey = BroadcastKey with
+  broadcaster : Party
+  id : Text
+    deriving (Eq, Show)
+
+data SubscriptionKey = SubscriptionKey with
+  broadcast : BroadcastKey
+  subscriber : Party
+    deriving (Eq, Show)
+
+template BroadcastData
+  with
+    broadcast : BroadcastKey
+    payload : Something
+  where
+    signatory broadcast.broadcaster
+
+    key broadcast : BroadcastKey
+    maintainer key.broadcaster
+
+template BroadcastSubscription
+  with
+    subscription : SubscriptionKey
+    currentDataCid : ContractId BroadcastData
+    currentData : BroadcastData
+  where
+    signatory subscription.broadcast.broadcaster, subscription.subscriber
+
+    key subscription : SubscriptionKey
+    maintainer key.broadcast.broadcaster
+
+    controller subscription.broadcast.broadcaster can
+      UpdateData : ContractId BroadcastSubscription
+        with
+          newDataCid : ContractId BroadcastData
+        do
+          -- This `fetch` ensures the new data lands in the subscriber's PCS
+          newData <- fetch newDataCid
+          create this with
+            currentDataCid = newDataCid
+            currentData = newData
+
+template SubscriptionRequest
+  with
+    broadcast : BroadcastKey
+    subscriber : Party
+  where
+    signatory subscriber
+
+    controller broadcast.broadcaster can
+      AcceptSubscription : ContractId BroadcastSubscription
+        with
+          currentDataCid : ContractId BroadcastData
+        do
+          -- This `fetch` ensures the current data lands in the subscriber's PCS
+          currentData <- fetch currentDataCid
+          create BroadcastSubscription with
+            subscription = SubscriptionKey with
+              broadcast
+              subscriber
+            currentDataCid
+            currentData
+
+template Broadcast
+  with
+    broadcast : BroadcastKey
+    subscribers : [Party]
+  where
+    signatory broadcast.broadcaster
+
+    key broadcast : BroadcastKey
+    maintainer key.broadcaster
+
+    controller broadcast.broadcaster can
+      nonconsuming BroadcastUpdate : [ContractId BroadcastSubscription]
+        with
+          newPayload : Something
+        do
+          (oldDataCid, oldData) <- fetchByKey @BroadcastData (key this)
+          archive oldDataCid
+          let newData = oldData with payload = newPayload
+          newDataCid <- create newData
+
+          forA subscribers
+            (\subscriber -> do
+              (subCid, _) <- fetchByKey @BroadcastSubscription
+                SubscriptionKey with
+                  broadcast = key this
+                  subscriber
+              exercise subCid UpdateData with
+                newDataCid
+            )
+ -}
+
 
 
 -- ImmunityProof Template
 
-template ImmunityProofTemplate
+template ImmunityProof
   with
-     immunityproofid : Int
-     citizen : Party
-     covidtest19: [CovidTest19]
+     immunityproofid: Int
+     citizen: Party
+     covidtest19: [Covid19Test]
      statehealth : Party
      proofvaliduntil : Date
      location : Locationstate
-     communitytest : [Communitytest]
+    -- communitytest : [Communitytest]  TO BE DONE
      qrcode : Text
      revokestatus: Text
      revokestatusdate : Date
@@ -89,26 +195,32 @@ template ImmunityProofTemplate
     signatory statehealth
     observer citizen
 
-    agreement that describes a state agency provides an Immunity Proof for a citizen
+    -- agreement that describes a state agency provides an Immunity Proof for a citizen
 
-    key (statehealth, citizen, immunityProofid) :  ( Party, Party, Int)
+    key (statehealth, citizen, immunityproofid) :  ( Party, Party, Int)
     maintainer key._1
 
 
     choice InitiateImmunityProof : ( ContractId ImmunityProof )
      with
-      citizen : Party
-      statehealth : Party
+     -- citizen: Citizen
+     -- statehealth: Party
 
      controller statehealth
       do
-          create ImmunityProof with immunityproofid, citizen, covidtest19, statehealth, proofvaliduntil,  location, communitytest, qrcode, revokestatus, revokestatusdate
+          create ImmunityProof with immunityproofid, citizen, covidtest19, statehealth, proofvaliduntil,  location, qrcode, revokestatus, revokestatusdate
           return ImmunityProof
   
 
 
 
 -- Quarantine Template
+
+
+data QuarantineType = Mandatory | Optional
+  deriving (Eq, Show)  -- what is the difference if I add Ord to this ?
+  -- I wanted to add option for "14DayMandatory" but the parser identified this as a problem
+
 
 type QuarantineKey = ( Party, Party, Int )
 
@@ -118,7 +230,7 @@ template Quarantine
      quarantineordernumber: Int
      quarantinetype: QuarantineType
      issuedate: Date
-     issueparty: Party
+     statehealth: Party
      citizen: Party
      enddate: Date  -- I want to add 14 days to the current date
      reason: Text
@@ -128,7 +240,7 @@ template Quarantine
     signatory statehealth
     observer citizen
 
-    agreement that describes a state agency orders a specific Quarantine for a citizen who has tested positive
+    -- agreement that describes a state agency orders a specific Quarantine for a citizen who has tested positive
 
     key (statehealth, citizen, quarantineordernumber) : QuarantineKey
     maintainer key._1
@@ -136,12 +248,12 @@ template Quarantine
 
     choice InitiateQuarantine : ( ContractId Quarantine)
      with
-      citizen : Party
-      statehealth : Party
+    --  citizen : Party
+    --  statehealth : Party
 
      controller statehealth
       do
-          create Quarantine with quarantineorder, issuedate,  issueparty, citizen, enddate,  reason,  location, trackingID
+          create Quarantine with quarantineordernumber, issuedate, statehealth ,quarantinetype, citizen, enddate,  reason,  location, trackingID
           return (Quarantine)
   
 
@@ -151,7 +263,7 @@ template Quarantine
 
 template CitizenRegistration
   with
-    citizen  : Party
+    citizen: Party
     citizenSSID : Text
     citizenVC : Text
     citizenfirstname : Text
@@ -166,25 +278,26 @@ template CitizenRegistration
     key (citizen, citizenSSN) :  ( Party, Text )
     maintainer key._1
 
-    choice InitiateCitizenRegistration :  ContractId CitizenDetails 
+    choice InitiateCitizenRegistration :  ContractId CitizenRegistration 
      with
-      citizen : Party
+   --   citizen : Party
 
      controller citizen
        do
-        create CitizenDetails with citizen,  citizenSSID,  citizenVC,  citizenSSN, citizenfirstname, citizenlastname,  citizenSSN, citizeninsuranceid, citizeninsurance, citizenlocationid
+        create CitizenRegistration with citizen,  citizenSSID,  citizenVC, citizenfirstname, citizenlastname,  citizenSSN, citizeninsuranceid, citizeninsurance, citizenlocationid
           
-        return (CitizenDetails)
+        return (CitizenRegistration)
 
-    choice UpdateCitizenRegistration : ContractId CitizenDetails
+    choice UpdateCitizenRegistration : ContractId CitizenRegistration
       with
-       citizen : Party
+    --   citizen : Party
 
       controller citizen
         do
-          update CitizenDetails with citizen;  citizenSSID;  citizenVC;  citizenfirstname ; citizenlastname;  citizenSSN ; citizeninsuranceid; citizeninsurance ; citizenlocationid
+          fetchByKey 
+          update CitizenRegistration with citizen;  citizenSSID;  citizenVC;  citizenfirstname ; citizenlastname;  citizenSSN ; citizeninsuranceid; citizeninsurance ; citizenlocationid
           
-          return (CitizenDetails)
+          return (CitizenRegistration)
 
 
 

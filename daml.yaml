@@ -1,4 +1,4 @@
-sdk-version: 1.0.0
+sdk-version: 1.0.1
 name: covid-19
 source: daml
 init-script: Setup:initialize

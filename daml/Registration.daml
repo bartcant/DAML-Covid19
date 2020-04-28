@@ -1,0 +1,72 @@
+
+module Registration where
+
+-- import DA.Action -- WHat is this import ?
+
+data CitizenInfo = CitizenInfo with
+  citizendetail1 : Text
+  citizendetail2 : Text
+  citizendetail3 : Text
+   deriving (Eq, Show)
+
+data CitizenKey = CitizenKey with
+  citizen : Party
+  id : Text
+   deriving (Eq, Show)
+
+
+template CitizenRegistration
+ with
+     registrationCid : CitizenKey
+     registrationData : CitizenInfo
+  where
+     signatory registrationCid.citizen
+
+     key registrationCid : CitizenKey
+     maintainer key.citizen
+
+     controller registrationCid.citizen can 
+       nonconsuming Register : ContractId CitizenRegistration  -- when to use non-consuming ? 
+        with
+          newRegistrationCid : CitizenKey
+          newRegistrationData : CitizenInfo
+        do
+         create CitizenRegistration with
+            registrationCid = newRegistrationCid
+            registrationData = newRegistrationData
+    
+
+       --nonconsuming UpdateRegistration : ContractId CitizenRegistration
+       -- with 
+       --   newCitizenDetails : CitizenInfo
+       -- do
+       --   (oldRegistrationCid, oldRegistrationData) <- fetchByKey @CitizenRegistration (key this)
+      --    archive oldRegistrationCid
+      --    let newRegistrationData = oldRegistrationData 
+       --   create CitizenRegistration with newRegistrationData, newCitizenDetails
+
+       
+
+-- WORK IN PROGRES BELOW --
+
+
+{- template RegistrationSharing
+ with
+    registrationdetails : BroadcastKey
+    subscribers : [Party]
+  where
+    signatory broadcast.broadcaster
+
+    key broadcast : BroadcastKey
+    maintainer key.broadcaster
+
+    controller citizen can
+      nonconsuming RegistrationUpdate : [ContractId RegistrationDetails]
+        with
+          newPayload : Something
+        do
+          (oldRegistrationCid, oldRegistration) <- fetchByKey @RegistrationData (key this)
+          archive oldRegistrationCid
+          let newRegistartionData = oldRegistrationData with payload = newPayload
+          newRegistrationDataCid <- create newRegistrationData
+ -}

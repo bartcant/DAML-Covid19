@@ -4,7 +4,9 @@ module Main where
 
 -- what imports are generally recommended ? 
 
-import DA.Date as D 
+-- import DA.Date as D
+-- import DA.Action
+--import Registration -- I split Registration into its own file
 
 -- CovidTest19 Template
 
@@ -13,58 +15,152 @@ data Locationstate = NC | SC | GA  | FL  -- Can I use a Map function here ?
 data Testresult = Positive | Negative | Pending
   deriving (Eq, Show)
 
+template Network
+  with
+   operator : Party
+  where
+   signatory operator
+
+   controller operator can 
+    nonconsuming InviteHealthClinic : ContractId HealthClinicInvitation
+      with 
+        healthClinic : Party
+      do
+        create HealthClinicInvitation with healthClinic, operator
+    nonconsuming InviteCitizen : ContractId CitizenInvitation
+      with 
+        citizen : Party
+      do
+        create CitizenInvitation with citizen, operator
+
+
+
+template HealthClinicInvitation
+  with
+    operator : Party
+    healthClinic : Party
+  where
+    signatory operator
+
+    controller healthClinic can
+     AcceptInvitation : ContractId HealthClinicRole
+
+      do
+       create HealthClinicRole with healthClinic, operator
+
+template HealthClinicRole
+  with 
+    operator : Party
+    healthClinic : Party
+  where
+    signatory operator,healthClinic
+
+
+template CitizenInvitation
+  with
+    operator : Party
+    citizen : Party
+  where
+    signatory operator
+
+    controller citizen can
+     AcceptCitizenInvitation : ContractId CitizenRole
+
+      do
+       create CitizenRole with citizen, operator
+
+template CitizenRole
+  with 
+    operator : Party
+    citizen: Party
+  where
+    signatory operator,citizen
+
+    controller citizen can 
+      nonconsuming RequestTest : ContractId TestRequest
+        with
+          healthclinic: Party
+        do
+          create TestRequest with healthclinic, citizen -- add statehealt
+
+template TestRequest
+  with 
+    healthclinic : Party
+    citizen: Party
+  where
+    signatory citizen
+
+    controller healthclinic can 
+      ConfirmTestAppointment : ContractId TestAppointment
+        with
+          appointmentdate : Date 
+        do
+          create TestAppointment with citizen, healthclinic, appointmentdate
+
+data Covid19TestData = Covid19TestData
+ with 
+      testdate : Date      
+      healthclinic: Party  -- when to use Party versus [Party]
+      citizen: Party
+      --statehealth: Party
+      testtype: Text
+      testnumber: Int
+      testresult: Testresult
+      locationstate: Locationstate
+      testupdatedata: Date
+       deriving (Eq, Show)
+
+template TestAppointment
+  with
+    healthclinic : Party
+    citizen: Party
+    appointmentdate : Date
+
+  where
+    signatory citizen, healthclinic
+
+    controller healthclinic can 
+       Covid19TestAppointment : ContractId Covid19Test
+        with
+          covid19testdata :  Covid19TestData
+        do
+          create Covid19Test with covid19testdata, healthclinic
+        
+
+    -- TODO  Bring on StateHealth Role onto the Network
+
+
+
 
 template Covid19Test
   with
-    healthprovider: Party  -- when to use Party versus [Party]
-    citizen: Party
-    statehealth: Party
-    testtype: Text
-    testnumber: Int
-    testresult: Testresult
-    testdate: Date -- or should this be D or D.date ?
-    locationstate: Locationstate
-    testupdate: Date  -- or should this be D or D.date ?
+    covid19testdata : Covid19TestData 
+    healthclinic : Party
+
   where
-    signatory healthprovider
-    observer citizen
-    observer statehealth
+    signatory healthclinic
+    observer covid19testdata.citizen
+   --  observer statehealth
 
     -- agreement that describes a test initiated and updated by a healtprovider for a specific citizen
 
-    key (healthprovider, testnumber) : ( Party, Int )
-    maintainer key._1
-
-    choice InitiateTest : ContractId Covid19Test
-      with
-     --  healthprovider: Party
-     --  citizen: Citizen
-     --  statehealth: Party
-      controller healthprovider
-       do
-        create Covid19Test with healthprovider, citizen, statehealth, testnumber, testtype, testdate, testresult, locationstate, testupdate
-          
-          -- Do I need to include all the fields that are defined above ?
-
-          -- When the DAML is built in the Navigator does it now offer the items from the list for eg. locationstate ? 
-          
-          -- How do I limit the parties to a specific subset ? In my case I have Citizens and Healthproviders. 
-          -- I like to limit for instance the healthproviders to a list of only healthproviders
+    --key (healthprovider, testnumber) : ( Party, Int )
+    --maintainer key._1
+    
   
-    choice UpdateTest : ContractId Covid19Test
+{- 
+    -- choice UpdateTest : ContractId Covid19Test
    
         -- Here I want to give an opportunity to update a previous specific Contract with new information
         -- How do preserve (and display) previous information and allow for some fields to be updated ?
 
-     with 
+    -- with 
      --  citizen: Citizen
      --  healthprovider: Party
      --  statehealth: Party
-      controller healthprovider
-       do
-        
-        update Covid19Test
-        with testnumber, healthprovider, citizen, statehealth, testtype, testdate, testresult, locationstate, testupdate
+     -- controller healthprovider
+    --   do
+    --     update Covid19Test with testnumber, healthprovider, citizen, statehealth, testtype, testdate, testresult, locationstate, testupdate
 
 -- This currently creates a compile error
 -- Do I need to do a search on Contract ID first  ?
@@ -72,109 +168,7 @@ template Covid19Test
 
 -- sample code from Broadcast.daml example
 
-
-{- 
-module Broadcast where
-
-import DA.Action
-
-data Something = Something with
-  deriving (Eq, Show)
-
-data BroadcastKey = BroadcastKey with
-  broadcaster : Party
-  id : Text
-    deriving (Eq, Show)
-
-data SubscriptionKey = SubscriptionKey with
-  broadcast : BroadcastKey
-  subscriber : Party
-    deriving (Eq, Show)
-
-template BroadcastData
-  with
-    broadcast : BroadcastKey
-    payload : Something
-  where
-    signatory broadcast.broadcaster
-
-    key broadcast : BroadcastKey
-    maintainer key.broadcaster
-
-template BroadcastSubscription
-  with
-    subscription : SubscriptionKey
-    currentDataCid : ContractId BroadcastData
-    currentData : BroadcastData
-  where
-    signatory subscription.broadcast.broadcaster, subscription.subscriber
-
-    key subscription : SubscriptionKey
-    maintainer key.broadcast.broadcaster
-
-    controller subscription.broadcast.broadcaster can
-      UpdateData : ContractId BroadcastSubscription
-        with
-          newDataCid : ContractId BroadcastData
-        do
-          -- This `fetch` ensures the new data lands in the subscriber's PCS
-          newData <- fetch newDataCid
-          create this with
-            currentDataCid = newDataCid
-            currentData = newData
-
-template SubscriptionRequest
-  with
-    broadcast : BroadcastKey
-    subscriber : Party
-  where
-    signatory subscriber
-
-    controller broadcast.broadcaster can
-      AcceptSubscription : ContractId BroadcastSubscription
-        with
-          currentDataCid : ContractId BroadcastData
-        do
-          -- This `fetch` ensures the current data lands in the subscriber's PCS
-          currentData <- fetch currentDataCid
-          create BroadcastSubscription with
-            subscription = SubscriptionKey with
-              broadcast
-              subscriber
-            currentDataCid
-            currentData
-
-template Broadcast
-  with
-    broadcast : BroadcastKey
-    subscribers : [Party]
-  where
-    signatory broadcast.broadcaster
-
-    key broadcast : BroadcastKey
-    maintainer key.broadcaster
-
-    controller broadcast.broadcaster can
-      nonconsuming BroadcastUpdate : [ContractId BroadcastSubscription]
-        with
-          newPayload : Something
-        do
-          (oldDataCid, oldData) <- fetchByKey @BroadcastData (key this)
-          archive oldDataCid
-          let newData = oldData with payload = newPayload
-          newDataCid <- create newData
-
-          forA subscribers
-            (\subscriber -> do
-              (subCid, _) <- fetchByKey @BroadcastSubscription
-                SubscriptionKey with
-                  broadcast = key this
-                  subscriber
-              exercise subCid UpdateData with
-                newDataCid
-            )
- -}
-
+-}
 
 
 -- ImmunityProof Template
@@ -209,7 +203,7 @@ template ImmunityProof
      controller statehealth
       do
           create ImmunityProof with immunityproofid, citizen, covidtest19, statehealth, proofvaliduntil,  location, qrcode, revokestatus, revokestatusdate
-          return ImmunityProof
+          
   
 
 
@@ -254,7 +248,7 @@ template Quarantine
      controller statehealth
       do
           create Quarantine with quarantineordernumber, issuedate, statehealth ,quarantinetype, citizen, enddate,  reason,  location, trackingID
-          return (Quarantine)
+        
   
 
 -- The following section is intended for the Party (Citizen) to self record some information about them selves that could be useful in the rest of the application
@@ -286,18 +280,18 @@ template CitizenRegistration
        do
         create CitizenRegistration with citizen,  citizenSSID,  citizenVC, citizenfirstname, citizenlastname,  citizenSSN, citizeninsuranceid, citizeninsurance, citizenlocationid
           
-        return (CitizenRegistration)
+    
 
-    choice UpdateCitizenRegistration : ContractId CitizenRegistration
-      with
+   -- choice UpdateRegistration : ContractId CitizenRegistration
+   --    with
     --   citizen : Party
 
-      controller citizen
-        do
-          fetchByKey 
-          update CitizenRegistration with citizen;  citizenSSID;  citizenVC;  citizenfirstname ; citizenlastname;  citizenSSN ; citizeninsuranceid; citizeninsurance ; citizenlocationid
+   --   controller citizen
+   --     do
+        -- Link here to Registration Daml
+        --  update CitizenRegistration with citizen;  citizenSSID;  citizenVC;  citizenfirstname ; citizenlastname;  citizenSSN ; citizeninsuranceid; citizeninsurance ; citizenlocationid
           
-          return (CitizenRegistration)
+        --  return (CitizenRegistration)
 
 
 

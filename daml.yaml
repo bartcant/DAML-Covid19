@@ -1,7 +1,6 @@
 sdk-version: 1.0.1
 name: covid-19
 source: daml
-init-script: Setup:initialize
 parties:
   - Alice
   - NCHealth
@@ -9,8 +8,10 @@ parties:
   - BCBSHealth
 version: 0.0.1
 dependencies:
-  - daml-prim
-  - daml-stdlib
-  - daml-script
+- daml-prim
+- daml-stdlib
+- daml-trigger
 sandbox-options:
-  - --wall-clock-time
+- --wall-clock-time
+- --ledgerid=covid19-sandbox
+

@@ -1071,10 +1071,10 @@
   dependencies:
     "@mojotech/json-type-validation" "^3.1.0"
 
-"@daml2js/daml-ui-template-0.0.1@file:../daml2js/daml-ui-template-0.0.1":
+"@daml2js/covid19-0.0.1@file:../daml2js/covid19-0.0.1":
   version "1.0.0"
   dependencies:
-    "@daml.js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662" "file:../../../Library/Caches/Yarn/v4/npm-@daml2js-daml-ui-template-0-0-1-1.0.0-6ba9dc07-92c1-4476-968e-24916674929c-1587561633670/node_modules/@daml2js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662"
+    "@daml.js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662" "file:../../../Library/Caches/Yarn/v4/npm-@daml2js-covid19-0-0-1-1.0.0-6ba9dc07-92c1-4476-968e-24916674929c-1587561633670/node_modules/@daml2js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662"
     "@daml/types" "1.0.0"
     "@mojotech/json-type-validation" "^3.1.0"
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { useLedger } from "@daml/react";
-import { Main } from "@daml2js/daml-ui-template-0.0.1";
+import { Main } from "@daml2js/covid19-0.0.1";
 import { Grid, Typography, TextField, Button } from "@material-ui/core";
 
 function NewAsset({ history } : RouteComponentProps) {

@@ -1,4 +1,4 @@
-sdk-version: 1.0.1
+sdk-version: 0.13.55
 name: covid-19
 source: daml
 parties:
@@ -13,5 +13,4 @@ dependencies:
 - daml-trigger
 sandbox-options:
 - --wall-clock-time
-- --ledgerid=covid19-sandbox
-
+- --ledgerid=covid19

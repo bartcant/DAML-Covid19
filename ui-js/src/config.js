@@ -5,7 +5,7 @@ export const isLocalDev = process.env.NODE_ENV === 'development';
 
 let host = window.location.host.split('.')
 
-export const ledgerId = isLocalDev ? "daml-ui-template" : host[0];
+export const ledgerId = isLocalDev ? "covid19" : host[0];
 
 let apiUrl = host.slice(1)
 apiUrl.unshift('api')
@@ -25,3 +25,5 @@ let loginUrl = host.slice(1)
 loginUrl.unshift('login')
 
 export const dablLoginUrl = loginUrl.join('.') + (window.location.port ? ':' + window.location.port : '') + '/auth/login?ledgerId=' + ledgerId;
+
+

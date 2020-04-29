@@ -1,7 +1,7 @@
 import React from "react";
 import Contracts from "../../components/Contracts/Contracts";
 import { useStreamQuery, useLedger } from "@daml/react";
-import { Main } from "@daml2js/daml-ui-template-0.0.1";
+import { Main } from "@daml2js/covid19-0.0.1";
 import { ContractId, Party } from "@daml/types";
 
 export default function Report() {

@@ -1084,7 +1084,7 @@
   dependencies:
     "@mojotech/json-type-validation" "^3.1.0"
 
-"@daml2js/covid19-0.0.1@file:../daml2js/covid-19-0.0.1":
+"@daml2js/covid-19-0.0.1@file:../daml2js/covid-19-0.0.1":
   version "1.0.1"
   dependencies:
     "@daml.js/40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7" "file:../../../../AppData/Local/Yarn/Cache/v6/npm-@daml2js-covid19-0-0-1-1.0.1-2a52618b-505a-452f-ac1d-e63e4fbeb3d8-1588174406253/node_modules/@daml2js/40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7"

@@ -1,8 +1,9 @@
 sdk-version: 1.0.1
-name: covid-19
+name: Covid19
 source: daml
 parties:
   - Alice
+  - Operator
   - NCHealth
   - AtriumHealth
   - BCBSHealth
@@ -13,4 +14,4 @@ dependencies:
 - daml-trigger
 sandbox-options:
 - --wall-clock-time
-- --ledgerid=covid19
+- --ledgerid=Covid19

@@ -181,7 +181,7 @@ export namespace ImmunityProof {
 daml.registerTemplate(ImmunityProof);
 
 export type Covid19Test = {
-  covid19testdata: Covid19TestData;
+  Covid19testdata: Covid19TestData;
   healthclinic: daml.Party;
 }
 export const Covid19Test: daml.Template<Covid19Test, undefined, 'ff65aa954b2720477198c267a0fa785f403d52fad5be2a9c917790033fa141dd:Main:Covid19Test'> & {
@@ -190,7 +190,7 @@ export const Covid19Test: daml.Template<Covid19Test, undefined, 'ff65aa954b27204
   templateId: 'ff65aa954b2720477198c267a0fa785f403d52fad5be2a9c917790033fa141dd:Main:Covid19Test',
   keyDecoder: () => jtv.constant(undefined),
   decoder: () => jtv.object({
-    covid19testdata: Covid19TestData.decoder(),
+    Covid19testdata: Covid19TestData.decoder(),
     healthclinic: daml.Party.decoder(),
   }),
   Archive: {
@@ -203,11 +203,11 @@ export const Covid19Test: daml.Template<Covid19Test, undefined, 'ff65aa954b27204
 daml.registerTemplate(Covid19Test);
 
 export type Covid19TestAppointment = {
-  covid19testdata: Covid19TestData;
+  Covid19testdata: Covid19TestData;
 }
 export const Covid19TestAppointment: daml.Serializable<Covid19TestAppointment> = ({
   decoder: () => jtv.object({
-    covid19testdata: Covid19TestData.decoder(),
+    Covid19testdata: Covid19TestData.decoder(),
   }),
 })
 

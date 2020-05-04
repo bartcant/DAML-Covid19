@@ -1061,6 +1061,18 @@
     isomorphic-ws "^4.0.1"
     ws "^7.2.1"
 
+"@daml/ledger@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@daml/ledger/-/ledger-1.0.1.tgz#4f69e025fad70d1cb71dcf7b416e762a66919aba"
+  integrity sha512-ZwKTisImwHtSvIr+XDsAkBXLRjrGkj9yh/VViKUX2sgd+unD85vyhV37Iumi1remhPmT48Ja2/z0/cYrx5AMQw==
+  dependencies:
+    "@daml/types" "1.0.1"
+    "@mojotech/json-type-validation" "^3.1.0"
+    cross-fetch "^3.0.4"
+    events "^3.1.0"
+    isomorphic-ws "^4.0.1"
+    ws "^7.2.1"
+
 "@daml/react@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@daml/react/-/react-1.0.0.tgz#c7f85fce39160fe645848e86d9ac950da655ebd5"
@@ -1084,11 +1096,11 @@
   dependencies:
     "@mojotech/json-type-validation" "^3.1.0"
 
-"@daml2js/covid-19-0.0.1@file:../daml2js/covid-19-0.0.1":
+"@daml2js/Covid19-0.0.1@file:../daml2js/Covid19-0.0.1":
   version "1.0.1"
   dependencies:
-    "@daml.js/40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7" "file:../../../../AppData/Local/Yarn/Cache/v6/npm-@daml2js-covid19-0-0-1-1.0.1-2a52618b-505a-452f-ac1d-e63e4fbeb3d8-1588174406253/node_modules/@daml2js/40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7"
-    "@daml.js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662" "file:../../../../AppData/Local/Yarn/Cache/v6/npm-@daml2js-covid19-0-0-1-1.0.1-2a52618b-505a-452f-ac1d-e63e4fbeb3d8-1588174406253/node_modules/@daml2js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662"
+    "@daml.js/40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7" "file:../../../../AppData/Local/Yarn/Cache/v6/npm-@daml2js-Covid19-0-0-1-1.0.1-823df32a-014e-4cba-b202-87dd16ff54e9-1588346351441/node_modules/@daml2js/40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7"
+    "@daml.js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662" "file:../../../../AppData/Local/Yarn/Cache/v6/npm-@daml2js-Covid19-0-0-1-1.0.1-823df32a-014e-4cba-b202-87dd16ff54e9-1588346351441/node_modules/@daml2js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662"
     "@daml/types" "1.0.1"
     "@mojotech/json-type-validation" "^3.1.0"
 

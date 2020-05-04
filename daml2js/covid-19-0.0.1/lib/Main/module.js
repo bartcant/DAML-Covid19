@@ -111,7 +111,7 @@ exports.Covid19Test = {
     templateId: 'ff65aa954b2720477198c267a0fa785f403d52fad5be2a9c917790033fa141dd:Main:Covid19Test',
     keyDecoder: function () { return jtv.constant(undefined); },
     decoder: function () { return jtv.object({
-        covid19testdata: exports.Covid19TestData.decoder(),
+        Covid19testdata: exports.Covid19TestData.decoder(),
         healthclinic: daml.Party.decoder(),
     }); },
     Archive: {
@@ -124,7 +124,7 @@ exports.Covid19Test = {
 daml.registerTemplate(exports.Covid19Test);
 exports.Covid19TestAppointment = ({
     decoder: function () { return jtv.object({
-        covid19testdata: exports.Covid19TestData.decoder(),
+        Covid19testdata: exports.Covid19TestData.decoder(),
     }); },
 });
 exports.TestAppointment = {

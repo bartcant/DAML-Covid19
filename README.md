@@ -1,5 +1,5 @@
 # DAML-Covid19
-DAML implementation for Covid-19 Use Cases
+DAML implementation for Covid19 Use Cases
 -- Copyright (c) 2020 Rethink Ledgers LLC. All rights reserved.
 
 

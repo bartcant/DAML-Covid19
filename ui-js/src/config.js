@@ -5,7 +5,7 @@ export const isLocalDev = process.env.NODE_ENV === 'development';
 
 let host = window.location.host.split('.')
 
-export const ledgerId = isLocalDev ? "covid19" : host[0];
+export const ledgerId = isLocalDev ? "Covid19" : host[0];
 
 let apiUrl = host.slice(1)
 apiUrl.unshift('api')

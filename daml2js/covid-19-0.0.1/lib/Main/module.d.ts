@@ -68,14 +68,14 @@ export declare namespace ImmunityProof {
     type Key = pkg40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7.DA.Types.Tuple3<daml.Party, daml.Party, daml.Int>;
 }
 export declare type Covid19Test = {
-    covid19testdata: Covid19TestData;
+    Covid19testdata: Covid19TestData;
     healthclinic: daml.Party;
 };
 export declare const Covid19Test: daml.Template<Covid19Test, undefined, 'ff65aa954b2720477198c267a0fa785f403d52fad5be2a9c917790033fa141dd:Main:Covid19Test'> & {
     Archive: daml.Choice<Covid19Test, pkgd14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662.DA.Internal.Template.Archive, {}, undefined>;
 };
 export declare type Covid19TestAppointment = {
-    covid19testdata: Covid19TestData;
+    Covid19testdata: Covid19TestData;
 };
 export declare const Covid19TestAppointment: daml.Serializable<Covid19TestAppointment>;
 export declare type TestAppointment = {

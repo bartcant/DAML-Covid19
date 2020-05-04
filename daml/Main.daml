@@ -24,9 +24,9 @@ template Network
    controller operator can 
     nonconsuming InviteHealthClinic : ContractId HealthClinicInvitation
       with 
-        healthClinic : Party
+        healthclinic : Party
       do
-        create HealthClinicInvitation with healthClinic, operator
+        create HealthClinicInvitation with healthclinic, operator
     nonconsuming InviteCitizen : ContractId CitizenInvitation
       with 
         citizen : Party
@@ -38,22 +38,22 @@ template Network
 template HealthClinicInvitation
   with
     operator : Party
-    healthClinic : Party
+    healthclinic : Party
   where
     signatory operator
 
-    controller healthClinic can
+    controller healthclinic can
      AcceptInvitation : ContractId HealthClinicRole
 
       do
-       create HealthClinicRole with healthClinic, operator
+       create HealthClinicRole with healthclinic, operator
 
 template HealthClinicRole
   with 
     operator : Party
-    healthClinic : Party
+    healthclinic : Party
   where
-    signatory operator,healthClinic
+    signatory operator,healthclinic
 
 
 template CitizenInvitation
@@ -124,7 +124,7 @@ template TestAppointment
         with
           covid19testdata :  Covid19TestData
         do
-          create Covid19Test with covid19testdata, healthclinic
+          create Covid19Test with covid19testdata , healthclinic
         
 
     -- TODO  Bring on StateHealth Role onto the Network

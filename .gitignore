@@ -1,4 +1,5 @@
 /.daml
-/ui-js/buil
+/ui-js/build
 /ui-js/node_modules
 /daml2js
+

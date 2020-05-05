@@ -23,7 +23,7 @@ export default function Report() {
           ["TemplateId", "templateId"],
           ["Operator", "payload.operator"]
         ]}
-
+         
        actions={[
          ["InviteHealthClinic", (c, healthclinic) => { exerciseInviteHealthClinic(c.contractId, healthclinic); }, "Healthclinic"],
          ["InviteCitizen", (c, citizen) => { exerciseInviteCitizen(c.contractId, citizen); }, "Citizen"]

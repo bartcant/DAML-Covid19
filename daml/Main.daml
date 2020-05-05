@@ -35,6 +35,9 @@ template Network
 
 
 
+
+
+
 template HealthClinicInvitation
   with
     operator : Party
@@ -309,14 +312,11 @@ template CitizenRegistration
 
 
 -- Scenario 2 : 
-
---setup = 
---  scenario do
---   alice <- getParty "Alice"
---   atriumhealth <- getParty "AtriumHealth"
---   ncgovhealth <- getParty "NCGovHealth"
---   AlicePositive <- submit atriumhealth do 
---    create Covid19Test with
---      healthprovider = atriumhealth; citizen = alice; statehealth = ncgovhealth; testnumber = 1; testtype = "Abbott" ; testdate =D.date 2020 Apr 22; testresult = "Positive" ; locationstate = "NC"
---    submit atriumhealth do
---      exercise  AlicePositive InitiateTest
+setup = scenario do
+  operator <- getParty "Operator"
+  atriumhealth <- getParty "AtriumHealth"
+  alice <- getParty "Alice"
+  submit operator do
+    create HealthClinicInvitation with healthclinic = atriumhealth , operator 
+  submit operator do
+    create CitizenInvitation with citizen = alice , operator 

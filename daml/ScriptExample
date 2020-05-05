@@ -1,0 +1,19 @@
+{-# LANGUAGE ApplicativeDo #-}
+
+module ScriptExample where
+
+import Daml.Script
+
+data LedgerParties = LedgerParties with
+  operator : Party
+  alice : Party
+  atriumhealth : Party
+
+initialize : LedgerParties -> Script ()
+initialize parties = do
+
+ (InviteHealthClinicAtrium, InviteCitizenAlice) <- submit parties.operator $ do
+    InviteHealthClinicAtrium <- createCmd (InviteHealtClinic (Network parties.operator parties.atriumhealth))
+    InviteCitizenAlice <- createCmd (InviteCitizen (Network parties.operator parties.alice))
+ 
+ pure ()   

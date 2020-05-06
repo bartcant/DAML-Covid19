@@ -2,11 +2,11 @@ sdk-version: 1.0.1
 name: Covid19
 source: daml
 parties:
-  - Alice
-  - Operator
-  - NCHealth
-  - AtriumHealth
-  - BCBSHealth
+- Alice
+- Operator
+- NCHealth
+- AtriumHealth
+- BCBSHealth
 version: 0.0.1
 dependencies:
 - daml-prim

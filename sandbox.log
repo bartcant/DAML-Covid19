@@ -65,3 +65,93 @@
 14:11:41.651 [sandbox-akka.actor.default-dispatcher-4] INFO  akka.event.slf4j.Slf4jLogger - Slf4jLogger started 
 14:11:50.209 [pool-1-thread-2] INFO  c.d.p.apiserver.LedgerApiServer - Listening on localhost:6865 over plain text. 
 14:11:50.227 [pool-1-thread-3] INFO  com.daml.platform.sandboxnext.Runner - Initialized sandbox version 1.0.1 with ledger-id = Covid19, port = 6865, dar file = List(.daml\dist\Covid19-0.0.1.dar), time mode = wall-clock time, ledger = in-memory, auth-service = AuthServiceWildcard$, contract ids seeding = strong 
+14:40:35.852 [sandbox-akka.actor.default-dispatcher-4] INFO  akka.event.slf4j.Slf4jLogger - Slf4jLogger started 
+14:40:43.623 [pool-1-thread-4] INFO  c.d.p.apiserver.LedgerApiServer - Listening on localhost:6865 over plain text. 
+14:40:43.644 [pool-1-thread-1] INFO  com.daml.platform.sandboxnext.Runner - Initialized sandbox version 1.0.1 with ledger-id = Covid19, port = 6865, dar file = List(.daml\dist\Covid19-0.0.1.dar), time mode = wall-clock time, ledger = in-memory, auth-service = AuthServiceWildcard$, contract ids seeding = strong 
+10:19:17.816 [sandbox-akka.actor.default-dispatcher-4] INFO  akka.event.slf4j.Slf4jLogger - Slf4jLogger started 
+10:19:24.119 [pool-1-thread-1] INFO  c.d.p.apiserver.LedgerApiServer - Listening on localhost:6865 over plain text. 
+10:19:24.132 [pool-1-thread-2] INFO  com.daml.platform.sandboxnext.Runner - Initialized sandbox version 1.0.1 with ledger-id = Myledger, port = 6865, dar file = List(.\.daml\dist\Covid19-0.0.1.dar), time mode = wall-clock time, ledger = in-memory, auth-service = AuthServiceWildcard$, contract ids seeding = strong 
+11:22:38.748 [sandbox-akka.actor.default-dispatcher-4] INFO  akka.event.slf4j.Slf4jLogger - Slf4jLogger started 
+11:22:40.193 [pool-1-thread-4] ERROR com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Exception during pool initialization. 
+org.postgresql.util.PSQLException: FATAL: database "test" does not exist
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2505)
+	at org.postgresql.core.v3.QueryExecutorImpl.readStartupMessages(QueryExecutorImpl.java:2617)
+	at org.postgresql.core.v3.QueryExecutorImpl.<init>(QueryExecutorImpl.java:135)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:250)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:49)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:211)
+	at org.postgresql.Driver.makeConnection(Driver.java:458)
+	at org.postgresql.Driver.connect(Driver.java:260)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:119)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:369)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:198)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:467)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:541)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
+	at org.flywaydb.core.internal.jdbc.JdbcUtils.openConnection(JdbcUtils.java:56)
+	at org.flywaydb.core.internal.jdbc.JdbcConnectionFactory.<init>(JdbcConnectionFactory.java:80)
+	at org.flywaydb.core.Flyway.execute(Flyway.java:447)
+	at org.flywaydb.core.Flyway.migrate(Flyway.java:153)
+	at com.daml.ledger.on.sql.Database$UninitializedDatabase.migrate(Database.scala:227)
+	at com.daml.ledger.on.sql.SqlLedgerReaderWriter$Owner.$anonfun$acquire$1(SqlLedgerReaderWriter.scala:131)
+	at scala.util.Success.$anonfun$map$1(Try.scala:251)
+	at scala.util.Success.map(Try.scala:209)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:288)
+	at scala.concurrent.impl.Promise.liftedTree1$1(Promise.scala:29)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:29)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:60)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:830)
+11:22:40.254 [main] ERROR com.daml.resources.ProgramResource - Shutting down because of an initialization error. 
+org.flywaydb.core.internal.exception.FlywaySqlException: 
+Unable to obtain connection from database: FATAL: database "test" does not exist
+--------------------------------------------------------------------------------
+SQL State  : 3D000
+Error Code : 0
+Message    : FATAL: database "test" does not exist
+
+	at org.flywaydb.core.internal.jdbc.JdbcUtils.openConnection(JdbcUtils.java:60)
+	at org.flywaydb.core.internal.jdbc.JdbcConnectionFactory.<init>(JdbcConnectionFactory.java:80)
+	at org.flywaydb.core.Flyway.execute(Flyway.java:447)
+	at org.flywaydb.core.Flyway.migrate(Flyway.java:153)
+	at com.daml.ledger.on.sql.Database$UninitializedDatabase.migrate(Database.scala:227)
+	at com.daml.ledger.on.sql.SqlLedgerReaderWriter$Owner.$anonfun$acquire$1(SqlLedgerReaderWriter.scala:131)
+	at scala.util.Success.$anonfun$map$1(Try.scala:251)
+	at scala.util.Success.map(Try.scala:209)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:288)
+	at scala.concurrent.impl.Promise.liftedTree1$1(Promise.scala:29)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:29)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:60)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:830)
+Caused by: org.postgresql.util.PSQLException: FATAL: database "test" does not exist
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2505)
+	at org.postgresql.core.v3.QueryExecutorImpl.readStartupMessages(QueryExecutorImpl.java:2617)
+	at org.postgresql.core.v3.QueryExecutorImpl.<init>(QueryExecutorImpl.java:135)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:250)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:49)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:211)
+	at org.postgresql.Driver.makeConnection(Driver.java:458)
+	at org.postgresql.Driver.connect(Driver.java:260)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:119)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:369)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:198)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:467)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:541)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
+	at org.flywaydb.core.internal.jdbc.JdbcUtils.openConnection(JdbcUtils.java:56)
+	... 14 common frames omitted
+11:23:57.103 [sandbox-akka.actor.default-dispatcher-4] INFO  akka.event.slf4j.Slf4jLogger - Slf4jLogger started 
+11:23:59.578 [pool-1-thread-2] INFO  d.m.postgres.V2_1__Rebuild_Acs - No ledger end found, assuming empty database. Skipping migration. 
+11:24:05.688 [pool-1-thread-3] INFO  c.d.p.apiserver.LedgerApiServer - Listening on localhost:6865 over plain text. 
+11:24:05.705 [pool-1-thread-1] INFO  com.daml.platform.sandboxnext.Runner - Initialized sandbox version 1.0.1 with ledger-id = ad9a8a37-c054-478f-b6d9-f13d32220e66, port = 6865, dar file = List(.daml\dist\Covid19-0.0.1.dar), time mode = wall-clock time, ledger = PostgreSQL, auth-service = AuthServiceWildcard$, contract ids seeding = strong 
+11:37:08.707 [sandbox-akka.actor.default-dispatcher-4] INFO  akka.event.slf4j.Slf4jLogger - Slf4jLogger started 
+11:37:16.196 [pool-1-thread-1] INFO  c.d.p.apiserver.LedgerApiServer - Listening on localhost:6865 over plain text. 
+11:37:16.211 [pool-1-thread-4] INFO  com.daml.platform.sandboxnext.Runner - Initialized sandbox version 1.0.1 with ledger-id = ad9a8a37-c054-478f-b6d9-f13d32220e66, port = 6865, dar file = List(.daml\dist\Covid19-0.0.1.dar), time mode = wall-clock time, ledger = PostgreSQL, auth-service = AuthServiceWildcard$, contract ids seeding = strong 
+11:50:19.952 [sandbox-akka.actor.default-dispatcher-4] INFO  akka.event.slf4j.Slf4jLogger - Slf4jLogger started 
+11:50:27.598 [pool-1-thread-1] INFO  c.d.p.apiserver.LedgerApiServer - Listening on localhost:6865 over plain text. 
+11:50:27.610 [pool-1-thread-3] INFO  com.daml.platform.sandboxnext.Runner - Initialized sandbox version 1.0.1 with ledger-id = ad9a8a37-c054-478f-b6d9-f13d32220e66, port = 6865, dar file = List(.daml\dist\Covid19-0.0.1.dar), time mode = wall-clock time, ledger = PostgreSQL, auth-service = AuthServiceWildcard$, contract ids seeding = strong 

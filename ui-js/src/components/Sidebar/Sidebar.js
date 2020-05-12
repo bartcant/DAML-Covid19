@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Drawer, IconButton, List } from "@material-ui/core";
-import { Home, List as ListIcon, ArrowBack } from "@material-ui/icons";
+import { Home, List as ListIcon, ArrowBack, EditSharp } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
 import { withRouter } from "react-router-dom";
 import classNames from "classnames";
@@ -66,6 +66,22 @@ function Sidebar({ location }) {
           label="Report"
           path="/app/report"
           icon={(<ListIcon />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+        />
+         <SidebarLink
+          key="Form"
+          label="Form"
+          path="/app/form"
+          icon={(<EditSharp />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+        />
+         <SidebarLink
+          key="Defaultclinic"
+          label="Defaultclinic"
+          path="/app/defaultclinic"
+          icon={(<Home />)}
           location={location}
           isSidebarOpened={isSidebarOpened}
         />

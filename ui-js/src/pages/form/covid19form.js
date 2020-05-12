@@ -27,15 +27,56 @@ export default function FormDialog() {
         <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here. We will send updates
-            occasionally.
+            Enter the Details from the Covid19-Test
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
-            id="name"
-            label="Email Address"
+            id="firstname"
+            label="first name"
+            type="text"
+            fullWidth
+          />
+            <TextField
+            autoFocus
+            margin="dense"
+            id="lastname"
+            label="last name"
+            type="text"
+            fullWidth
+          />
+
+            <TextField
+            autoFocus
+            margin="dense"
+            id="email"
+            label="email"
             type="email"
+            fullWidth
+          />
+
+          <TextField
+            autoFocus
+            margin="dense"
+            id="testdate"
+            label="testdate"
+            type="date"
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="testtype"
+            label="testtype"
+            type="text"
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="testresult"
+            label="testresult"
+            type="text"
             fullWidth
           />
         </DialogContent>
@@ -44,7 +85,7 @@ export default function FormDialog() {
             Cancel
           </Button>
           <Button onClick={handleClose} color="primary">
-            Subscribe
+            Submit
           </Button>
         </DialogActions>
       </Dialog>

@@ -11,10 +11,16 @@ export default function Report() {
   const operator = useParty();
   const ledger = useLedger();
   const assets = useStreamQuery (Main.Network);
+ 
 
   const exerciseInviteHealthClinic = function(cid, healthclinic ) {
+    console.log("operator :" + operator);
+    console.log("healtclinic : " + healthclinic);
+    console.log("cid: "+ cid);
     ledger.exercise(Main.Network.InviteHealthClinic, cid, { operator, healthclinic } ); };
-  const exerciseInviteCitizen = function(cid, citizen ) {
+    
+    
+    const exerciseInviteCitizen = function(cid, citizen ) {
     ledger.exercise(Main.Network.InviteCitizen, cid, { operator, citizen } ); };
  
   return (

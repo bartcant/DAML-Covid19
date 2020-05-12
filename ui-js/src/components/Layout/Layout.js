@@ -9,6 +9,8 @@ import Report from "../../pages/report/Report";
 import DamlLedger from "@daml/react";
 import { useUserState } from "../../context/UserContext";
 import Default from "../../pages/default/Default";
+import Defaultclinic from "../../pages/defaultclinic/Defaultclinic";
+import Form from "../../pages/form/covid19form";
 import { wsBaseUrl, httpBaseUrl } from "../../config";
 
 
@@ -32,6 +34,8 @@ function Layout() {
               <Switch>
                 <Route path="/app/default" component={Default} />
                 <Route path="/app/report" component={Report} />
+                <Route path="/app/form" component={Form} />
+                <Route path="/app/defaultclinic" component={Defaultclinic} />
               </Switch>
             </div>
           </>

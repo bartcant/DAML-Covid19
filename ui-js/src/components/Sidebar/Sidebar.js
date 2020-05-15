@@ -113,7 +113,7 @@ function Sidebar({ location }) {
         <SidebarLink
           key="Form"
           label="Form"
-          path="/app/reduxform"
+          path="/app/finalform"
           icon={(<EditSharp />)}
           location={location}
           isSidebarOpened={isSidebarOpened}

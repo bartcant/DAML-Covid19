@@ -14,6 +14,7 @@ import CitizenInvite from "../../pages/citizeninvite/Citizeninvite";
 import TestRequest from "../../pages/testrequest/Testrequest";
 import TestAppointment from "../../pages/testappointment/Testappointment";
 import Covid19Test from "../../pages/covid19test/Covid19test";
+import StartForm from "../../pages/finalform/Start";
 import { wsBaseUrl, httpBaseUrl } from "../../config";
 
 
@@ -42,7 +43,7 @@ function Layout() {
                 <Route path="/app/testrequest" component={TestRequest} />
                 <Route path="/app/testappointment" component={TestAppointment} />
                 <Route path="/app/covid19test" component={Covid19Test} />
-                <Route path="/app/reduxform" component={ReduxForm} />
+                <Route path="/app/finalform" component={StartForm} />
               </Switch>
             </div>
           </>

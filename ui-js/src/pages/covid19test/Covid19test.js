@@ -3,6 +3,7 @@ import Contracts from "../../components/Contracts/Contracts";
 import { useStreamQuery, useParty, useLedger } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
 import Covid19Form from "../../components/Covid19form.js"
+// import StartForm from "../../pages/finalform/Start.js"
 
 
 
@@ -53,13 +54,19 @@ return (
         
         <br/>
 
+
+
         <Covid19Form>   
 
           <div> test</div>
 
 
         </Covid19Form>
+        
+
+
         </>
+
       );
     }
 

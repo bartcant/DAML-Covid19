@@ -77,7 +77,7 @@ template CitizenRole
     operator : Party
     citizen: Party
   where
-    signatory operator,citizen
+    signatory citizen
 
     controller citizen can 
       nonconsuming RequestTest : ContractId TestRequest
@@ -120,14 +120,14 @@ template TestAppointment
     appointmentdate : Date
 
   where
-    signatory citizen, healthclinic
+    signatory healthclinic
 
     controller healthclinic can 
        Covid19TestAppointment : ContractId Covid19Test
         with
           covid19testdata :  Covid19TestData
         do
-          create Covid19Test with covid19testdata , healthclinic
+          create Covid19Test with covid19testdata, healthclinic
         
 
     -- TODO  Bring on StateHealth Role onto the Network

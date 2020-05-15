@@ -62,29 +62,63 @@ function Sidebar({ location }) {
           isSidebarOpened={isSidebarOpened}
         />
         <SidebarLink
-          key="Report"
-          label="Report"
-          path="/app/report"
+          key="Network"
+          label="Network"
+          path="/app/network"
           icon={(<ListIcon />)}
           location={location}
           isSidebarOpened={isSidebarOpened}
         />
+         
          <SidebarLink
-          key="Form"
-          label="Form"
-          path="/app/form"
+          key="Clinicinvite"
+          label="Clinicinvite"
+          path="/app/clinicinvite"
           icon={(<EditSharp />)}
           location={location}
           isSidebarOpened={isSidebarOpened}
         />
-         <SidebarLink
-          key="Defaultclinic"
-          label="Defaultclinic"
-          path="/app/defaultclinic"
-          icon={(<Home />)}
+        <SidebarLink
+          key="Citizeninvite"
+          label="Citizeninvite"
+          path="/app/citizeninvite"
+          icon={(<EditSharp />)}
           location={location}
           isSidebarOpened={isSidebarOpened}
         />
+        <SidebarLink
+          key="TestRequest"
+          label="TestRequest"
+          path="/app/testrequest"
+          icon={(<EditSharp />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+        />
+        <SidebarLink
+          key="TestAppointment"
+          label="TestAppointment"
+          path="/app/testappointment"
+          icon={(<EditSharp />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+        />
+        <SidebarLink
+          key="Covid19Test"
+          label="Covid19Test"
+          path="/app/covid19test"
+          icon={(<EditSharp />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+      />
+        <SidebarLink
+          key="Form"
+          label="Form"
+          path="/app/reduxform"
+          icon={(<EditSharp />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+      />
+
       </List>
     </Drawer>
   );

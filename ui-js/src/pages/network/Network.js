@@ -6,7 +6,7 @@ import { Main } from "@daml2js/Covid19-0.0.1/";
 
 
 
-export default function Report() {
+export default function Network() {
 
   const operator = useParty();
   const ledger = useLedger();
@@ -20,7 +20,10 @@ export default function Report() {
     ledger.exercise(Main.Network.InviteHealthClinic, cid, { operator, healthclinic } ); };
     
     
-    const exerciseInviteCitizen = function(cid, citizen ) {
+  const exerciseInviteCitizen = function(cid, citizen ) {
+    console.log("operator :" + operator);
+    console.log("citizen : " + citizen);
+    console.log("cid: "+ cid);
     ledger.exercise(Main.Network.InviteCitizen, cid, { operator, citizen } ); };
  
   return (

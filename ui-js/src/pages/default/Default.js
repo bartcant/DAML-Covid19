@@ -7,7 +7,7 @@ import { Main } from "@daml2js/Covid19-0.0.1/";
 export default function Default() {
 
   
-  const assets = useStreamQuery (Main.Network);
+  const assets = useStreamQuery (Main.CitizenRole);
 
 
   return (

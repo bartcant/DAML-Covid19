@@ -5,12 +5,15 @@ import useStyles from "./styles";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import { useLayoutState } from "../../context/LayoutContext";
-import Report from "../../pages/report/Report";
+import Network from "../../pages/network/Network";
 import DamlLedger from "@daml/react";
 import { useUserState } from "../../context/UserContext";
 import Default from "../../pages/default/Default";
-import Defaultclinic from "../../pages/defaultclinic/Defaultclinic";
-import Form from "../../pages/form/covid19form";
+import ClinicInvite from "../../pages/clinicinvite/Clinicinvite";
+import CitizenInvite from "../../pages/citizeninvite/Citizeninvite";
+import TestRequest from "../../pages/testrequest/Testrequest";
+import TestAppointment from "../../pages/testappointment/Testappointment";
+import Covid19Test from "../../pages/covid19test/Covid19test";
 import { wsBaseUrl, httpBaseUrl } from "../../config";
 
 
@@ -33,9 +36,13 @@ function Layout() {
               <div className={classes.fakeToolbar} />
               <Switch>
                 <Route path="/app/default" component={Default} />
-                <Route path="/app/report" component={Report} />
-                <Route path="/app/form" component={Form} />
-                <Route path="/app/defaultclinic" component={Defaultclinic} />
+                <Route path="/app/network" component={Network} />
+                <Route path="/app/clinicinvite" component={ClinicInvite} />
+                <Route path="/app/citizeninvite" component={CitizenInvite} />
+                <Route path="/app/testrequest" component={TestRequest} />
+                <Route path="/app/testappointment" component={TestAppointment} />
+                <Route path="/app/covid19test" component={Covid19Test} />
+                <Route path="/app/reduxform" component={ReduxForm} />
               </Switch>
             </div>
           </>

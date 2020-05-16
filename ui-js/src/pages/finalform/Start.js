@@ -1,5 +1,5 @@
-import React from 'react'
-// import { render } from 'react-dom'
+import React, {Component} from 'react'
+import { render } from 'react-dom'
 import Styles from './Styles'
 import { Form, Field } from 'react-final-form'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -8,7 +8,6 @@ import TextField from 'material-ui/TextField'
 // import Toggle from 'material-ui/Toggle'
 import Select from 'react-select'
 import states from './states'
-
 
 const TextFieldAdapter = ({ input, meta, ...rest }) => (
   <TextField
@@ -28,24 +27,30 @@ const TextFieldAdapter = ({ input, meta, ...rest }) => (
 //  />
 //)
 
+export default function StartForm() {
+
+
 const ReactSelectAdapter = ({ input, ...rest }) => (
   <Select {...input} {...rest} searchable />
 )
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-const onSubmit = async values => {
-  await sleep(300)
-  window.alert(JSON.stringify(values, 0, 2))
+const onSubmit = async covid19testdata => {
+  sleep(300);
+  window.alert(JSON.stringify(covid19testdata, 0, 2));
+  let zdata = covid19testdata;
+  console.log("zdata" + JSON.stringify(zdata, 0, 2));
+  //this.props.navigation.navigate('../../covid19test/Covid19test.js', {
+  //   data: zdata,
+  // });
 }
+
 const required = value => (value ? undefined : 'Required')
 
-class StartForm extends React.Component {
 
-
-
-render() {
-  return (
+return(
+    
 <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Styles>
       <h1> React Final Form Example</h1>
@@ -58,9 +63,10 @@ render() {
         <a href="https://github.com/JedWatson/react-select">React Select</a> and{' '}
         <a href="http://www.material-ui.com">Material UI</a>.
       </div>
+
       <Form
         onSubmit={onSubmit}
-        render={({ handleSubmit, form, submitting, pristine, values }) => (
+        render={({ handleSubmit, form, submitting, pristine, covid19testdata }) => (
           <form onSubmit={handleSubmit}>
             <div>
               <Field
@@ -91,7 +97,7 @@ render() {
             </div>
             <div>
               <Field
-                name="Test Number"
+                name="testnumber"
                 component={TextFieldAdapter}
                 validate={required}
                 hintText="Test Number"
@@ -100,7 +106,7 @@ render() {
             </div>
             <div>
               <Field
-                name="Test Result"
+                name="restresult"
                 component={TextFieldAdapter}
                 validate={required}
                 hintText="Test Result"
@@ -108,16 +114,22 @@ render() {
               />
             </div>
 
-
             <div>
               <Field
-                name="state"
+                name="locationstate"
                 component={ReactSelectAdapter}
                 options={states}
               />
             </div>
+            
             <div>
-              
+              <Field
+                name="testupdatedata"
+                component={TextFieldAdapter}
+                hintText="Test Update Date"
+                floatingLabelText="TestUpdate Date"
+              />
+            
             </div>
             <div className="buttons">
               <button type="submit" disabled={submitting}>
@@ -131,15 +143,14 @@ render() {
                 Reset
               </button>
             </div>
-            <pre>{JSON.stringify(values, 0, 2)}</pre>
+            <pre>{JSON.stringify(covid19testdata, 0, 2)}</pre>
           </form>
         )}
       />
     </Styles>
   </MuiThemeProvider>
+
 )
 
-};
-        
+
 }
-export default StartForm; 

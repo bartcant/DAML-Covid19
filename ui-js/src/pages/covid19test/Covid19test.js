@@ -3,7 +3,8 @@ import Contracts from "../../components/Contracts/Contracts";
 import { useStreamQuery, useParty, useLedger } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
 import Covid19Form from "../../components/Covid19form.js"
-// import StartForm from "../../pages/finalform/Start.js"
+import StartForm from "../../pages/finalform/Start.js"
+import { PlaylistAddOutlined } from '@material-ui/icons';
 
 
 
@@ -12,19 +13,10 @@ export default function TestAppointment() {
   const citizen = "Alice";
   const healthclinic = useParty(); 
   const ledger = useLedger();
-  const covid19testdata = {
-    
-    testdate: "",      
-    healthclinic: "",
-    citizen: "",
-    testtype: "",
-    testnumber: "",
-    testresult: "",
-    locationstate: "",
-    testupdatedata: ""
-   }
+
 
   const assets = useStreamQuery (Main.TestAppointment);
+  // console.log(assets.contracts.contractId);
 
 
 
@@ -32,11 +24,20 @@ export default function TestAppointment() {
     console.log("healtclinic : " + healthclinic);
     console.log("citizen : " + citizen); 
     console.log("cid: "+ cid);
-    ledger.exercise(Main.TestAppointment.Covid19Test, cid, {citizen, healthclinic, covid19testdata} ); 
+    // ledger.exercise(Main.TestAppointment.Covid19Test, cid, {citizen, healthclinic, covid19testdata} ); 
+
+
   };
 
+  
+
 return (
+
+
     <>
+
+     <div>{datastring}</div>
+
       <Contracts
         contracts={assets.contracts}
         columns={[
@@ -48,26 +49,28 @@ return (
        
         actions={[
           
-          ["Conduct Test", (c) => { exercisestarttest(c.contractId ); }]
+          ["Conduct Test", (c) => { exercisestarttest(c.contractId ); }
+       
+        ]
         ]}
+
+
+
         />
-        
+      
         <br/>
 
+      
 
+    
+        />  
 
-        <Covid19Form>   
-
-          <div> test</div>
-
-
-        </Covid19Form>
         
-
-
         </>
 
       );
     }
+
+
 
 

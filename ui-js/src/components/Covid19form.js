@@ -5,9 +5,16 @@ class Covid19Form extends React.Component {
 
 
     constructor(props) {
-      super(props);
+          super(props);
       this.state = {
-        issuedby: "AtriumHealth"
+        testdate : "", 
+        issuedby: "AtriumHealth",
+        testtype : "", 
+        testnumber : "", 
+        testresult : "", 
+        locationstate : "",
+        testupdatedata : ""
+
       };
   
       this.handleInputChange = this.handleInputChange.bind(this);

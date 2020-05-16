@@ -60,6 +60,6 @@ const states = {
   WY: 'Wyoming'
 }
 export default Object.keys(states).map(value => ({
-  value,
+  value, 
   label: states[value]
 }))

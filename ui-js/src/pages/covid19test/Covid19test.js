@@ -2,9 +2,8 @@ import React from 'react';
 import Contracts from "../../components/Contracts/Contracts";
 import { useStreamQuery, useParty, useLedger } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
-import Covid19Form from "../../components/Covid19form.js"
-import StartForm from "../../pages/finalform/Start.js"
-import { PlaylistAddOutlined } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 
 
@@ -16,7 +15,7 @@ export default function TestAppointment() {
 
 
   const assets = useStreamQuery (Main.TestAppointment);
-  // console.log(assets.contracts.contractId);
+ 
 
 
 
@@ -25,6 +24,10 @@ export default function TestAppointment() {
     console.log("citizen : " + citizen); 
     console.log("cid: "+ cid);
     // ledger.exercise(Main.TestAppointment.Covid19Test, cid, {citizen, healthclinic, covid19testdata} ); 
+
+    // this above function the needs input for "covid19testdata" from the Start.js page and needs it in the following format:
+
+   // {"testdate":"testdate", issuedby:"issuedby","testtype":"testtype,"testnumber":"testnumber,"locationstate":"locationstate","testupdatedata:"testupdatedata"}
 
 
   };
@@ -35,8 +38,6 @@ return (
 
 
     <>
-
-     <div>{datastring}</div>
 
       <Contracts
         contracts={assets.contracts}
@@ -53,19 +54,15 @@ return (
        
         ]
         ]}
-
-
-
-        />
+      
+        // This previous JSX component is based on Contracts.js
+        // I like to customize "Contracts.js" so when the button is clicked it launches a pop-up or page to start the Form      />
       
         <br/>
 
-      
-
-    
-        />  
-
-        
+        <Button component={ Link } to="/app/finalform" variant="contained" color="primary"> Conduct Test
+        </Button>
+         // This is currently a hack to navigate to the Start.js page, but is not necessary
         </>
 
       );

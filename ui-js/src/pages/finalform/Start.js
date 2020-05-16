@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import { render } from 'react-dom'
+// import { render } from 'react-dom'
+import ReactDOM from 'react-dom';
 import Styles from './Styles'
 import { Form, Field } from 'react-final-form'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import TextField from 'material-ui/TextField'
-// import Toggle from 'material-ui/Toggle'
 import Select from 'react-select'
 import states from './states'
 
@@ -18,16 +18,6 @@ const TextFieldAdapter = ({ input, meta, ...rest }) => (
   />
 )
 
-// const ToggleAdapter = ({ input: { onChange, value }, label, ...rest }) => (
-//  <Toggle
-//    label={label}
-//    toggled={!!value}
-//   onToggle={(event, isInputChecked) => onChange(isInputChecked)}
-//    {...rest}
-//  />
-//)
-
-export default function StartForm() {
 
 
 const ReactSelectAdapter = ({ input, ...rest }) => (
@@ -39,16 +29,19 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 const onSubmit = async covid19testdata => {
   sleep(300);
   window.alert(JSON.stringify(covid19testdata, 0, 2));
-  let zdata = covid19testdata;
-  console.log("zdata" + JSON.stringify(zdata, 0, 2));
-  //this.props.navigation.navigate('../../covid19test/Covid19test.js', {
-  //   data: zdata,
-  // });
+
+
+  // I need to pass the data of 'covid19testdata' to the Covid19test.js so this information can be used for another function
+  // most likely that can be done through props or this.state
 }
 
 const required = value => (value ? undefined : 'Required')
 
+export default class StartForm extends React.Component {
 
+  //Not sure if best to use a class or export default
+  
+render () {
 return(
     
 <MuiThemeProvider muiTheme={getMuiTheme()}>
@@ -58,11 +51,7 @@ return(
       <a href="https://github.com/erikras/react-final-form#-react-final-form">
         Read Docs
       </a>
-      <div>
-        This example uses{' '}
-        <a href="https://github.com/JedWatson/react-select">React Select</a> and{' '}
-        <a href="http://www.material-ui.com">Material UI</a>.
-      </div>
+     
 
       <Form
         onSubmit={onSubmit}
@@ -144,13 +133,21 @@ return(
               </button>
             </div>
             <pre>{JSON.stringify(covid19testdata, 0, 2)}</pre>
+            //This is no longer working//
           </form>
-        )}
-      />
-    </Styles>
-  </MuiThemeProvider>
+           )}
+           />
+         </Styles>
+       </MuiThemeProvider>
+     )
+
+
+ReactDOM.render(
+ <StartForm />, 
+  document.getElementById('content')
+
+// What is the best approach for rendering ? here at the bottom or in the middle of a page
 
 )
-
-
+}
 }

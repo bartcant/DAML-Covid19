@@ -56,13 +56,16 @@ return (
         ]}
       
         // This previous JSX component is based on Contracts.js
-        // I like to customize "Contracts.js" so when the button is clicked it launches a pop-up or page to start the Form      />
+        // I like to customize "Contracts.js" to remove the "button" which is currently displayed as "Conduct Test"
+
+        />
       
         <br/>
 
         <Button component={ Link } to="/app/finalform" variant="contained" color="primary"> Conduct Test
         </Button>
-         // This is currently a hack to navigate to the Start.js page, but is not necessary
+        // this is a hack to navigate to the next screen
+        
         </>
 
       );

@@ -59,13 +59,13 @@ return (
         // I like to customize "Contracts.js" to remove the "button" which is currently displayed as "Conduct Test"
 
         />
-      
+       
         <br/>
 
         <Button component={ Link } to="/app/finalform" variant="contained" color="primary"> Conduct Test
         </Button>
         // this is a hack to navigate to the next screen
-        
+
         </>
 
       );

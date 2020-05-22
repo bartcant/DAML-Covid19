@@ -1,4 +1,4 @@
-
+import axios from 'axios';
 import React, { Component } from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,13 +8,15 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {TextField} from "@material-ui/core";
-import axios from 'axios';
+
+
+
+
 import QRcode from 'qrcode.react';
 
-// import logo from "./"; {/*add streetcred logo*/}
-
 axios.defaults.baseURL = 'http://localhost:3002/';
-export class App extends Component {
+
+export default class StreetCred extends Component {
     state = {
             name: "",
             title: "",
@@ -33,7 +35,7 @@ export class App extends Component {
             firstname: this.state.title,
             dob: this.state.org,
             phone: this.state.phone,
-            email: this.state.email
+            email: this.state.email,
             insuranceid: this.state.insuranceid
         }  
         console.log(citizen)
@@ -132,3 +134,5 @@ export class App extends Component {
         )
     }
 }
+
+

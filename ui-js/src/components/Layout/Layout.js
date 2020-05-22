@@ -15,6 +15,7 @@ import TestRequest from "../../pages/testrequest/Testrequest";
 import TestAppointment from "../../pages/testappointment/Testappointment";
 import Covid19Test from "../../pages/covid19test/Covid19test";
 import StartForm from "../../pages/finalform/Start";
+import StreetCred from "../../pages/streetcred/Streetcred";
 import { wsBaseUrl, httpBaseUrl } from "../../config";
 
 
@@ -44,6 +45,7 @@ function Layout() {
                 <Route path="/app/testappointment" component={TestAppointment} />
                 <Route path="/app/covid19test" component={Covid19Test} />
                 <Route path="/app/finalform" component={StartForm} />
+                <Route path="/app/streetcred" component={StreetCred} />
               </Switch>
             </div>
           </>

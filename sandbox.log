@@ -414,3 +414,7 @@ java.sql.SQLTransientConnectionException: daml.index.db.connection.api-server - 
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at java.base/java.lang.Thread.run(Thread.java:830)
  akkaAddress=akka://sandbox, sourceThread=sandbox-akka.actor.default-dispatcher-11, akkaSource=RestartWithBackoffSource(akka://sandbox), sourceActorSystem=sandbox, akkaTimestamp=02:22:57.224UTC
+09:00:45.351 [sandbox-akka.actor.default-dispatcher-5] INFO  akka.event.slf4j.Slf4jLogger - Slf4jLogger started 
+09:00:54.295 [pool-1-thread-3] INFO  c.d.p.apiserver.LedgerApiServer - Listening on localhost:6865 over plain text. 
+09:00:54.311 [pool-1-thread-4] INFO  com.daml.platform.sandboxnext.Runner - Initialized sandbox version 1.0.1 with ledger-id = Covid19, port = 6865, dar file = List(.daml/dist/Covid19-0.0.1.dar), time mode = wall-clock time, ledger = in-memory, auth-service = AuthServiceWildcard$, contract ids seeding = strong 
+08:46:11.738 [sandbox-akka.actor.default-dispatcher-5] INFO  akka.event.slf4j.Slf4jLogger - Slf4jLogger started 

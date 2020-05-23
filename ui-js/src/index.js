@@ -1,4 +1,8 @@
 import React from "react";
+// import redux & store
+import { createStore, combineReducers } from "redux";
+import { Provider, connect } from 'react-redux';
+
 import ReactDOM from "react-dom";
 import { ThemeProvider } from "@material-ui/styles";
 import { CssBaseline } from "@material-ui/core";

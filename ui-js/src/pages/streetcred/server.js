@@ -23,6 +23,8 @@ app.get('*', function (req, res) {
 
 // WEBHOOK ENDPOINT
 app.post('/webhook', async function (req, res) {
+    console.log ("accesstok" +process.env.ACCESSTOK);
+    console.log ("subkey" + process.env.SUBKEY) ;
     try {
         console.log("got webhook" + req + "   type: " + req.body.message_type);
         if (req.body.message_type === 'new_connection') {

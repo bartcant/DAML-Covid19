@@ -8,16 +8,12 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {TextField} from "@material-ui/core";
-
-
-
-
 import QRcode from 'qrcode.react';
 
 axios.defaults.baseURL = 'http://localhost:3002/';
 
 export default class StreetCred extends Component {
-    state = {
+   state = {
             name: "",
             title: "",
             org: "",
@@ -30,18 +26,19 @@ export default class StreetCred extends Component {
     };
 
     onIssue = () => {
-        const citizen = {
-            lastname: this.state.name, 
-            firstname: this.state.title,
-            dob: this.state.org,
+        const bizCard = {
+            name: this.state.name, 
+            title: this.state.title,
+            org: this.state.org,
             phone: this.state.phone,
-            email: this.state.email,
-            insuranceid: this.state.insuranceid
+            email: this.state.email
         }  
-        console.log(citizen)
-        axios.post('/api/issue', citizen).then((response) => {
+        console.log(bizCard)
+        console.log("start Axios here")
+        axios.post('/api/issue', bizCard).then((response) => {
             console.log(response);
             this.setState({invite_url: "https://web.cloud.streetcred.id/link/?c_i=" + response.data.invite_url});
+            console.log("invite url"+ this.state.invite_url);
         });
         this.setState({
           qr_open: true,
@@ -73,7 +70,7 @@ export default class StreetCred extends Component {
                         <div style={{display: 'flex', padding: '24px 24px', flexDirection: 'column', width: '100%'}}>
                             <div style={{display: 'flex', marginBottom: '24px'}}>
                                 <Typography variant="h5" style={{flexGrow: 1}}>
-                                    Create your Citizen Credential
+                                    Create your Business Card Credential
                                 </Typography>
                                 
                                 
@@ -82,7 +79,7 @@ export default class StreetCred extends Component {
                             <TextField  
                               id="name"
                               label="name"
-                              placeholder={"what's your lastname?"}
+                              placeholder={"what's your name?"}
                               value={card.name}
                               onChange={(e) => this.setState({name: e.target.value})}
                               style={{marginBottom: '12px'}}
@@ -90,7 +87,7 @@ export default class StreetCred extends Component {
                             <TextField  
                               id="title"
                               label="title"
-                              placeholder={"what's your first name?"} 
+                              placeholder={"what's your title?"} 
                               value={card.title}
                               onChange={(e) => this.setState({title: e.target.value})}
                               style={{marginBottom: '12px'}}
@@ -127,12 +124,10 @@ export default class StreetCred extends Component {
                     </Paper>
                 </div>
                 <Dialog open={this.state.qr_open} onClose={() => this.setState({qr_open: false})}>
-                    <DialogTitle style={{width: "300px"}}>Scan this QR code</DialogTitle>
-                    <QRcode size="200" value={this.state.invite_url} style={{margin: "0 auto", padding: "10px"}} />
+                    <DialogTitle style={{width: "500px"}}>Scan this QR code</DialogTitle>
+                    <QRcode value={this.state.invite_url} style={{margin: "0 auto", padding: "10px"}} />
                 </Dialog>
             </div>
         )
     }
 }
-
-

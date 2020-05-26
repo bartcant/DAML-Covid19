@@ -19,7 +19,7 @@ import states from "../finalform/states"
 
 export default function TestAppointment() {
 
-  const citizen = "Alice";
+  const citizen = "ledger-party-45889ea2-16cc-4e56-9c7e-d31b13c06281";
   const healthclinic = useParty();
   const ledger = useLedger();
 
@@ -30,7 +30,6 @@ export default function TestAppointment() {
   const [curContractId, setContractId] = React.useState('');
   const [covid19testdata, setConductForm] = React.useState({
     testdate: '',
-    issuedby: '',
     citizen: citizen,
     healtclinic: healthclinic,
     testtype: '',
@@ -64,7 +63,7 @@ export default function TestAppointment() {
 
     console.log({citizen, healthclinic, covid19testdata});
 
-    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, covid19testdata);
+    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {healthclinic, covid19testdata});
     // ledger.exercise(Main.TestAppointment.Covid19Test, cid, {citizen, healthclinic, covid19testdata} );
 
     // this above function the needs input for "covid19testdata" from the Start.js page and needs it in the following format:
@@ -129,14 +128,6 @@ export default function TestAppointment() {
               />
             </div>
 
-            <div>
-              <TextField
-                label="Issued By"
-                placeholder="Issued By"
-                value={covid19testdata.issuedby}
-                onChange={(e) => handleConductChange('issuedby', e)}
-              />
-            </div>
 
             <div>
               <TextField

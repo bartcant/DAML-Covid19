@@ -33,7 +33,7 @@ export default function TestAppointment() {
     issuedby: '',
     testtype: '',
     testnumber: '',
-    restresult: '',
+    testresult: '',
     locationstate: '',
     testupdatedata: ''
   });
@@ -62,7 +62,7 @@ export default function TestAppointment() {
 
     console.log({citizen, healthclinic, covid19testdata});
 
-    ledger.exercise(Main.TestAppointment.Covid19Test, curContractId, {healthclinic, covid19testdata} );
+    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {healthclinic, covid19testdata} );
     // ledger.exercise(Main.TestAppointment.Covid19Test, cid, {citizen, healthclinic, covid19testdata} );
 
     // this above function the needs input for "covid19testdata" from the Start.js page and needs it in the following format:
@@ -158,8 +158,8 @@ export default function TestAppointment() {
               <TextField
                 label="Test Result"
                 placeholder="Test Result"
-                value={covid19testdata.restresult}
-                onChange={(e) => handleConductChange('restresult', e)}
+                value={covid19testdata.testresult}
+                onChange={(e) => handleConductChange('testresult', e)}
               />
             </div>
 
@@ -175,6 +175,7 @@ export default function TestAppointment() {
 
             <div>
               <TextField
+              
                 label="Test Update Date"
                 placeholder="Test Update Date"
                 value={covid19testdata.testupdatedata}

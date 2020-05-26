@@ -13,7 +13,7 @@ export default function Clinicinvite() {
 
   const exerciseHealthClinicAccept = function(cid ) {
     console.log("operator :" + operator);
-    console.log("healtclinic : " + healthclinic);
+    console.log("healthclinic : " + healthclinic);
     console.log("cid: "+ cid);
     ledger.exercise(Main.HealthClinicInvitation.AcceptInvitation, cid, { operator, healthclinic } ); };
     

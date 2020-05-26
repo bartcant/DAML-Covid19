@@ -13,7 +13,7 @@ export default function TestRequest() {
 
    const exerciseRequestTest = function(cid, healthclinic ) {
     console.log("operator :" + operator);
-    console.log("healtclinic : " + healthclinic);
+    console.log("healthclinic : " + healthclinic);
     console.log("citizen : " + citizen); 
     console.log("cid: "+ cid);
     ledger.exercise(Main.CitizenRole.RequestTest, cid, { operator, citizen, healthclinic} ); };

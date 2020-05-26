@@ -106,11 +106,6 @@ export default function TestAppointment() {
 
         />
 
-
-
-        <br/>
-          // this is a hack to navigate to the next screen
-
         <Dialog
           open={conductModalOpen}
           onClose={handleConductModalClose}

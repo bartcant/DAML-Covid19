@@ -11,7 +11,7 @@ export default function TestRequest() {
   const assets = useStreamQuery (Main.TestRequest);
 
   const exerciseAppointment = function(cid, appointmentdate ) {
-    console.log("healtclinic : " + healthclinic);
+    console.log("healthclinic : " + healthclinic);
     console.log("citizen : " + citizen); 
     console.log("appointmentdate : "+ appointmentdate);
     console.log("cid: "+ cid);

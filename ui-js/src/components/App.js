@@ -4,24 +4,37 @@ import Layout from "./Layout/Layout";
 import Error from "../pages/error/Error";
 import Login from "../pages/login/Login";
 import { useUserState, useUserDispatch } from "../context/UserContext";
+// import redux & store
+import { createStore, combineReducers } from "redux";
+import { Provider, connect } from 'react-redux';
+
+import rootReducer from '../reducers';
+
+// Store
+const store = createStore(
+    rootReducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 export default function App() {
   const userState = useUserState();
 
   return (
-    <HashRouter>
-      <Switch>
-        <Route exact path="/" component={RootRoute} />
-        <Route
-          exact
-          path="/app"
-          render={() => <Redirect to="/app/report" />}
-        />
-        <PrivateRoute path="/app" component={Layout} />
-        <PublicRoute path="/login" component={Login} />
-        <Route component={Error} />
-      </Switch>
-    </HashRouter>
+    <Provider store={store}>
+      <HashRouter>
+        <Switch>
+          <Route exact path="/" component={RootRoute} />
+          <Route
+            exact
+            path="/app"
+            render={() => <Redirect to="/app/report" />}
+          />
+          <PrivateRoute path="/app" component={Layout} />
+          <PublicRoute path="/login" component={Login} />
+          <Route component={Error} />
+        </Switch>
+      </HashRouter>
+    </Provider>
   );
 
   // #######################################################################

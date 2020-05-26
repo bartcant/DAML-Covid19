@@ -15,7 +15,7 @@ export default function Network() {
 
   const exerciseInviteHealthClinic = function(cid, healthclinic ) {
     console.log("operator :" + operator);
-    console.log("healtclinic : " + healthclinic);
+    console.log("healthclinic : " + healthclinic);
     console.log("cid: "+ cid);
     ledger.exercise(Main.Network.InviteHealthClinic, cid, { operator, healthclinic } ); };
     

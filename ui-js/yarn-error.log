@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\bartc\Documents\Github\DAML-Covid19\ui-js\node_modules\postcss-reduce-transforms\node_modules\postcss-value-parser'
+
 
 npm manifest: 
   {
@@ -43,9 +43,13 @@ npm manifest:
       "react-dom": "^16.12.0",
       "react-final-form": "^6.4.0",
       "react-json-view": "^1.19.1",
+      "react-redux": "^7.2.0",
       "react-router-dom": "^5.0.1",
       "react-scripts": "3.4.0",
       "react-select": "^3.1.0",
+      "reactjs-popup": "^1.5.0",
+      "redux": "^4.0.5",
+
       "styled-components": "^5.1.0",
       "tinycolor2": "^1.4.1",
       "uuid": "^3.3.3",
@@ -195,6 +199,17 @@ Lockfile:
       lodash "^4.17.13"
       source-map "^0.5.0"
   
+
+  "@babel/generator@^7.9.6":
+    version "7.9.6"
+    resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.9.6.tgz#5408c82ac5de98cda0d77d8124e99fa1f2170a43"
+    integrity sha512-+htwWKJbH2bL72HRluF8zumBxzuX0ZZUFl3JLNyoUjM/Ho8wnVpPXM6aUz8cfKDqQ/h7zHqKt4xzJteUosckqQ==
+    dependencies:
+      "@babel/types" "^7.9.6"
+      jsesc "^2.5.1"
+      lodash "^4.17.13"
+      source-map "^0.5.0"
+
   "@babel/helper-annotate-as-pure@^7.0.0", "@babel/helper-annotate-as-pure@^7.8.3":
     version "7.8.3"
     resolved "https://registry.yarnpkg.com/@babel/helper-annotate-as-pure/-/helper-annotate-as-pure-7.8.3.tgz#60bc0bc657f63a0924ff9a4b4a0b24a13cf4deee"
@@ -415,6 +430,11 @@ Lockfile:
       js-tokens "^4.0.0"
   
   "@babel/parser@^7.0.0", "@babel/parser@^7.1.0", "@babel/parser@^7.4.3", "@babel/parser@^7.8.4", "@babel/parser@^7.8.6", "@babel/parser@^7.9.0", "@babel/parser@^7.9.6":
+    version "7.9.6"
+    resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.9.6.tgz#3b1bbb30dabe600cd72db58720998376ff653bc7"
+    integrity sha512-AoeIEJn8vt+d/6+PXDRPaksYhnlbMIiejioBZvvMQsOjW/JYK6k/0dKnvvP3EhK5GfMBWDPtrxRtegWdAcdq9Q==
+  
+  "@babel/parser@^7.9.6":
     version "7.9.6"
     resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.9.6.tgz#3b1bbb30dabe600cd72db58720998376ff653bc7"
     integrity sha512-AoeIEJn8vt+d/6+PXDRPaksYhnlbMIiejioBZvvMQsOjW/JYK6k/0dKnvvP3EhK5GfMBWDPtrxRtegWdAcdq9Q==
@@ -1110,6 +1130,13 @@ Lockfile:
     dependencies:
       regenerator-runtime "^0.13.4"
   
+  "@babel/runtime@^7.2.0":
+    version "7.9.6"
+    resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.9.6.tgz#a9102eb5cadedf3f31d08a9ecf294af7827ea29f"
+    integrity sha512-64AF1xY3OAkFHqOb9s4jpgk1Mm5vDZ4L3acHvAml+53nO1XbXLuDodsVpO4OIUsmemlUHMxNdYMNJmsvOwLrvQ==
+    dependencies:
+      regenerator-runtime "^0.13.4"
+  
   "@babel/template@^7.4.0", "@babel/template@^7.8.3", "@babel/template@^7.8.6":
     version "7.8.6"
     resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.8.6.tgz#86b22af15f828dfb086474f964dcc3e39c43ce2b"
@@ -1133,8 +1160,37 @@ Lockfile:
       debug "^4.1.0"
       globals "^11.1.0"
       lodash "^4.17.13"
+
+  "@babel/traverse@^7.4.5":
+    version "7.9.6"
+    resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.9.6.tgz#5540d7577697bf619cc57b92aa0f1c231a94f442"
+    integrity sha512-b3rAHSjbxy6VEAvlxM8OV/0X4XrG72zoxme6q1MOoe2vd0bEc+TwayhuC1+Dfgqh1QEG+pj7atQqvUprHIccsg==
+    dependencies:
+      "@babel/code-frame" "^7.8.3"
+      "@babel/generator" "^7.9.6"
+      "@babel/helper-function-name" "^7.9.5"
+      "@babel/helper-split-export-declaration" "^7.8.3"
+      "@babel/parser" "^7.9.6"
+      "@babel/types" "^7.9.6"
+      debug "^4.1.0"
+      globals "^11.1.0"
+      lodash "^4.17.13"
   
+  "@babel/types@^7.0.0", "@babel/types@^7.3.0", "@babel/types@^7.4.0", "@babel/types@^7.4.4", "@babel/types@^7.8.3", "@babel/types@^7.8.6", "@babel/types@^7.9.0", "@babel/types@^7.9.5":
+    version "7.9.5"
+    resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.9.5.tgz#89231f82915a8a566a703b3b20133f73da6b9444"
+    integrity sha512-XjnvNqenk818r5zMaba+sLQjnbda31UfUURv3ei0qPQw4u+j2jMyJ5b11y8ZHYTRSI3NnInQkkkRT4fLqqPdHg==
+
   "@babel/types@^7.0.0", "@babel/types@^7.3.0", "@babel/types@^7.4.0", "@babel/types@^7.4.4", "@babel/types@^7.8.3", "@babel/types@^7.8.6", "@babel/types@^7.9.0", "@babel/types@^7.9.5", "@babel/types@^7.9.6":
+    version "7.9.6"
+    resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.9.6.tgz#2c5502b427251e9de1bd2dff95add646d95cc9f7"
+    integrity sha512-qxXzvBO//jO9ZnoasKF1uJzHd2+M6Q2ZPIVfnFps8JJvXy0ZBbwbNOmE6SGIY5XOY6d1Bo5lb9d9RJ8nv3WSeA==
+    dependencies:
+      "@babel/helper-validator-identifier" "^7.9.5"
+      lodash "^4.17.13"
+      to-fast-properties "^2.0.0"
+  
+  "@babel/types@^7.9.6":
     version "7.9.6"
     resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.9.6.tgz#2c5502b427251e9de1bd2dff95add646d95cc9f7"
     integrity sha512-qxXzvBO//jO9ZnoasKF1uJzHd2+M6Q2ZPIVfnFps8JJvXy0ZBbwbNOmE6SGIY5XOY6d1Bo5lb9d9RJ8nv3WSeA==
@@ -1172,7 +1228,23 @@ Lockfile:
     dependencies:
       "@daml/types" "1.0.1"
       "@mojotech/json-type-validation" "^3.1.0"
+
+  "@daml/ledger@1.1.1":
+    version "1.1.1"
+    resolved "https://registry.yarnpkg.com/@daml/ledger/-/ledger-1.1.1.tgz#eca8174707c128e8a5029c553c3d7ac7dfcaa8bd"
+    integrity sha512-WBZRdquLSnfsyy+iqdWSEn4X5UWs81bv5qFOZlvhGWjDRNkiukEZOVnihS3EYaO9jt+U2RLMnQVo9yvgDx1cQA==
+    dependencies:
+      "@daml/types" "1.1.1"
+      "@mojotech/json-type-validation" "^3.1.0"
+      cross-fetch "^3.0.4"
+      events "^3.1.0"
+      isomorphic-ws "^4.0.1"
+      ws "^7.2.1"
   
+  "@daml/ledger@^1.0.1":
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/@daml/ledger/-/ledger-1.0.1.tgz#4f69e025fad70d1cb71dcf7b416e762a66919aba"
+    integrity sha512-ZwKTisImwHtSvIr+XDsAkBXLRjrGkj9yh/VViKUX2sgd+unD85vyhV37Iumi1remhPmT48Ja2/z0/cYrx5AMQw==
   "@daml/ledger@1.1.1", "@daml/ledger@^1.0.1":
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/@daml/ledger/-/ledger-1.1.1.tgz#eca8174707c128e8a5029c553c3d7ac7dfcaa8bd"
@@ -1211,8 +1283,13 @@ Lockfile:
   "@daml2js/Covid19-0.0.1@file:../daml2js/Covid19-0.0.1":
     version "1.0.1"
     dependencies:
+
+      "@daml.js/40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7" "file:../../../../AppData/Local/Yarn/Cache/v6/npm-@daml2js-ovid19-0-0-1-1.0.1-a281d3a8-7e48-49fb-ae6b-e73fde119eb2-1589557027112/node_modules/@daml2js/40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7"
+      "@daml.js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662" "file:../../../../AppData/Local/Yarn/Cache/v6/npm-@daml2js-ovid19-0-0-1-1.0.1-a281d3a8-7e48-49fb-ae6b-e73fde119eb2-1589557027112/node_modules/@daml2js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662"
+
       "@daml.js/40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7" "file:../../../../AppData/Local/Yarn/Cache/v6/npm-@daml2js-ovid19-0-0-1-1.0.1-2e49b120-5bb1-4154-9df0-96693a3d6010-1589998510230/node_modules/@daml2js/40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7"
       "@daml.js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662" "file:../../../../AppData/Local/Yarn/Cache/v6/npm-@daml2js-ovid19-0-0-1-1.0.1-2e49b120-5bb1-4154-9df0-96693a3d6010-1589998510230/node_modules/@daml2js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662"
+
       "@daml/types" "1.0.1"
       "@mojotech/json-type-validation" "^3.1.0"
   
@@ -4030,7 +4107,9 @@ Lockfile:
     dependencies:
       utila "~0.4"
   
-  dom-helpers@^3.2.0:
+
+  dom-helpers@^3.2.0, dom-helpers@^3.4.0:
+
     version "3.4.0"
     resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.4.0.tgz#e9b369700f959f62ecde5a6babde4bccd9169af8"
     integrity sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
@@ -9452,10 +9531,17 @@ Lockfile:
       prop-types "^15.5.6"
       warning "^3.0.0"
   
+
+  react-transition-group@^4.3.0:
+    version "4.3.0"
+    resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.3.0.tgz#fea832e386cf8796c58b61874a3319704f5ce683"
+    integrity sha512-1qRV1ZuVSdxPlPf4O8t7inxUGpdyO5zG9IoNfJxSO0ImU2A1YWkEQvFPuIPZmMLkg5hYs7vv5mMOyfgSkvAwvw==
+
   react-transition-group@^4.3.0, react-transition-group@^4.4.0:
     version "4.4.1"
     resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.1.tgz#63868f9325a38ea5ee9535d828327f85773345c9"
     integrity sha512-Djqr7OQ2aPUiYurhPalTrVy9ddmFCCzwhqQmtN+J3+3DzLO209Fdr70QrN8Z3DsglWql6iY1lDWAfpFiBtuKGw==
+
     dependencies:
       "@babel/runtime" "^7.5.5"
       dom-helpers "^5.0.1"
@@ -11247,10 +11333,17 @@ Lockfile:
     dependencies:
       loose-envify "^1.0.0"
   
+
+  watchpack@^1.6.0:
+    version "1.6.1"
+    resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.6.1.tgz#280da0a8718592174010c078c7585a74cd8cd0e2"
+    integrity sha512-+IF9hfUFOrYOOaKyfaI7h7dquUIOgyEMoQMLA7OP5FxegKA2+XdXThAZ9TU2kucfhDH7rfMHs1oPYziVGWRnZA==
+
   watchpack-chokidar2@^2.0.0:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/watchpack-chokidar2/-/watchpack-chokidar2-2.0.0.tgz#9948a1866cbbd6cb824dea13a7ed691f6c8ddff0"
     integrity sha512-9TyfOyN/zLUbA288wZ8IsMZ+6cbzvsNyEzSBp6e/zkifi6xxbl8SmQ/CxQq32k8NNqrdVEVUVSEf56L4rQ/ZxA==
+
     dependencies:
       chokidar "^2.1.8"
   

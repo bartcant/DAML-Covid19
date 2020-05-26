@@ -4,3 +4,5 @@
 /daml2js
 sandbox.log
 navigator.log
+.env
+/ui-js/scr/pages/streetcred/.env

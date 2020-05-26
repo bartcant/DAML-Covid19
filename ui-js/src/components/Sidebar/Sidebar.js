@@ -118,6 +118,14 @@ function Sidebar({ location }) {
           location={location}
           isSidebarOpened={isSidebarOpened}
       />
+            <SidebarLink
+          key="StreetCred"
+          label="StreetCred"
+          path="/app/streetcred"
+          icon={(<EditSharp />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+      />
 
       </List>
     </Drawer>

@@ -30,7 +30,7 @@ export default function TestAppointment() {
   const [curContractId, setContractId] = React.useState('');
   const [covid19testdata, setConductForm] = React.useState({
     testdate: '',
-    healtclinic: healthclinic,
+    healthclinic: healthclinic,
     citizen: citizen,
     testtype: '',
     testnumber: '',
@@ -57,7 +57,7 @@ export default function TestAppointment() {
 
   const exercisestarttest = function() {
     setConductModalOpen(false);
-    console.log("healtclinic : " + healthclinic);
+    console.log("healthclinic : " + healthclinic);
     console.log("citizen : " + citizen);
     console.log("cid: " + curContractId);
 

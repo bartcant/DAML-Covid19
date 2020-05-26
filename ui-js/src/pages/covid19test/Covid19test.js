@@ -30,8 +30,8 @@ export default function TestAppointment() {
   const [curContractId, setContractId] = React.useState('');
   const [covid19testdata, setConductForm] = React.useState({
     testdate: '',
-    citizen: citizen,
     healtclinic: healthclinic,
+    citizen: citizen,
     testtype: '',
     testnumber: '',
     testresult: '',
@@ -63,7 +63,7 @@ export default function TestAppointment() {
 
     console.log({citizen, healthclinic, covid19testdata});
 
-    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {healthclinic, covid19testdata});
+    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {covid19testdata, healthclinic});
     // ledger.exercise(Main.TestAppointment.Covid19Test, cid, {citizen, healthclinic, covid19testdata} );
 
     // this above function the needs input for "covid19testdata" from the Start.js page and needs it in the following format:

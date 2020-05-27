@@ -44,7 +44,7 @@ function Layout() {
                 <Route path="/app/testrequest" component={TestRequest} />
                 <Route path="/app/testappointment" component={TestAppointment} />
                 <Route path="/app/covid19test" component={Covid19Test} />
-                <Route path="/app/finalform" component={StartForm} />
+              
                 <Route path="/app/streetcred" component={StreetCred} />
               </Switch>
             </div>

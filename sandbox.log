@@ -576,3 +576,10 @@ java.sql.SQLTransientConnectionException: daml.index.db.connection.api-server - 
 	at java.base/java.lang.Thread.run(Thread.java:830)
  akkaAddress=akka://sandbox, sourceThread=sandbox-akka.actor.default-dispatcher-6, akkaSource=RestartWithBackoffSource(akka://sandbox), sourceActorSystem=sandbox, akkaTimestamp=13:03:56.955UTC
 
+18:04:27.919 [sandbox-akka.actor.default-dispatcher-4] INFO  akka.event.slf4j.Slf4jLogger - Slf4jLogger started 
+18:04:29.776 [pool-1-thread-3] INFO  d.m.postgres.V2_1__Rebuild_Acs - No ledger end found, assuming empty database. Skipping migration. 
+18:04:34.772 [pool-1-thread-3] INFO  c.d.p.apiserver.LedgerApiServer - Listening on localhost:6865 over plain text. 
+18:04:34.782 [pool-1-thread-3] INFO  com.daml.platform.sandboxnext.Runner - Initialized sandbox version 1.1.1 with ledger-id = Covid19, port = 6865, dar file = List(.daml\dist\Covid19-0.0.1.dar), time mode = wall-clock time, ledger = PostgreSQL, auth-service = AuthServiceWildcard$, contract ids seeding = strong 
+22:06:50.036 [sandbox-akka.actor.default-dispatcher-4] INFO  akka.event.slf4j.Slf4jLogger - Slf4jLogger started 
+22:06:59.088 [pool-1-thread-5] INFO  c.d.p.apiserver.LedgerApiServer - Listening on localhost:6865 over plain text. 
+22:06:59.101 [pool-1-thread-5] INFO  com.daml.platform.sandboxnext.Runner - Initialized sandbox version 1.1.1 with ledger-id = Covid19, port = 6865, dar file = List(.daml\dist\Covid19-0.0.1.dar), time mode = wall-clock time, ledger = PostgreSQL, auth-service = AuthServiceWildcard$, contract ids seeding = strong 

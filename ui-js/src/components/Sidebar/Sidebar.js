@@ -110,14 +110,6 @@ function Sidebar({ location }) {
           location={location}
           isSidebarOpened={isSidebarOpened}
       />
-        <SidebarLink
-          key="Form"
-          label="Form"
-          path="/app/finalform"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-      />
             <SidebarLink
           key="StreetCred"
           label="StreetCred"

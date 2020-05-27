@@ -57,7 +57,6 @@ app.post('/webhook', async function (req, res) {
         }
     }
     catch (e) {
-        console.log ("Here is the problem");
         console.log(e.message || e.toString());
     }
 });
@@ -66,6 +65,9 @@ app.post('/webhook', async function (req, res) {
 app.post('/api/issue', cors(), async function (req, res) {
     const invite = await getInvite();
     const attribs = JSON.stringify(req.body);
+    console.log("attribs " + attribs);
+    console.log("invite_url" + invite_url);
+    console.log("connectonId" + ConnectionId);
     cache.add(invite.connectionId, attribs);
     res.status(200).send({ invite_url: invite.invitation });
 });

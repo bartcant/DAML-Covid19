@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 // import { render } from 'react-dom'
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
 import Styles from './Styles'
 import { Form, Field } from 'react-final-form'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -16,7 +16,7 @@ import { Main } from "@daml2js/Covid19-0.0.1/";
 // redux connect
 import { connect } from 'react-redux'
 
-const TextFieldAdapter = ({ input, meta, value, handleChange, ...rest }) => (
+/* const TextFieldAdapter = ({ input, meta, value, handleChange, ...rest }) => (
   <TextField
     {...input}
     {...rest}
@@ -26,24 +26,13 @@ const TextFieldAdapter = ({ input, meta, value, handleChange, ...rest }) => (
   />
 )
 
-
-
 const ReactSelectAdapter = ({ input, ...rest }) => (
   <Select {...input} {...rest} searchable />
 )
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-// const onSubmit = async covid19testdata => {
-//   sleep(300);
-//   window.alert(JSON.stringify(covid19testdata, 0, 2));
-//
-//
-//   // I need to pass the data of 'covid19testdata' to the Covid19test.js so this information can be used for another function
-//   // most likely that can be done through props or this.state
-// }
-
-const required = value => (value ? undefined : 'Required')
+const required = value => (value ? undefined : 'Required') */
 
 function StartForm({conduct}) {
   const ledger = useLedger();
@@ -70,7 +59,6 @@ function StartForm({conduct}) {
     console.log("healthclinic : " + conduct.healthclinic);
     console.log("citizen : " + conduct.citizen);
     console.log("cid: " + conduct.contractId);
-
     console.log(covid19testdata)
 
     const healthclinic = conduct.healthclinic;
@@ -88,11 +76,7 @@ function StartForm({conduct}) {
 
     <MuiThemeProvider muiTheme={getMuiTheme()}>
       <Styles>
-        <h1> React Final Form Example</h1>
-        <h2>Third Party Components</h2>
-        <a href="https://github.com/erikras/react-final-form#-react-final-form">
-          Read Docs
-        </a>
+        <h1> Covid19Test</h1>
 
 
       <Form
@@ -164,7 +148,6 @@ function StartForm({conduct}) {
                 Reset
               </button>
             </div>
-            //This is no longer working//
           </form>
            )}
         />

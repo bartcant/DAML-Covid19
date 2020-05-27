@@ -103,21 +103,14 @@ function Sidebar({ location }) {
           isSidebarOpened={isSidebarOpened}
         />
         <SidebarLink
-          key="Covid19Test"
-          label="Covid19Test"
-          path="/app/covid19test"
+          key="Covid19TestAlt"
+          label="Covid19TestAlt"
+          path="/app/covid19testalt"
           icon={(<EditSharp />)}
           location={location}
           isSidebarOpened={isSidebarOpened}
       />
-        <SidebarLink
-          key="Form"
-          label="Form"
-          path="/app/finalform"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-      />
+        
 
       </List>
     </Drawer>

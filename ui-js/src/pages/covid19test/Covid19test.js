@@ -158,8 +158,8 @@ export default function TestAppointment() {
               <TextField
                 label="Test Result"
                 placeholder="Test Result"
-                value={covid19testdata.restresult}
-                onChange={(e) => handleConductChange('restresult', e)}
+                value={covid19testdata.testresult}
+                onChange={(e) => handleConductChange('testresult', e)}
               />
             </div>
 

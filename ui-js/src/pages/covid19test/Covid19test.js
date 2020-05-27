@@ -62,7 +62,7 @@ export default function TestAppointment() {
 
     console.log({citizen, healthclinic, covid19testdata});
 
-    ledger.exercise(Main.TestAppointment.Covid19Test, curContractId, {citizen, healthclinic, covid19testdata} );
+    ledger.exercise(Main.TestAppointment.Covid19Test, curContractId, {healthclinic, covid19testdata} );
     // ledger.exercise(Main.TestAppointment.Covid19Test, cid, {citizen, healthclinic, covid19testdata} );
 
     // this above function the needs input for "covid19testdata" from the Start.js page and needs it in the following format:

@@ -16,6 +16,8 @@ import TestAppointment from "../../pages/testappointment/Testappointment";
 import Covid19Test from "../../pages/covid19test/Covid19test";
 import StartForm from "../../pages/finalform/Start";
 import StreetCred from "../../pages/streetcred/Streetcred";
+import Covid19TestAlt from "../../pages/covid19test/Covid19test_alt";
+import StartFormAlt from "../../pages/finalform/Start_alt";
 import { wsBaseUrl, httpBaseUrl } from "../../config";
 
 
@@ -43,9 +45,11 @@ function Layout() {
                 <Route path="/app/citizeninvite" component={CitizenInvite} />
                 <Route path="/app/testrequest" component={TestRequest} />
                 <Route path="/app/testappointment" component={TestAppointment} />
-                <Route path="/app/covid19test" component={Covid19Test} />
-              
+                <Route path="/app/covid19test" component={Covid19Test} />  
                 <Route path="/app/streetcred" component={StreetCred} />
+                <Route path="/app/covid19testalt" component={Covid19TestAlt} />
+                <Route path="/app/finalform" component={StartFormAlt} />
+
               </Switch>
             </div>
           </>

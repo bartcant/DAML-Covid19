@@ -103,6 +103,7 @@ function Sidebar({ location }) {
           isSidebarOpened={isSidebarOpened}
         />
         <SidebarLink
+
           key="Covid19Test"
           label="Covid19Test"
           path="/app/covid19test"
@@ -110,7 +111,16 @@ function Sidebar({ location }) {
           location={location}
           isSidebarOpened={isSidebarOpened}
       />
-            <SidebarLink
+        <SidebarLink
+          key="Covid19TestAlt"
+          label="Covid19TestAlst"
+          path="/app/covid19testalt"
+          icon={(<EditSharp />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+      />
+
+      <SidebarLink
           key="StreetCred"
           label="StreetCred"
           path="/app/streetcred"

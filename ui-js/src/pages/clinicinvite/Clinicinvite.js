@@ -25,7 +25,7 @@ export default function Clinicinvite() {
         columns={[
           ["ContractId", "contractId"],
           ["Operator", "payload.operator"],
-          ["HealtClinic", "payload.healthclinic"]
+          ["HealthClinic", "payload.healthclinic"]
         ]}
          
        actions={[

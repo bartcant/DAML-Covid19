@@ -119,8 +119,15 @@ function Sidebar({ location }) {
           location={location}
           isSidebarOpened={isSidebarOpened}
       />
-
-      <SidebarLink
+        <SidebarLink
+          key="Testlist"
+          label="Test List"
+          path="/app/testlist"
+          icon={(<EditSharp />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+      />
+          <SidebarLink
           key="StreetCred"
           label="StreetCred"
           path="/app/streetcred"

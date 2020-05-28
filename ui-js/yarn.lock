@@ -1120,8 +1120,8 @@
 "@daml2js/Covid19-0.0.1@file:../daml2js/Covid19-0.0.1":
   version "1.1.1"
   dependencies:
-    "@daml.js/40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7" "file:../../../../AppData/Local/Yarn/Cache/v6/npm-@daml2js-ovid19-0-0-1-1.1.1-1d582bc2-452a-408c-a01a-e6e8620eb313-1590551814787/node_modules/@daml2js/40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7"
-    "@daml.js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662" "file:../../../../AppData/Local/Yarn/Cache/v6/npm-@daml2js-ovid19-0-0-1-1.1.1-1d582bc2-452a-408c-a01a-e6e8620eb313-1590551814787/node_modules/@daml2js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662"
+    "@daml.js/40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7" "file:../../../../AppData/Local/Yarn/Cache/v6/npm-@daml2js-ovid19-0-0-1-1.1.1-ced1ea7e-b73c-4ae1-9bf0-afe620a441c9-1590691558670/node_modules/@daml2js/40f452260bef3f29dede136108fc08a88d5a5250310281067087da6f0baddff7"
+    "@daml.js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662" "file:../../../../AppData/Local/Yarn/Cache/v6/npm-@daml2js-ovid19-0-0-1-1.1.1-ced1ea7e-b73c-4ae1-9bf0-afe620a441c9-1590691558670/node_modules/@daml2js/d14e08374fc7197d6a0de468c968ae8ba3aadbf9315476fd39071831f5923662"
     "@daml/ledger" "1.1.1"
     "@daml/types" "1.1.1"
     "@mojotech/json-type-validation" "^3.1.0"
@@ -10598,6 +10598,11 @@ run-async@^2.2.0, run-async@^2.4.0:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/run-async/-/run-async-2.4.1.tgz#8440eccf99ea3e70bd409d49aab88e10c189a455"
   integrity sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==
+
+run-p@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/run-p/-/run-p-0.0.0.tgz#716a55bd120277a9d90da5f82333b70b918088f2"
+  integrity sha1-cWpVvRICd6nZDaX4IzO3C5GAiPI=
 
 run-queue@^1.0.0, run-queue@^1.0.3:
   version "1.0.3"

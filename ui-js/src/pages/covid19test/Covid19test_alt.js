@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 // redux connect
 import { connect } from 'react-redux'
 // import actions
-import { conductTest } from '../../actions.js';
+import { conductclick } from '../../actions.js';
 
 function TestAppointment({dispatch}) {
 
@@ -42,7 +42,7 @@ function TestAppointment({dispatch}) {
  // };
 
   const handleConductClicked = (cid = '') => {
-    dispatch(conductTest({
+    dispatch(conductclick({
       citizen: citizen,
       healthclinic: healthclinic,
       contractId: cid

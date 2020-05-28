@@ -67,7 +67,7 @@ function StartForm({conduct}) {
   }
 
   const onSubmit = function () {
-    console.log("healtclinic : " + conduct.healthclinic);
+    console.log("healthclinic : " + conduct.healthclinic);
     console.log("citizen : " + conduct.citizen);
     console.log("cid: " + conduct.contractId);
 

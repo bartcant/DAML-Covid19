@@ -75,7 +75,7 @@ function TestAppointment({dispatch}) {
 
   const exercisestarttest = function() {
     setConductModalOpen(false);
-    console.log("healtclinic : " + healthclinic);
+    console.log("healthclinic : " + healthclinic);
     console.log("citizen : " + citizen);
     console.log("cid: " + curContractId);
 

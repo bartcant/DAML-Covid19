@@ -6,19 +6,22 @@ import { Form, Field } from 'react-final-form'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import TextField from 'material-ui/TextField'
-import Select from 'react-select'
+// import Select from 'react-select'
 import states from './states'
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import { useStreamQuery, useParty, useLedger } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
 // redux connect
 import { connect } from 'react-redux'
 
-const TextFieldAdapter = ({ input, meta, ...rest }) => (
+const TextFieldAdapter = ({ input, meta, value, handleChange, ...rest }) => (
   <TextField
     {...input}
     {...rest}
-    onChange={(event, value) => input.onChange(value)}
+    value={value}
+    onChange={(event, value) => handleChange(value)}
     errorText={meta.touched ? meta.error : ''}
   />
 )
@@ -31,134 +34,128 @@ const ReactSelectAdapter = ({ input, ...rest }) => (
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-const onSubmit = async covid19testdata => {
-  sleep(300);
-  window.alert(JSON.stringify(covid19testdata, 0, 2));
-
-
-  // I need to pass the data of 'covid19testdata' to the Covid19test.js so this information can be used for another function
-  // most likely that can be done through props or this.state
-}
+// const onSubmit = async covid19testdata => {
+//   sleep(300);
+//   window.alert(JSON.stringify(covid19testdata, 0, 2));
+//
+//
+//   // I need to pass the data of 'covid19testdata' to the Covid19test.js so this information can be used for another function
+//   // most likely that can be done through props or this.state
+// }
 
 const required = value => (value ? undefined : 'Required')
 
-class StartForm extends React.Component {
-  //Not sure if best to use a class or export default
+function StartForm({conduct}) {
+  const ledger = useLedger();
 
-  constructor(props) {
-    super(props);
+  const [covid19testdata, setConductForm] = React.useState({
+    testdate: '',
+    issuedby: '',
+    citizen: conduct.citizen,
+    healthclinic: conduct.healthclinic,
+    testtype: '',
+    testnumber: '',
+    testresult: '',
+    locationstate: '',
+    testupdatedata: ''
+  });
 
-    this.state = {
-      contractId: props.conduct.contractId,
-      covid19testdata: {
-        testdate: '',
-        issuedby: '',
-        citizen: props.conduct.citizen,
-        healthclinic: props.conduct.healthclinic,
-        testtype: '',
-        testnumber: '',
-        testresult: '',
-        locationstate: '',
-        testupdatedata: ''
-      }
-    }
+  const handleConductChange = (idx, event) => {
+    setConductForm({
+      ...covid19testdata,
+      [idx]: event.target.value
+    })
   }
 
-  // exercisestarttest() {
-  //   console.log("healthclinic : " + this.state.covid19testdata.healthclinic);
-  //   console.log("citizen : " + this.state.covid19testdata.citizen);
-  //   console.log("cid: " + this.state.contractId);
-  //
-  //   useLedger().exercise(Main.TestAppointment.Covid19TestAppointment, this.state.contractId, this.state.covid19testdata);
-  //   // ledger.exercise(Main.TestAppointment.Covid19Test, cid, {citizen, healthclinic, covid19testdata} );
-  //
-  //   // this above function the needs input for "covid19testdata" from the Start.js page and needs it in the following format:
-  //
-  //  // {"testdate":"testdate", issuedby:"issuedby","testtype":"testtype,"testnumber":"testnumber,"locationstate":"locationstate","testupdatedata:"testupdatedata"}
-  //
-  //
-  // };
+  const onSubmit = function () {
+    console.log("healtclinic : " + conduct.healthclinic);
+    console.log("citizen : " + conduct.citizen);
+    console.log("cid: " + conduct.contractId);
 
-render () {
-  console.log("Covid19TestAppointment = ", Main.TestAppointment.Covid19TestAppointment)
-  console.log("contractId = ", this.state.contractId)
-  console.log("covid19testdata = ", this.state.covid19testdata)
+    console.log(covid19testdata)
 
-return(
+    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, conduct.contractId, covid19testdata);
+  }
 
-<MuiThemeProvider muiTheme={getMuiTheme()}>
-    <Styles>
-      <h1> React Final Form Example</h1>
-      <h2>Third Party Components</h2>
-      <a href="https://github.com/erikras/react-final-form#-react-final-form">
-        Read Docs
-      </a>
+  const getStates = () => {
+    return states.map((each) => {
+      return <MenuItem key={each.value} value={each.value}>{each.label}</MenuItem>
+    });
+  }
+
+  return(
+
+    <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <Styles>
+        <h1> React Final Form Example</h1>
+        <h2>Third Party Components</h2>
+        <a href="https://github.com/erikras/react-final-form#-react-final-form">
+          Read Docs
+        </a>
 
 
       <Form
         onSubmit={onSubmit}
-        render={({ handleSubmit, form, submitting, pristine, covid19testdata }) => (
+        render={({ handleSubmit, form, submitting, pristine }) => (
           <form onSubmit={handleSubmit}>
             <div>
-              <Field
-                name="testdate"
-                component={TextFieldAdapter}
-                hintText="TestDate"
-                floatingLabelText="Test Date"
+              <TextField
+                label="TestDate"
+                placeholder="TestDate"
+                value={covid19testdata.testdate}
+                onChange={(e) => handleConductChange('testdate', e)}
               />
             </div>
 
             <div>
-              <Field
-                name="issuedby"
-                component={TextFieldAdapter}
-                validate={required}
-                hintText="Issued By"
-                floatingLabelText="Issued By"
+              <TextField
+                label="Issued By"
+                placeholder="Issued By"
+                value={covid19testdata.issuedby}
+                onChange={(e) => handleConductChange('issuedby', e)}
               />
             </div>
             <div>
-              <Field
-                name="testtype"
-                component={TextFieldAdapter}
-                validate={required}
-                hintText="Test Type"
-                floatingLabelText="Test Type"
+              <TextField
+                label="Test Type"
+                placeholder="Test Type"
+                value={covid19testdata.testtype}
+                onChange={(e) => handleConductChange('testtype', e)}
               />
             </div>
             <div>
-              <Field
-                name="testnumber"
-                component={TextFieldAdapter}
-                validate={required}
-                hintText="Test Number"
-                floatingLabelText="Test Number"
+              <TextField
+                label="Test Number"
+                placeholder="Test Number"
+                value={covid19testdata.testnumber}
+                onChange={(e) => handleConductChange('testnumber', e)}
               />
             </div>
             <div>
-              <Field
-                name="restresult"
-                component={TextFieldAdapter}
-                validate={required}
-                hintText="Test Result"
-                floatingLabelText="Test Result"
+              <TextField
+                label="Test Result"
+                placeholder="Test Result"
+                value={covid19testdata.testresult}
+                onChange={(e) => handleConductChange('testresult', e)}
               />
             </div>
 
             <div>
-              <Field
-                name="locationstate"
-                component={ReactSelectAdapter}
-                options={states}
-              />
+              <Select
+                labelId="demo-simple-select-label"
+                value={covid19testdata.locationstate}
+                onChange={(e) => handleConductChange('locationstate', e)}
+              >
+                { getStates() }
+              </Select>
             </div>
 
             <div>
-              <Field
-                name="testupdatedata"
-                component={TextFieldAdapter}
-                hintText="Test Update Date"
-                floatingLabelText="TestUpdate Date"
+              <TextField
+                label="Test Update Date"
+                placeholder="Test Update Date"
+                value={covid19testdata.testupdatedata}
+                onChange={(e) => handleConductChange('testupdatedata', e)}
               />
 
             </div>
@@ -174,24 +171,13 @@ return(
                 Reset
               </button>
             </div>
-            <pre>{JSON.stringify(covid19testdata, 0, 2)}</pre>
             //This is no longer working//
           </form>
            )}
-           />
-         </Styles>
-       </MuiThemeProvider>
-     )
-
-
-ReactDOM.render(
- <StartForm />,
-  document.getElementById('content')
-
-// What is the best approach for rendering ? here at the bottom or in the middle of a page
-
-)
-}
+        />
+      </Styles>
+    </MuiThemeProvider>
+  )
 }
 
 function mapStateToProps(state) {

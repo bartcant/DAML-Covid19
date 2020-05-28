@@ -1,7 +1,7 @@
 // Actions Type
-export const CONDUCT_TEST = 'conduct_test';
+export const CONDUCT_CLICKED = 'conduct_clicked';
 // Actions
-const conductTest = (payload) => ({
-    type: CONDUCT_TEST,
-    payload: 1,
+export const conductTest = (payload) => ({
+    type: CONDUCT_CLICKED,
+    payload
 });

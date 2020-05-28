@@ -1,18 +1,26 @@
 import { combineReducers } from "redux";
 
 import {
-  CONDUCT_TEST
+  CONDUCT_CLICKED
 } from './actions';
 
 // Reducers
-const mathReducer = (state = {number: 0}, action) => {
-    if (action.type === CONDUCT_TEST) {
-        return {...state, number: state.number + action.payload};
+const conductReducer = (state = {
+  citizen: '',
+  healthclinic: '',
+  contractId: ''
+}, action) => {
+  if (action.type === CONDUCT_CLICKED) {
+    return {
+      citizen: action.payload.citizen,
+      healthclinic: action.payload.healthclinic,
+      contractId: action.payload.contractId
     }
-    
-    return state;
+  }
+
+  return state;
 };
 // Root Reducers
 export default combineReducers({
-   math: mathReducer,
+  conduct: conductReducer
 });

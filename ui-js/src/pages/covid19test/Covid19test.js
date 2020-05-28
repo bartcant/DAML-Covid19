@@ -17,11 +17,20 @@ import Button from '@material-ui/core/Button';
 
 import states from "../finalform/states"
 
-export default function TestAppointment() {
+// redirect
+import { useHistory } from "react-router-dom";
+// redux connect
+import { connect } from 'react-redux'
+// import actions
+import { conductTest } from '../../actions.js';
+
+function TestAppointment({dispatch}) {
 
   const citizen = "Alice";
   const healthclinic = useParty();
   const ledger = useLedger();
+  // history
+  const history = useHistory();
 
 
   const assets = useStreamQuery (Main.TestAppointment);
@@ -32,7 +41,7 @@ export default function TestAppointment() {
     testdate: '',
     issuedby: '',
     citizen: citizen,
-    healtclinic: healthclinic,
+    healthclinic: healthclinic,
     testtype: '',
     testnumber: '',
     testresult: '',
@@ -44,6 +53,15 @@ export default function TestAppointment() {
     setContractId(cid);
     setConductModalOpen(true);
   };
+
+  const handleConductClicked = (cid = '') => {
+    dispatch(conductTest({
+      citizen: citizen,
+      healthclinic: healthclinic,
+      contractId: cid
+    }));
+    history.push("/app/finalform");
+  }
 
   const handleConductModalClose = () => {
     setConductModalOpen(false);
@@ -96,8 +114,8 @@ export default function TestAppointment() {
 
         actions={[
 
-          // ["Conduct Test", (c) => { exercisestarttest(c.contractId ); }
-          ["Conduct Test", (c) => { handleConductModalOpen(c.contractId); }
+          ["Conduct Test", (c) => { handleConductClicked(c.contractId ); }
+          // ["Conduct Test", (c) => { handleConductModalOpen(c.contractId); }
 
         ]
         ]}
@@ -199,3 +217,15 @@ export default function TestAppointment() {
 
     );
   }
+
+// function mapStateToProps(state) {
+//   return { conduct: state.conduct };
+// }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  }
+}
+
+export default connect(null, mapDispatchToProps)(TestAppointment);

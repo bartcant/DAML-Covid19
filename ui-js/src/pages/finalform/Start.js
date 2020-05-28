@@ -9,6 +9,11 @@ import TextField from 'material-ui/TextField'
 import Select from 'react-select'
 import states from './states'
 
+import { useStreamQuery, useParty, useLedger } from "@daml/react";
+import { Main } from "@daml2js/Covid19-0.0.1/";
+// redux connect
+import { connect } from 'react-redux'
+
 const TextFieldAdapter = ({ input, meta, ...rest }) => (
   <TextField
     {...input}
@@ -37,13 +42,50 @@ const onSubmit = async covid19testdata => {
 
 const required = value => (value ? undefined : 'Required')
 
-export default class StartForm extends React.Component {
-
+class StartForm extends React.Component {
   //Not sure if best to use a class or export default
-  
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      contractId: props.conduct.contractId,
+      covid19testdata: {
+        testdate: '',
+        issuedby: '',
+        citizen: props.conduct.citizen,
+        healthclinic: props.conduct.healthclinic,
+        testtype: '',
+        testnumber: '',
+        testresult: '',
+        locationstate: '',
+        testupdatedata: ''
+      }
+    }
+  }
+
+  // exercisestarttest() {
+  //   console.log("healthclinic : " + this.state.covid19testdata.healthclinic);
+  //   console.log("citizen : " + this.state.covid19testdata.citizen);
+  //   console.log("cid: " + this.state.contractId);
+  //
+  //   useLedger().exercise(Main.TestAppointment.Covid19TestAppointment, this.state.contractId, this.state.covid19testdata);
+  //   // ledger.exercise(Main.TestAppointment.Covid19Test, cid, {citizen, healthclinic, covid19testdata} );
+  //
+  //   // this above function the needs input for "covid19testdata" from the Start.js page and needs it in the following format:
+  //
+  //  // {"testdate":"testdate", issuedby:"issuedby","testtype":"testtype,"testnumber":"testnumber,"locationstate":"locationstate","testupdatedata:"testupdatedata"}
+  //
+  //
+  // };
+
 render () {
+  console.log("Covid19TestAppointment = ", Main.TestAppointment.Covid19TestAppointment)
+  console.log("contractId = ", this.state.contractId)
+  console.log("covid19testdata = ", this.state.covid19testdata)
+
 return(
-    
+
 <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Styles>
       <h1> React Final Form Example</h1>
@@ -51,7 +93,7 @@ return(
       <a href="https://github.com/erikras/react-final-form#-react-final-form">
         Read Docs
       </a>
-     
+
 
       <Form
         onSubmit={onSubmit}
@@ -110,7 +152,7 @@ return(
                 options={states}
               />
             </div>
-            
+
             <div>
               <Field
                 name="testupdatedata"
@@ -118,7 +160,7 @@ return(
                 hintText="Test Update Date"
                 floatingLabelText="TestUpdate Date"
               />
-            
+
             </div>
             <div className="buttons">
               <button type="submit" disabled={submitting}>
@@ -143,7 +185,7 @@ return(
 
 
 ReactDOM.render(
- <StartForm />, 
+ <StartForm />,
   document.getElementById('content')
 
 // What is the best approach for rendering ? here at the bottom or in the middle of a page
@@ -151,3 +193,9 @@ ReactDOM.render(
 )
 }
 }
+
+function mapStateToProps(state) {
+  return { conduct: state.conduct };
+}
+
+export default connect(mapStateToProps)(StartForm);

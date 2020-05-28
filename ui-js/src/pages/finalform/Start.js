@@ -73,7 +73,9 @@ function StartForm({conduct}) {
 
     console.log(covid19testdata)
 
-    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, conduct.contractId, covid19testdata);
+    const healthclinic = conduct.healthclinic;
+
+    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, conduct.contractId, {covid19testdata, healthclinic});
   }
 
   const getStates = () => {

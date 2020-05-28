@@ -12,7 +12,7 @@ import { spacing } from '@material-ui/system';
 import Contracts from "../../components/Contracts/Contracts";
 import { useStreamQuery, useParty, useLedger } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
-import { Link } from 'react-router-dom';
+
 import Button from '@material-ui/core/Button';
 
 import states from "../finalform/states"
@@ -64,12 +64,7 @@ export default function TestAppointment() {
     console.log({citizen, healthclinic, covid19testdata});
 
     ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {covid19testdata, healthclinic});
-    // ledger.exercise(Main.TestAppointment.Covid19Test, cid, {citizen, healthclinic, covid19testdata} );
-
-    // this above function the needs input for "covid19testdata" from the Start.js page and needs it in the following format:
-
-   // {"testdate":"testdate", issuedby:"issuedby","testtype":"testtype,"testnumber":"testnumber,"locationstate":"locationstate","testupdatedata:"testupdatedata"}
-
+    
 
   };
 
@@ -95,14 +90,13 @@ export default function TestAppointment() {
 
         actions={[
 
-          // ["Conduct Test", (c) => { exercisestarttest(c.contractId ); }
+       
           ["Conduct Test", (c) => { handleConductModalOpen(c.contractId); }
 
         ]
         ]}
 
-        // This previous JSX component is based on Contracts.js
-        // I like to customize "Contracts.js" to remove the "button" which is currently displayed as "Conduct Test"
+       
 
         />
 

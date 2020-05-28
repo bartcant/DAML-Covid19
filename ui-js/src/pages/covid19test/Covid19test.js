@@ -26,7 +26,7 @@ import { conductTest } from '../../actions.js';
 
 function TestAppointment({dispatch}) {
 
-  const citizen = "Alice";
+  const citizen = "ledger-party-db2e9969-83d1-480a-b010-06f0c959f7fc";
   const healthclinic = useParty();
   const ledger = useLedger();
   // history

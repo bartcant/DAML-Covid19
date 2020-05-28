@@ -39,7 +39,6 @@ function TestAppointment({dispatch}) {
   const [curContractId, setContractId] = React.useState('');
   const [covid19testdata, setConductForm] = React.useState({
     testdate: '',
-    issuedby: '',
     citizen: citizen,
     healthclinic: healthclinic,
     testtype: '',
@@ -144,15 +143,6 @@ function TestAppointment({dispatch}) {
                 placeholder="TestDate"
                 value={covid19testdata.testdate}
                 onChange={(e) => handleConductChange('testdate', e)}
-              />
-            </div>
-
-            <div>
-              <TextField
-                label="Issued By"
-                placeholder="Issued By"
-                value={covid19testdata.issuedby}
-                onChange={(e) => handleConductChange('issuedby', e)}
               />
             </div>
 

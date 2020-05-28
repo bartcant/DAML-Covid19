@@ -50,7 +50,6 @@ function StartForm({conduct}) {
 
   const [covid19testdata, setConductForm] = React.useState({
     testdate: '',
-    issuedby: '',
     citizen: conduct.citizen,
     healthclinic: conduct.healthclinic,
     testtype: '',
@@ -107,14 +106,6 @@ function StartForm({conduct}) {
               />
             </div>
 
-            <div>
-              <TextField
-                label="Issued By"
-                placeholder="Issued By"
-                value={covid19testdata.issuedby}
-                onChange={(e) => handleConductChange('issuedby', e)}
-              />
-            </div>
             <div>
               <TextField
                 label="Test Type"

@@ -587,3 +587,44 @@ java.sql.SQLTransientConnectionException: daml.index.db.connection.api-server - 
 14:45:05.967 [pool-1-thread-2] INFO  d.m.postgres.V2_1__Rebuild_Acs - No ledger end found, assuming empty database. Skipping migration. 
 14:45:10.406 [pool-1-thread-4] INFO  c.d.p.apiserver.LedgerApiServer - Listening on localhost:6865 over plain text. 
 14:45:10.415 [pool-1-thread-4] INFO  com.daml.platform.sandboxnext.Runner - Initialized sandbox version 1.1.1 with ledger-id = Covid19, port = 6865, dar file = List(.daml\dist\Covid19-0.0.1.dar), time mode = wall-clock time, ledger = PostgreSQL, auth-service = AuthServiceWildcard$, contract ids seeding = strong 
+18:41:11.488 [sandbox-akka.actor.default-dispatcher-4] INFO  akka.event.slf4j.Slf4jLogger - Slf4jLogger started 
+18:41:14.999 [pool-1-thread-4] INFO  d.m.postgres.V2_1__Rebuild_Acs - No ledger end found, assuming empty database. Skipping migration. 
+18:41:23.515 [pool-1-thread-2] INFO  c.d.p.apiserver.LedgerApiServer - Listening on localhost:6865 over plain text. 
+18:41:23.544 [pool-1-thread-2] INFO  com.daml.platform.sandboxnext.Runner - Initialized sandbox version 1.1.1 with ledger-id = Covid19, port = 6865, dar file = List(.daml\dist\Covid19-0.0.1.dar), time mode = wall-clock time, ledger = PostgreSQL, auth-service = AuthServiceWildcard$, contract ids seeding = strong 
+10:26:03.970 [daml.index.db.connection.api-server-13] ERROR c.d.platform.store.dao.DbDispatcher - get_ledger_end: Got an exception while executing a SQL query. Rolled back the transaction. 
+java.sql.SQLTransientConnectionException: daml.index.db.connection.api-server - Connection is not available, request timed out after 257ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:676)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:190)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:155)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:100)
+	at com.daml.platform.store.dao.HikariJdbcConnectionProvider.runSQL(HikariJdbcConnectionProvider.scala:78)
+	at com.daml.platform.store.dao.DbDispatcher.$anonfun$executeSql$1(DbDispatcher.scala:54)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.liftedTree1$1(Promise.scala:33)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:33)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:64)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:830)
+10:26:04.025 [sandbox-akka.actor.default-dispatcher-4] WARN  a.s.s.RestartWithBackoffSource - Restarting graph due to failure. stack_trace: 
+java.sql.SQLTransientConnectionException: daml.index.db.connection.api-server - Connection is not available, request timed out after 257ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:676)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:190)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:155)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:100)
+	at com.daml.platform.store.dao.HikariJdbcConnectionProvider.runSQL(HikariJdbcConnectionProvider.scala:78)
+	at com.daml.platform.store.dao.DbDispatcher.$anonfun$executeSql$1(DbDispatcher.scala:54)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.liftedTree1$1(Promise.scala:33)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:33)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:64)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:830)
+ akkaAddress=akka://sandbox, sourceThread=sandbox-akka.actor.default-dispatcher-6, akkaSource=RestartWithBackoffSource(akka://sandbox), sourceActorSystem=sandbox, akkaTimestamp=14:26:04.020UTC

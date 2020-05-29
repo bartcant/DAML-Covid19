@@ -127,6 +127,14 @@ function Sidebar({ location }) {
           location={location}
           isSidebarOpened={isSidebarOpened}
       />
+         <SidebarLink
+          key="VCList"
+          label="VC List"
+          path="/app/vclist"
+          icon={(<EditSharp />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+      />
           <SidebarLink
           key="StreetCred"
           label="StreetCred"

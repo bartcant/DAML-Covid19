@@ -7,19 +7,18 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { spacing } from '@material-ui/system';
+import Button from '@material-ui/core/Button';
 
 import Contracts from "../../components/Contracts/Contracts";
 import { useStreamQuery, useParty, useLedger } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
 
-import Button from '@material-ui/core/Button';
 
 import states from "../finalform/states"
 
 export default function TestAppointment() {
 
-  const citizen = "ledger-party-45889ea2-16cc-4e56-9c7e-d31b13c06281";
+  const citizen = "Alice";
   const healthclinic = useParty();
   const ledger = useLedger();
 

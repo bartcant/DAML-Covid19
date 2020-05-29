@@ -103,14 +103,13 @@ template TestRequest
 data Covid19TestData = Covid19TestData
  with 
       testdate : Date      
-      healthclinic: Party  -- when to use Party versus [Party]
+      healthclinic: Party 
       citizen: Party
-      --statehealth: Party
+      statehealth: Party
       testtype: Text
       testnumber: Int
       testresult: Testresult
       locationstate: Locationstate
-      testupdatedata: Date
        deriving (Eq, Show)
 
 template TestAppointment
@@ -126,30 +125,52 @@ template TestAppointment
        Covid19TestAppointment : ContractId Covid19Test
         with
           covid19testdata :  Covid19TestData
+          statehealth : Party
         do
-          create Covid19Test with covid19testdata, healthclinic
+          create Covid19Test with covid19testdata, healthclinic, statehealth, citizen
         
 
-    -- TODO  Bring on StateHealth Role onto the Network
-
-
+data ImmunityVC = ImmunityVC
+ with
+      date : Date      
+      did : Text
+      vc_schema : Text
+      citizen : Party
+      statehealth: Party
+      vc_message : Text
+       deriving (Eq, Show)
 
 
 template Covid19Test
   with
     covid19testdata : Covid19TestData 
     healthclinic : Party
+    citizen : Party
+    statehealth : Party
 
   where
     signatory healthclinic
-    observer covid19testdata.citizen
-   --  observer statehealth
+    observer citizen
+    observer statehealth
 
-    -- agreement that describes a test initiated and updated by a healtprovider for a specific citizen
+    controller statehealth can 
+       SupplyVC : ContractId SupplyImmunityVC
+        with
+          immunityvc : ImmunityVC 
+        do
+          create SupplyImmunityVC with immunityvc, statehealth , citizen
 
-    --key (healthprovider, testnumber) : ( Party, Int )
-    --maintainer key._1
-    
+
+template SupplyImmunityVC
+  with
+    immunityvc : ImmunityVC 
+    statehealth : Party
+    citizen : Party
+  where
+    signatory statehealth
+    observer citizen
+
+   
   
 {- 
     -- choice UpdateTest : ContractId Covid19Test
@@ -171,43 +192,6 @@ template Covid19Test
 
 -- sample code from Broadcast.daml example
 
--}
-
-
--- ImmunityProof Template
-
-template ImmunityProof
-  with
-     immunityproofid: Int
-     citizen: Party
-     covidtest19: [Covid19Test]
-     statehealth : Party
-     proofvaliduntil : Date
-     location : Locationstate
-    -- communitytest : [Communitytest]  TO BE DONE
-     qrcode : Text
-     revokestatus: Text
-     revokestatusdate : Date
-  where
-    signatory statehealth
-    observer citizen
-
-    -- agreement that describes a state agency provides an Immunity Proof for a citizen
-
-    key (statehealth, citizen, immunityproofid) :  ( Party, Party, Int)
-    maintainer key._1
-
-
-    choice InitiateImmunityProof : ( ContractId ImmunityProof )
-     with
-     -- citizen: Citizen
-     -- statehealth: Party
-
-     controller statehealth
-      do
-          create ImmunityProof with immunityproofid, citizen, covidtest19, statehealth, proofvaliduntil,  location, qrcode, revokestatus, revokestatusdate
-          
-  
 
 
 
@@ -320,3 +304,5 @@ setup = scenario do
     create HealthClinicInvitation with healthclinic = atriumhealth , operator 
   submit operator do
     create CitizenInvitation with citizen = alice , operator 
+
+ -}

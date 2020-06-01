@@ -20,14 +20,14 @@ export default function TestList() {
 
 
   const assets = useStreamQuery (Main.Covid19Test);
-  const statehealth = useParty();
+  const statehealth = "NCHealth";
   const citizen = "Alice"
   const ledger = useLedger();
 
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
   const [curContractId, setContractId] = React.useState('');
   const [immunityvc, setConductForm] = React.useState({
-    vcdate: '',
+    date: '',
     did: '',
     statehealth: statehealth,
     citizen: citizen,
@@ -55,15 +55,15 @@ export default function TestList() {
  
 
 
-  const exerciseStateHealthVC = function(cid ) {
+  const exerciseStateHealthVC = function() {
     setConductModalOpen(false);
 
     console.log("citizen : " + citizen);
     console.log("statehealth : " + statehealth);
-    console.log("cid: " + cid);
-    ledger.exercise(Main.Covid19Test.SupplyVC, cid, { statehealth, immunityvc } ); };
+    console.log("cid: " + curContractId);
+    ledger.exercise(Main.Covid19Test.SupplyVC,  curContractId, { statehealth, immunityvc } ); };
 
-
+    
     const getVCSchemas = () => {
       return vcschemas.map((each) => {
         return <MenuItem key={each.value} value={each.value}>{each.label}</MenuItem>
@@ -75,7 +75,7 @@ export default function TestList() {
       <Contracts
         contracts={assets.contracts}
         actions={[
-          ["SupplyVC",(c) => { exerciseStateHealthVC(c.contrcatId);}]
+          ["SupplyVC",(c) => { handleConductModalOpen (c.contractId);}]
         ]}
       
       />
@@ -92,8 +92,8 @@ export default function TestList() {
         <TextField
           label="Verified Credential Date"
           placeholder="VC Date"
-          value={immunityvc.vcdate}
-          onChange={(e) => handleConductChange('vcdate', e)}
+          value={immunityvc.vc_date}
+          onChange={(e) => handleConductChange('date', e)}
         />
       </div>
 
@@ -109,8 +109,8 @@ export default function TestList() {
       <div>
         <Select
           labelId="demo-simple-select-label"
-          value={immunityvc.schema_vc}
-          onChange={(e) => handleConductChange('schema_vc', e)}
+          value={immunityvc.vc_schema}
+          onChange={(e) => handleConductChange('vc_schema', e)}
         >
           { getVCSchemas() }
         </Select>
@@ -121,7 +121,7 @@ export default function TestList() {
           label="VC Message"
           placeholder="VC Message"
           value={immunityvc.vc_message}
-          onChange={(e) => handleConductChange('vcmessage', e)}
+          onChange={(e) => handleConductChange('vc_message', e)}
         />
       </div>
     </DialogContent>

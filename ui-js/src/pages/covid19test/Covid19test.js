@@ -20,6 +20,7 @@ export default function TestAppointment() {
 
   const citizen = "Alice";
   const healthclinic = useParty();
+  const statehealth = "NCHealth";
   const ledger = useLedger();
 
 
@@ -31,11 +32,12 @@ export default function TestAppointment() {
     testdate: '',
     healthclinic: healthclinic,
     citizen: citizen,
+    statehealth: statehealth,
     testtype: '',
     testnumber: '',
     testresult: '',
-    locationstate: '',
-    testupdatedata: ''
+    locationstate: ''
+    
   });
 
   const handleConductModalOpen = (cid = '') => {
@@ -58,11 +60,13 @@ export default function TestAppointment() {
     setConductModalOpen(false);
     console.log("healthclinic : " + healthclinic);
     console.log("citizen : " + citizen);
+    console.log("statehealth : " + statehealth);
     console.log("cid: " + curContractId);
+
 
     console.log({citizen, healthclinic, covid19testdata});
 
-    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {covid19testdata, healthclinic});
+    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {covid19testdata, statehealth, citizen, healthclinic});
     
 
   };
@@ -155,15 +159,6 @@ export default function TestAppointment() {
               </Select>
             </div>
 
-            <div>
-              <TextField
-                label="Test Update Date"
-                placeholder="Test Update Date"
-                value={covid19testdata.testupdatedata}
-                onChange={(e) => handleConductChange('testupdatedata', e)}
-              />
-
-            </div>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleConductModalClose} color="primary">

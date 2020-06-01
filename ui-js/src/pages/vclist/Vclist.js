@@ -15,7 +15,7 @@ export default function VCList() {
       <Contracts
         contracts={assets.contracts}
         
-         
+      
        
       />
     </>

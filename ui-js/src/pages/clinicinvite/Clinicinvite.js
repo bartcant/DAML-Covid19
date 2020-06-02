@@ -3,6 +3,12 @@ import React from "react";
 import Contracts from "../../components/Contracts/Contracts";
 import { useStreamQuery, useParty, useLedger } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 export default function Clinicinvite() {
 
@@ -36,7 +42,7 @@ export default function Clinicinvite() {
 
   const handleConductChange = (idx, event) => {
     setConductForm({
-      ...citizensdetails,
+      ...healthclinicdetails,
       [idx]: event.target.value
     })
   }
@@ -146,7 +152,7 @@ export default function Clinicinvite() {
             <Button onClick={handleConductModalClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => exerciseCitizenAccept()} color="primary" autoFocus>
+            <Button onClick={() => exerciseHealthClinicAccept()} color="primary" autoFocus>
               Test
             </Button>
           </DialogActions>

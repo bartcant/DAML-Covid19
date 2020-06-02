@@ -3,6 +3,13 @@ import React from "react";
 import Contracts from "../../components/Contracts/Contracts";
 import { useStreamQuery, useParty, useLedger } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -45,7 +52,7 @@ export default function Clinicinvite() {
 
   const handleConductChange = (idx, event) => {
     setConductForm({
-      ...citizensdetails,
+      ...citizendetails,
       [idx]: event.target.value
     })
   }
@@ -140,7 +147,6 @@ return (
                       <FormControlLabel value="VC" control={<Radio />} label="Verifiable Credential" />
                     </RadioGroup>
                 </FormControl>
-              <RadioButton
               />
             </div>
 

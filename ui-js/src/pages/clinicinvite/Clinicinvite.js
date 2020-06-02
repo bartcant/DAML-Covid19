@@ -49,10 +49,15 @@ export default function Clinicinvite() {
 
 
 
-  const exerciseHealthClinicAccept = function(cid ) {
+  const exerciseHealthClinicAccept = function() {
+
+    setConductModalOpen(false);
+    
     console.log("operator :" + operator);
     console.log("healthclinic : " + healthclinic);
     console.log("cid: "+ curContractId);
+    console.log("healthclinicdetails: "+ healthclinicdetails );
+    
     ledger.exercise(Main.HealthClinicInvitation.AcceptInvitation, curContractId, { operator, healthclinic, healthclinicdetails } ); };
     
   return (

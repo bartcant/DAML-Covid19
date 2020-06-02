@@ -79,15 +79,15 @@ template HealthClinicInvitation
     controller healthclinic can
      AcceptInvitation : ContractId HealthClinicRole
         with
-        citizendetails : CitizenDetails
+        healthclinicdetails : HealthClinicDetails
       do
-       create HealthClinicRole with healthclinic, operator, citizendetails
+       create HealthClinicRole with healthclinic, operator, healthclinicdetails
 
 template HealthClinicRole
   with 
     operator : Party
     healthclinic : Party
-    citizendetails : CitizenDetails
+    healthclinicdetails : HealthClinicDetails
   where
     signatory healthclinic
 

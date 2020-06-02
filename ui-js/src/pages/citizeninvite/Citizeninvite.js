@@ -60,10 +60,13 @@ export default function Clinicinvite() {
  
 
 
-  const exerciseCitizenAccept = function(cid ) {
+  const exerciseCitizenAccept = function() {
+    setConductModalOpen(false);
+
     console.log("operator :" + operator);
     console.log("citizen : " + citizen);
     console.log("cid: " + curContractId);
+    console.log("citizendetails: " + citizendetails);
     
 
     ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails } ); };

@@ -35,7 +35,7 @@ export default function Clinicinvite() {
     lastname: '',
     email:'',
     accept_vcoremail: '',
-    hippa_accept: '',
+    hippa_accept: 'true',
     insurance_id: ''
   });
 

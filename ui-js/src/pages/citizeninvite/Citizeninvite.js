@@ -35,11 +35,25 @@ export default function Clinicinvite() {
     lastname: '',
     email:'',
     accept_vcoremail: '',
-    Hippa_accept: '',
+    hippa_accept: '',
     insurance_id: ''
   });
 
-  const [checked, setChecked] = React.useState(true);
+  const [state,setState] = React.useState({
+    checkedA: true
+  });
+  
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked  });
+    handleConductChange('hippa_accept')
+  };
+
+
+  const handleOptionChange = function (changeEvent) {
+    this.setState({
+      selectedOption: changeEvent.target.value
+    });
+  };
 
   const handleConductModalOpen = (cid = '') => {
     setContractId(cid);
@@ -66,7 +80,7 @@ export default function Clinicinvite() {
     console.log("operator :" + operator);
     console.log("citizen : " + citizen);
     console.log("cid: " + curContractId);
-    console.log("citizendetails: " + citizendetails);
+    console.log("citizendetails: " + JSON.stringify(citizendetails));
     
 
     ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails } ); };
@@ -130,10 +144,11 @@ return (
               <TextField
                 label="firstname"
                 placeholder="firstname"
-                value={citizendetails.did}
+                value={citizendetails.firstname}
                 onChange={(e) => handleConductChange('firstname', e)}
               />
             </div>
+
             <div>
               <TextField
                 label="email"
@@ -142,29 +157,33 @@ return (
                 onChange={(e) => handleConductChange('email', e)}
               />
             </div>
-             <div>
-               <FormControl component="Accept Credentials">
-                 <FormLabel component="legend">Accept Credentials</FormLabel>
-                    <RadioGroup aria-label="gender" name="gender1" value={citizendetails.accept_vcoremail} onChange={(e) => handleConductChange('accept_vcoremail', e)}>
-                      <FormControlLabel value="email" control={<Radio />} label="Email" />
-                      <FormControlLabel value="VC" control={<Radio />} label="Verifiable Credential" />
+             
+            <div>
+               <FormControl component="acceptcredentials">
+                 <FormLabel component="legend"> Credential Type</FormLabel>
+                    <RadioGroup aria-label="Accept Type" name="accepttype" value={citizendetails.accept_vcoremail} onChange={(e) => handleConductChange('accept_vcoremail', e)}>
+                     <FormControlLabel  control={<Radio />} label="Email" value="email"  />
+                     <FormControlLabel control={<Radio />} label="Verifiable Credential" value="vc"  />
                     </RadioGroup>
                 </FormControl>
-              />
+      
             </div>
 
             <div>
             <FormControlLabel
-              value="start"
-                control={<Checkbox
-                  checked={checked}
+               control={
+                  <Checkbox
+                  checked={state.checkedA} onChange={handleChange} name="accepthippa"
                   value={citizendetails.hippa_accept}
-                  onChange={(e) => handleConductChange('hippa_accept', e)}
-                  label="Accept HIPPA"
-             />}
+                  />
+                  }
+                  label="AcceptHippa"
+      
+              
              />
            </div>
 
+         
            <div>
               <TextField
                 label="insuranceid"

@@ -37,7 +37,7 @@ data HealthClinicDetails = HealthClinicDetails
       id : Text      
       did: Text
       hcname: Text
-      hcaddres: Text
+      hcaddress: Text
       hctel: Text
       hccontactname: Text
       hccontactemail: Text

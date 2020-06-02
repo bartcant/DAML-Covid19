@@ -15,6 +15,37 @@ data Locationstate = NC | SC | GA  | FL  -- Can I use a Map function here ?
 data Testresult = Positive | Negative | Pending
   deriving (Eq, Show)
 
+data CitizenDetails = CitizenDetails
+ with 
+      idtype : Text      
+      ssn: Text 
+      did: Text
+      firstname: Text
+      lastname: Text
+      email: Text
+      accept_vcoremail: Text
+      hippa_accept: Bool
+      insurance_id: Text
+
+       deriving (Eq, Show)
+
+
+
+
+data HealthClinicDetails = HealthClinicDetails
+ with 
+      id : Text      
+      did: Text
+      hcname: Text
+      hcaddres: Text
+      hctel: Text
+      hccontactname: Text
+      hccontactemail: Text
+      hccontacttel: Text
+
+       deriving (Eq, Show)
+
+
 template Network
   with
    operator : Party
@@ -30,9 +61,9 @@ template Network
     nonconsuming InviteCitizen : ContractId CitizenInvitation
       with 
         citizen : Party
+       
       do
         create CitizenInvitation with citizen, operator
-
 
 
 
@@ -47,16 +78,18 @@ template HealthClinicInvitation
 
     controller healthclinic can
      AcceptInvitation : ContractId HealthClinicRole
-
+        with
+        citizendetails : CitizenDetails
       do
-       create HealthClinicRole with healthclinic, operator
+       create HealthClinicRole with healthclinic, operator, citizendetails
 
 template HealthClinicRole
   with 
     operator : Party
     healthclinic : Party
+    citizendetails : CitizenDetails
   where
-    signatory operator,healthclinic
+    signatory healthclinic
 
 
 template CitizenInvitation
@@ -68,14 +101,17 @@ template CitizenInvitation
 
     controller citizen can
      AcceptCitizenInvitation : ContractId CitizenRole
+      with
+       citizendetails : CitizenDetails
 
       do
-       create CitizenRole with citizen, operator
+       create CitizenRole with citizen, operator, citizendetails
 
 template CitizenRole
   with 
     operator : Party
     citizen: Party
+    citizendetails : CitizenDetails
   where
     signatory citizen
 
@@ -83,8 +119,9 @@ template CitizenRole
       nonconsuming RequestTest : ContractId TestRequest
         with
           healthclinic: Party
+
         do
-          create TestRequest with healthclinic, citizen -- add statehealt
+          create TestRequest with healthclinic, citizen 
 
 template TestRequest
   with 

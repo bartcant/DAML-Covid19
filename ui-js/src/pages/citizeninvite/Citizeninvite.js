@@ -86,7 +86,7 @@ return (
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           >
-          <DialogTitle id="alert-dialog-title">{"CONDUCT TEST"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Citizen Registration"}</DialogTitle>
           <DialogContent>
             <div>
               <TextField
@@ -179,7 +179,7 @@ return (
               Cancel
             </Button>
             <Button onClick={() => exerciseCitizenAccept()} color="primary" autoFocus>
-              Test
+              Register
             </Button>
           </DialogActions>
           </Dialog>

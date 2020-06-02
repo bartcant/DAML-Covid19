@@ -76,7 +76,7 @@ export default function Clinicinvite() {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           >
-          <DialogTitle id="alert-dialog-title">{"CONDUCT TEST"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Health Clinic Registration"}</DialogTitle>
           <DialogContent>
             <div>
               <TextField
@@ -153,7 +153,7 @@ export default function Clinicinvite() {
               Cancel
             </Button>
             <Button onClick={() => exerciseHealthClinicAccept()} color="primary" autoFocus>
-              Test
+              Register
             </Button>
           </DialogActions>
           </Dialog>

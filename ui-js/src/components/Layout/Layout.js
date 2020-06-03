@@ -10,7 +10,9 @@ import DamlLedger from "@daml/react";
 import { useUserState } from "../../context/UserContext";
 import Default from "../../pages/default/Default";
 import ClinicInvite from "../../pages/clinicinvite/Clinicinvite";
+import ClinicUpdate from "../../pages/updatehcdetails/Updatehcdetails";
 import CitizenInvite from "../../pages/citizeninvite/Citizeninvite";
+import CitizenUpdate from "../../pages/updatecitizendetails/Updatecitizendetails";
 import TestRequest from "../../pages/testrequest/Testrequest";
 import TestAppointment from "../../pages/testappointment/Testappointment";
 import Covid19Test from "../../pages/covid19test/Covid19test";
@@ -44,7 +46,9 @@ function Layout() {
                 <Route path="/app/default" component={Default} />
                 <Route path="/app/network" component={Network} />
                 <Route path="/app/clinicinvite" component={ClinicInvite} />
+                <Route path="/app/clinicupdate" component={ClinicUpdate} />
                 <Route path="/app/citizeninvite" component={CitizenInvite} />
+                <Route path="/app/citizenupdate" component={CitizenUpdate} />
                 <Route path="/app/testrequest" component={TestRequest} />
                 <Route path="/app/testappointment" component={TestAppointment} />
                 <Route path="/app/covid19test" component={Covid19Test} />  

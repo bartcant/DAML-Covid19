@@ -2,13 +2,6 @@
 
 module Main where
 
--- what imports are generally recommended ? 
-
--- import DA.Date as D
--- import DA.Action
---import Registration -- I split Registration into its own file
-
--- CovidTest19 Template
 
 data Locationstate = NC | SC | GA  | FL  -- Can I use a Map function here ? 
   deriving (Eq, Show)
@@ -28,9 +21,6 @@ data CitizenDetails = CitizenDetails
       insurance_id: Text
 
        deriving (Eq, Show)
-
-
-
 
 data HealthClinicDetails = HealthClinicDetails
  with 
@@ -83,6 +73,9 @@ template HealthClinicInvitation
       do
        create HealthClinicRole with healthclinic, operator, healthclinicdetails
 
+
+
+
 template HealthClinicRole
   with 
     operator : Party
@@ -90,6 +83,18 @@ template HealthClinicRole
     healthclinicdetails : HealthClinicDetails
   where
     signatory healthclinic
+
+    controller healthclinic can
+     UpdateRegistration : ContractId HealthClinicRole
+        with
+        newhealthclinicdetails : HealthClinicDetails
+      do
+       create this with 
+        healthclinic = healthclinic
+        operator = operator
+        healthclinicdetails = newhealthclinicdetails
+
+
 
 
 template CitizenInvitation
@@ -131,7 +136,7 @@ template TestRequest
     signatory citizen
 
     controller healthclinic can 
-      ConfirmTestAppointment : ContractId TestAppointment
+      nonconsuming ConfirmTestAppointment : ContractId TestAppointment
         with
           appointmentdate : Date 
         do
@@ -159,7 +164,7 @@ template TestAppointment
     signatory healthclinic
 
     controller healthclinic can 
-       Covid19TestAppointment : ContractId Covid19Test
+      nonconsuming Covid19TestAppointment : ContractId Covid19Test
         with
           covid19testdata :  Covid19TestData
           statehealth : Party
@@ -191,7 +196,7 @@ template Covid19Test
     observer statehealth
 
     controller statehealth can 
-       SupplyVC : ContractId SupplyImmunityVC
+       nonconsuming SupplyVC : ContractId SupplyImmunityVC
         with
           immunityvc : ImmunityVC 
         do
@@ -231,49 +236,6 @@ template SupplyImmunityVC
 
 
 
-
--- Quarantine Template
-
-
-data QuarantineType = Mandatory | Optional
-  deriving (Eq, Show)  -- what is the difference if I add Ord to this ?
-  -- I wanted to add option for "14DayMandatory" but the parser identified this as a problem
-
-
-type QuarantineKey = ( Party, Party, Int )
-
-
-template Quarantine
-  with
-     quarantineordernumber: Int
-     quarantinetype: QuarantineType
-     issuedate: Date
-     statehealth: Party
-     citizen: Party
-     enddate: Date  -- I want to add 14 days to the current date
-     reason: Text
-     location: Locationstate
-     trackingID: Text
-  where
-    signatory statehealth
-    observer citizen
-
-    -- agreement that describes a state agency orders a specific Quarantine for a citizen who has tested positive
-
-    key (statehealth, citizen, quarantineordernumber) : QuarantineKey
-    maintainer key._1
-
-
-    choice InitiateQuarantine : ( ContractId Quarantine)
-     with
-    --  citizen : Party
-    --  statehealth : Party
-
-     controller statehealth
-      do
-          create Quarantine with quarantineordernumber, issuedate, statehealth ,quarantinetype, citizen, enddate,  reason,  location, trackingID
-        
-  
 
 -- The following section is intended for the Party (Citizen) to self record some information about them selves that could be useful in the rest of the application
 -- Again this will need to allow for an initial creation and update function

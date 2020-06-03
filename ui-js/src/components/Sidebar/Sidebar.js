@@ -78,10 +78,26 @@ function Sidebar({ location }) {
           location={location}
           isSidebarOpened={isSidebarOpened}
         />
+         <SidebarLink
+          key="Clinicupdate"
+          label="Clinicupdate"
+          path="/app/clinicupdate"
+          icon={(<EditSharp />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+        />
         <SidebarLink
           key="Citizeninvite"
           label="Citizeninvite"
           path="/app/citizeninvite"
+          icon={(<EditSharp />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+        />
+        <SidebarLink
+          key="Citizenupdate"
+          label="Citizenupdate"
+          path="/app/citizenupdate"
           icon={(<EditSharp />)}
           location={location}
           isSidebarOpened={isSidebarOpened}

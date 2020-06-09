@@ -2,6 +2,7 @@
 
 module Main where
 
+type AccountKey = (Party, CitizenDetails)
 
 data Locationstate = NC | SC | GA  | FL  -- Can I use a Map function here ? 
   deriving (Eq, Show)
@@ -51,7 +52,6 @@ template Network
     nonconsuming InviteCitizen : ContractId CitizenInvitation
       with 
         citizen : Party
-       
       do
         create CitizenInvitation with citizen, operator
 
@@ -120,6 +120,9 @@ template CitizenRole
   where
     signatory citizen
 
+    key (citizen, citizendetails) : AccountKey
+    maintainer key._1
+
     controller citizen can 
       nonconsuming RequestTest : ContractId TestRequest
         with
@@ -127,6 +130,20 @@ template CitizenRole
 
         do
           create TestRequest with healthclinic, citizen 
+          
+          
+      UpdateCitizenRegistration : ContractId CitizenRole
+        with
+          newcitizendetails : CitizenDetails
+       
+       do
+          create this with 
+             citizen = citizen
+             operator = operator
+             citizendetails = newcitizendetails
+
+
+
 
 template TestRequest
   with 
@@ -232,53 +249,6 @@ template SupplyImmunityVC
 -- Do I need to do a search on Contract ID first  ?
 
 
--- sample code from Broadcast.daml example
-
-
-
-
--- The following section is intended for the Party (Citizen) to self record some information about them selves that could be useful in the rest of the application
--- Again this will need to allow for an initial creation and update function
-
-
-template CitizenRegistration
-  with
-    citizen: Party
-    citizenSSID : Text
-    citizenVC : Text
-    citizenfirstname : Text
-    citizenlastname : Text
-    citizenSSN : Text
-    citizeninsuranceid : Text
-    citizeninsurance : Party
-    citizenlocationid : Text
-  where
-    signatory citizen
-  
-    key (citizen, citizenSSN) :  ( Party, Text )
-    maintainer key._1
-
-    choice InitiateCitizenRegistration :  ContractId CitizenRegistration 
-     with
-   --   citizen : Party
-
-     controller citizen
-       do
-        create CitizenRegistration with citizen,  citizenSSID,  citizenVC, citizenfirstname, citizenlastname,  citizenSSN, citizeninsuranceid, citizeninsurance, citizenlocationid
-          
-    
-
-   -- choice UpdateRegistration : ContractId CitizenRegistration
-   --    with
-    --   citizen : Party
-
-   --   controller citizen
-   --     do
-        -- Link here to Registration Daml
-        --  update CitizenRegistration with citizen;  citizenSSID;  citizenVC;  citizenfirstname ; citizenlastname;  citizenSSN ; citizeninsuranceid; citizeninsurance ; citizenlocationid
-          
-        --  return (CitizenRegistration)
-
 
 
 -- I want to setup the following scenarios:
@@ -292,16 +262,30 @@ template CitizenRegistration
 -- 5. State Agency creates Quarantine Notice
 -- 6. State Agency lifts Qurantine Notice
 -- 7. State Agency creates Immunity Proof "Negative"
+-}
 
 
--- Scenario 2 : 
 setup = scenario do
   operator <- getParty "Operator"
   atriumhealth <- getParty "AtriumHealth"
   alice <- getParty "Alice"
-  submit operator do
-    create HealthClinicInvitation with healthclinic = atriumhealth , operator 
-  submit operator do
-    create CitizenInvitation with citizen = alice , operator 
 
- -}
+  submit operator do
+    create HealthClinicInvitation with healthclinic = atriumhealth ; operator = operator
+  submit operator do
+    create CitizenInvitation with citizen = alice ; operator = operator
+
+  let citizendetails = CitizenDetails with idtype = "text" ; ssn = ""; did = "decentralized did"; firstname = "John" ;  lastname =  "Doe"; email = "john.doe@email.com" ; accept_vcoremail = "vc"; hippa_accept =  True;insurance_id = "12345"
+
+  submit alice do
+    create CitizenRole with  citizen = alice ; operator = operator ; citizendetails = citizendetails
+
+  let newcitizendetails = CitizenDetails with idtype = "text2" ; ssn = ""; did = "decentralized did"; firstname = "John" ;  lastname =  "Doe"; email = "john.doe@email.com" ; accept_vcoremail = "vc"; hippa_accept =  True;insurance_id = "12345"
+  updatedCitizenRole <- submit alice do exercise UpdateCitizenRegistration with 
+     operator = operator
+     citizen = alice
+     citizendetails = newcitizendetails
+
+  return updatedCitizenRole
+
+

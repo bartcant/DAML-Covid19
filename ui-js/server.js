@@ -36,11 +36,14 @@ app.post('/webhook', async function (req, res) {
                         definitionId: process.env.CRED_DEF_ID,
                         connectionId: req.body.object_id,
                         credentialValues: {
-                            "Full Name": param_obj["name"],
-                            "Title": param_obj["title"],
-                            "Company Name": param_obj["org"],
-                            "Phone Number": param_obj["phone"],
-                            "Email": param_obj["email"]
+                            "testdate": param_obj["testdate"],
+                            "healthclinic": param_obj["healthclinic"],
+                            "citizen": param_obj["citizen"],
+                            "statehealth": param_obj["statehealth"],
+                            "testtype": param_obj["testtype"],
+                            "testnumber": param_obj["testnumber"],
+                            "testresult": param_obj["testresult"],
+                            "locationstate": param_obj["locationstate"]
                         }
                     }
                 }

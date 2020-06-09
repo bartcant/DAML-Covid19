@@ -281,11 +281,7 @@ setup = scenario do
     create CitizenRole with  citizen = alice ; operator = operator ; citizendetails = citizendetails
 
   let newcitizendetails = CitizenDetails with idtype = "text2" ; ssn = ""; did = "decentralized did"; firstname = "John" ;  lastname =  "Doe"; email = "john.doe@email.com" ; accept_vcoremail = "vc"; hippa_accept =  True;insurance_id = "12345"
-  updatedCitizenRole <- submit alice do exercise UpdateCitizenRegistration with 
-     operator = operator
-     citizen = alice
-     citizendetails = newcitizendetails
-
-  return updatedCitizenRole
-
+ 
+  submit alice do 
+   create CitizenRole with  citizen = alice ; operator = operator ; citizendetails = newcitizendetails
 

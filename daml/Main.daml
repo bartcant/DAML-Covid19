@@ -264,7 +264,6 @@ template SupplyImmunityVC
 -- 7. State Agency creates Immunity Proof "Negative"
 -}
 
-
 setup = scenario do
   operator <- getParty "Operator"
   atriumhealth <- getParty "AtriumHealth"

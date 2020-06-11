@@ -46,6 +46,10 @@ template AliasCitizen
   with
     citizen : Party  -- user's party identifier
     alias : Text  -- user's preferred public name
+    healthclinic : Party
+    statehealth : Party
+    operator : Party
+
   where
     signatory  citizen
     observer healthclinic, statehealth, operator
@@ -53,10 +57,9 @@ template AliasCitizen
     maintainer key
     controller citizen can
       nonconsuming SetAlias : ContractId AliasCitizen with
-         citizen : Party
-         alias : Text
+         newAlias : Text
        do
-         create AliasCitizen with ..
+         create this with alias = newAlias
           
   
 example = scenario do
@@ -81,9 +84,8 @@ example = scenario do
   let citizenkey = key oldRegistrationData
   let newCitizenDetails = CitizenInfo with citizendetail1 = "UpdatedText1" ; citizendetail2 ="UpdatedText2" ; citizendetail3 = "UpdatedText3" 
 
-  aliceupdate <- submit alice do
-    exercise UpdateRegistration with 
-      registrationCid = citizenkey ; registrationData = newCitizenDetails
+  aliceupdate <- submit alice do exercise aliceregistration UpdateRegistration with newCitizenDetails  
+
   return (aliceregistration,bobregistration,aliceupdate)
 
  

@@ -25,27 +25,50 @@ app.get('*', function (req, res) {
  app.post('/webhook', async function (req, res) {
     try {
         console.log("got webhook" + req + "   type: " + req.body.message_type);
-        if (req.body.message_type === 'new_connection') 
-        {
+        if (req.body.message_type === 'new_connection') {
             console.log("new connection notif");
-            console.log("Connection Complete with connectionid : " + req.body.object_id );
-               
-        }
 
+            const attribs = cache.get(req.body.object_id)
+             if (attribs) {
+                let param_obj = JSON.parse(attribs);
+                let params = {
+                    credentialOfferParameters: {
+                        definitionId: process.env.CRED_DEF_ID,
+                        connectionId: req.body.object_id,
+                        credentialValues: {
+                            "testdate": param_obj["testdate"],
+                            "healthclinic": param_obj["healthclinic"],
+                            "citizen": param_obj["citizen"],
+                            "statehealth": param_obj["statehealth"],
+                            "testtype": param_obj["testtype"],
+                            "testnumber": param_obj["testnumber"],
+                            "testresult": param_obj["testresult"],
+                            "locationstate": param_obj["locationstate"]
+                        }
+                    }
+                }
+                await client.createCredential(params);
+            } 
+        }
+         else if (req.body.message_type === 'credential_request') {
+            console.log("cred request notif");
+            await client.issueCredential(req.body.object_id); 
+        }
     }
     catch (e) {
-        console.log("Error in creating a connection ");
         console.log(e.message || e.toString());
     }
 });
 
-//FRONTEND ENDPOINT for creating a connection
-app.post('/api/connection', cors(), async function (req, res) {
+//FRONTEND ENDPOINT
+app.post('/api/issue', cors(), async function (req, res) {
     const invite = await getInvite();
-    cache.add("alice", invite.connectionId); 
-    console.log("Cache invite.connectionId : " + invite.connectionId);
+   /*  const attribs = JSON.stringify(req.body);
+
+    cache.add(invite.connectionId, attribs); */
     res.status(200).send({ invite_url: invite.invitation });
 });
+
 
 const getInvite = async () => {
     try {
@@ -53,45 +76,9 @@ const getInvite = async () => {
             connectionInvitationParameters: {}
         });
     } catch (e) {
-        console.log ("Get invite problem");
         console.log(e.message || e.toString());
     }
 }
-
-
-// //FRONTEND ENDPOINT for issuing credentials
-app.post('/api/issue', cors(), async function (req, res) {
-    const attribs = JSON.stringify(req.body);
-    console.log("attribs in app.post" + attribs);
-    const connectid = cache.get("alice");
-    console.log()
-    console.log ("We are starting the credentials part");
-        let param_obj = JSON.parse(attribs);
-        let params = {
-            credentialOfferParameters: {
-                definitionId: process.env.CRED_DEF_ID,
-                connectionId: connectid,
-                automaticIssuance: true,
-                credentialValues: {
-                    "testdate": param_obj["testdate"],
-                    "healthclinic": param_obj["healthclinic"],
-                    "citizen": param_obj["citizen"],
-                    "statehealth": param_obj["statehealth"],
-                    "testtype": param_obj["testtype"],
-                    "testnumber": param_obj["testnumber"],
-                    "testresult": param_obj["testresult"],
-                    "locationstate": param_obj["locationstate"]
-                }
-            }
-        }
-        console.log("Client.createCredential");
-        await client.createCredential(params);
-    
-});
-
-
-
-
 
 // for graceful closing
 let server = http.createServer(app);

@@ -2,7 +2,7 @@
 import React from "react";
 import Contracts from "../../components/Contracts/Contracts";
 import { useStreamQuery, useParty, useLedger } from "@daml/react";
-import { Main } from "@daml2js/Covid19-0.0.1/";
+import { Main} from "@daml2js/Covid19-0.0.1/";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -16,13 +16,24 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 
-export default function Clinicinvite() {
+// redirect
+import { useHistory } from "react-router-dom";
+// redux connect
+import { connect } from 'react-redux'
+// import actions
+import { conductclick } from '../../actions.js';
+
+
+
+export default function Clinicinvite({dispatch}) {
 
   
   const citizen = useParty();
   const operator = "Operator"; 
   const ledger = useLedger();
   const assets = useStreamQuery (Main.CitizenInvitation);
+ // const assets2 = useStreamQuery (Registration.CitizenAlias);
+  const history = useHistory();
 
 
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
@@ -38,13 +49,14 @@ export default function Clinicinvite() {
     hippa_accept: true,
     insurance_id: ''
   });
-  const [alias, setConductForm] = React.useState({
+  const [alias, setConductAlias] = React.useState({
     alias: ''
   });
 
   const [state,setState] = React.useState({
     checkedA: true
   });
+
   
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked  });
@@ -67,23 +79,15 @@ export default function Clinicinvite() {
     setConductModalOpen(false);
   };
 
+
   const handleConductChange = (idx, event) => {
     setConductForm({
       ...citizendetails,[idx]: event.target.value
-// Also need to pickup the content for "alias" from line 195
-
     })
   }
 
- 
-
-
   const exerciseCitizenAccept = function() {
     setConductModalOpen(false);
-
-    // const newAliasContract = await ledger.create(Registration.AliasCitizen, operator, healthclinic, statehealth, operator, alias});
-    // const {contracts, loading} = useStreamFetchByKey(AliasCitizen, () => key, [dep1, dep2, ...])
-    // I need to collect the contractId from previous action so it cn be set as an AliasCid in the CitizenRegistration
 
 
     console.log("operator :" + operator);
@@ -91,12 +95,22 @@ export default function Clinicinvite() {
     console.log("cid: " + curContractId);
     console.log("citizendetails: " + JSON.stringify(citizendetails));
     console.log("alias" + JSON.stringify(alias)); 
+    let aliasCid ="test";
 
-    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, aliasCid } ); };
+    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, aliasCid } );
+    
+    dispatch(conductclick({
+      citizen: citizen,
+     // healthclinic: healthclinic,
+     // contractId: cid
+    }));
+    history.push("/app/citizenalias");
+  }
+
     
   
 return (
-    <>
+      <div>
       <Contracts
         contracts={assets.contracts}
         actions={[
@@ -105,8 +119,9 @@ return (
         ]}
       
         />
-      
-       <Dialog
+
+       <div>
+        <Dialog
           open={conductModalOpen}
           onClose={handleConductModalClose}
           aria-labelledby="alert-dialog-title"
@@ -191,15 +206,6 @@ return (
               
              />
            </div>
-
-           <div>
-              <TextField
-                label="alias"
-                placeholder="alias"
-                value={alias.alias}
-                onChange={(e) => handleConductChange('insurance_id', e)}
-              />
-            </div>
          
            <div>
               <TextField
@@ -222,7 +228,16 @@ return (
             </Button>
           </DialogActions>
           </Dialog>
-          </>
+        </div>
 
-          );
+    
+     </div>
+        )
+
+  function mapDispatchToProps(dispatch) {
+    return {
+       dispatch,
+          }
         }
+        
+ }

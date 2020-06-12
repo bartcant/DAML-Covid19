@@ -2,45 +2,25 @@
 module Registration where
 
 data CitizenInfo = CitizenInfo with
-  citizendetail1 : Text
-  citizendetail2 : Text
-  citizendetail3 : Text
+
+  idtype : Text
+  ssn : Text
+  did : Text
+  firstname : Text
+  lastname : Text
+  email : Text
+  accept_vcoremail: Text
+  hippa_accept : Bool
+  insurance_id : Text
+  connectionid : Text
+
+
    deriving (Eq, Show)
 
 data CitizenKey = CitizenKey with
   citizen : Party
   id : Text
    deriving (Eq, Show)
-
-
-template CitizenRegistration
-  with
-    registrationCid : CitizenKey
-    registrationData : CitizenInfo
-  where
-    signatory registrationCid.citizen
-
-    key registrationCid : CitizenKey
-    maintainer key.citizen
-
-    controller registrationCid.citizen can 
-      nonconsuming Register : ContractId CitizenRegistration with
-        newRegistrationCid : CitizenKey
-        newRegistrationData : CitizenInfo
-       do
-        create CitizenRegistration with
-          registrationCid = newRegistrationCid
-          registrationData = newRegistrationData
-   
-
-      nonconsuming UpdateRegistration : ContractId CitizenRegistration with
-          newCitizenDetails : CitizenInfo
-       do
-         (oldRegistrationCid, oldRegistrationData) <- fetchByKey @CitizenRegistration (key this)
-         archive oldRegistrationCid
-         create CitizenRegistration with 
-            registrationCid = key oldRegistrationData
-            registrationData = newCitizenDetails
 
 template AliasCitizen
   with
@@ -60,33 +40,111 @@ template AliasCitizen
          newAlias : Text
        do
          create this with alias = newAlias
+    controller citizen can
+      nonconsuming UpdateAlias : ContractId AliasCitizen with
+         newAlias : Text
+       do  
+         (aliasCitizenCid, oldAliasData) <- fetchByKey @AliasCitizen (key this)
+         archive aliasCitizenCid
+         create this with citizen = key oldAliasData ; alias = newAlias
+      
+
+
+template CitizenRegistration
+  with
+    registrationCid : CitizenKey
+    registrationData : CitizenInfo
+    aliasCid : ContractId AliasCitizen
+  where
+    signatory registrationCid.citizen
+
+    key registrationCid : CitizenKey
+    maintainer key.citizen
+
+    controller registrationCid.citizen can 
+      nonconsuming Register : ContractId CitizenRegistration with
+        newRegistrationCid : CitizenKey
+        newRegistrationData : CitizenInfo
+       do
+        (citizenCid, citizenaliasdata) <- fetchByKey @ AliasCitizen (key newRegistrationCid.citizen)
+        create CitizenRegistration with
+          registrationCid = newRegistrationCid 
+          registrationData = newRegistrationData
+          aliasCid = citizenCid
+  
+   
+
+      nonconsuming UpdateRegistration : ContractId CitizenRegistration with
+          newCitizenDetails : CitizenInfo
+          oldaliasCid : ContractId AliasCitizen
+       do
+         (oldRegistrationCid, oldRegistrationData) <- fetchByKey @CitizenRegistration (key this)
+         archive oldRegistrationCid
+         create CitizenRegistration with 
+            registrationCid = key oldRegistrationData
+            registrationData = newCitizenDetails
+            aliasCid = oldaliasCid
+
+
           
   
 example = scenario do
   alice <- getParty "Alice"
   bob <- getParty "Bob"
+  atriumhealth <- getParty "AtriumHealth"
+  operator <- getParty "Operator"
+  nchealth <- getParty "NCHealth"
+
+ -- Setting and Updating Alice  and Bob Alias
+
+  alicealias <- submit alice do
+    create AliasCitizen with  citizen = alice ; alias = "AliceAlias" ; healthclinic = atriumhealth ; operator = operator ; statehealth = nchealth
+
+  let newAlias = "AliceAlias2"
+
+  updatealicealias <- submit alice do exercise alicealias UpdateAlias with newAlias
+
+  bobalias <- submit bob do
+    create AliasCitizen with  citizen = bob ; alias = "AliceBob" ; healthclinic = atriumhealth ; operator = operator ; statehealth = nchealth
+
+
+
+  -- Bob Registratiom
 
   let citizenkey = CitizenKey with citizen = bob ; id = "2" 
-  let citizeninfo = CitizenInfo with  citizendetail1 = "Text1" ; citizendetail2 ="Text2" ; citizendetail3 = "Text3" 
-        
+  let citizeninfo = CitizenInfo with idtype = "idtype1" ; ssn ="ssn1" ; did = "did1" ; firstname = "firtsname1" ; lastname ="lastname1"; email ="email1"; accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid" ; connectionid ="connectionid1"
+  let citizen = bob
+  (aliasbobCid, aliasbobdata) <- submit bob do fetchByKey @AliasCitizen (key bob)
+
   bobregistration <- submit bob do 
     create CitizenRegistration with 
-        registrationCid = citizenkey; registrationData = citizeninfo
-      
+        registrationCid = citizenkey; registrationData = citizeninfo ; aliasCid = aliasbobCid
+
+  -- Alice Registration
+
   let citizenkey = CitizenKey with citizen = alice ; id = "1"
-  let citizeninfo = CitizenInfo with  citizendetail1 = "Text1" ; citizendetail2 ="Text2" ; citizendetail3 = "Text3" 
-      
+  let citizeninfo = CitizenInfo with  idtype = "idtype1" ; ssn ="ssn1" ; did = "did1" ; firstname = "firtsname1" ; lastname ="lastname1"; email ="email1"; accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid" ; connectionid ="connectionid1"
+  let citizen = alice
+  (aliasaliceCid, aliasalicedata) <- submit alice do fetchByKey @AliasCitizen (key citizen)    
+  
   aliceregistration <- submit alice do 
-    create CitizenRegistration with registrationCid = citizenkey; registrationData = citizeninfo
+    create CitizenRegistration with registrationCid = citizenkey; registrationData = citizeninfo ; aliasCid = aliasaliceCid
+
+  
 
   (oldRegistrationCid, oldRegistrationData) <- submit alice do fetchByKey @CitizenRegistration (citizenkey)
-
+  
   let citizenkey = key oldRegistrationData
-  let newCitizenDetails = CitizenInfo with citizendetail1 = "UpdatedText1" ; citizendetail2 ="UpdatedText2" ; citizendetail3 = "UpdatedText3" 
+  let newCitizenDetails = CitizenInfo with  idtype = "idtype2" ; ssn ="ssn2" ; did = "did2" ; firstname = "firtsname2" ; lastname ="lastname2"; email ="email2";  accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid2" ; connectionid ="connectionid2"
 
-  aliceupdate <- submit alice do exercise aliceregistration UpdateRegistration with newCitizenDetails  
+  aliceupdate <- submit alice do exercise aliceregistration UpdateRegistration with newCitizenDetails
 
-  return (aliceregistration,bobregistration,aliceupdate)
+  
+
+  return (aliceregistration,bobregistration,aliceupdate,alicealias, updatealicealias)
+
+
+  
 
  
 

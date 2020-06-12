@@ -66,7 +66,7 @@ template CitizenRegistration
         newRegistrationCid : CitizenKey
         newRegistrationData : CitizenInfo
        do
-        (citizenCid, citizenaliasdata) <- fetchByKey @ AliasCitizen (key newRegistrationCid.citizen)
+        (citizenCid, citizenaliasdata) <- fetchByKey @ AliasCitizen newRegistrationCid.citizen
         create CitizenRegistration with
           registrationCid = newRegistrationCid 
           registrationData = newRegistrationData
@@ -76,14 +76,14 @@ template CitizenRegistration
 
       nonconsuming UpdateRegistration : ContractId CitizenRegistration with
           newCitizenDetails : CitizenInfo
-          oldaliasCid : ContractId AliasCitizen
        do
          (oldRegistrationCid, oldRegistrationData) <- fetchByKey @CitizenRegistration (key this)
          archive oldRegistrationCid
+         (citizenCid, citizenaliasdata) <- fetchByKey @ AliasCitizen registrationCid.citizen
          create CitizenRegistration with 
             registrationCid = key oldRegistrationData
             registrationData = newCitizenDetails
-            aliasCid = oldaliasCid
+            aliasCid = citizenCid
 
 
           
@@ -113,8 +113,7 @@ example = scenario do
 
   let citizenkey = CitizenKey with citizen = bob ; id = "2" 
   let citizeninfo = CitizenInfo with idtype = "idtype1" ; ssn ="ssn1" ; did = "did1" ; firstname = "firtsname1" ; lastname ="lastname1"; email ="email1"; accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid" ; connectionid ="connectionid1"
-  let citizen = bob
-  (aliasbobCid, aliasbobdata) <- submit bob do fetchByKey @AliasCitizen (key bob)
+  (aliasbobCid, aliasbobdata) <- submit bob do fetchByKey @AliasCitizen bob
 
   bobregistration <- submit bob do 
     create CitizenRegistration with 
@@ -124,22 +123,17 @@ example = scenario do
 
   let citizenkey = CitizenKey with citizen = alice ; id = "1"
   let citizeninfo = CitizenInfo with  idtype = "idtype1" ; ssn ="ssn1" ; did = "did1" ; firstname = "firtsname1" ; lastname ="lastname1"; email ="email1"; accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid" ; connectionid ="connectionid1"
-  let citizen = alice
-  (aliasaliceCid, aliasalicedata) <- submit alice do fetchByKey @AliasCitizen (key citizen)    
+  (aliasaliceCid, aliasalicedata) <- submit alice do fetchByKey @AliasCitizen alice    
   
   aliceregistration <- submit alice do 
     create CitizenRegistration with registrationCid = citizenkey; registrationData = citizeninfo ; aliasCid = aliasaliceCid
 
-  
-
-  (oldRegistrationCid, oldRegistrationData) <- submit alice do fetchByKey @CitizenRegistration (citizenkey)
+  (oldRegistrationCid, oldRegistrationData) <- submit alice do fetchByKey @CitizenRegistration citizenkey
   
   let citizenkey = key oldRegistrationData
   let newCitizenDetails = CitizenInfo with  idtype = "idtype2" ; ssn ="ssn2" ; did = "did2" ; firstname = "firtsname2" ; lastname ="lastname2"; email ="email2";  accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid2" ; connectionid ="connectionid2"
 
   aliceupdate <- submit alice do exercise aliceregistration UpdateRegistration with newCitizenDetails
-
-  
 
   return (aliceregistration,bobregistration,aliceupdate,alicealias, updatealicealias)
 

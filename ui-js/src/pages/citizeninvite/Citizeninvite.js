@@ -38,6 +38,9 @@ export default function Clinicinvite() {
     hippa_accept: true,
     insurance_id: ''
   });
+  const [alias, setConductForm] = React.useState({
+    alias: ''
+  });
 
   const [state,setState] = React.useState({
     checkedA: true
@@ -66,8 +69,9 @@ export default function Clinicinvite() {
 
   const handleConductChange = (idx, event) => {
     setConductForm({
-      ...citizendetails,
-      [idx]: event.target.value
+      ...citizendetails,[idx]: event.target.value
+// Also need to pickup the content for "alias" from line 195
+
     })
   }
 
@@ -77,13 +81,18 @@ export default function Clinicinvite() {
   const exerciseCitizenAccept = function() {
     setConductModalOpen(false);
 
+    // const newAliasContract = await ledger.create(Registration.AliasCitizen, operator, healthclinic, statehealth, operator, alias});
+    // const {contracts, loading} = useStreamFetchByKey(AliasCitizen, () => key, [dep1, dep2, ...])
+    // I need to collect the contractId from previous action so it cn be set as an AliasCid in the CitizenRegistration
+
+
     console.log("operator :" + operator);
     console.log("citizen : " + citizen);
     console.log("cid: " + curContractId);
     console.log("citizendetails: " + JSON.stringify(citizendetails));
-    
+    console.log("alias" + JSON.stringify(alias)); 
 
-    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails } ); };
+    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, aliasCid } ); };
     
   
 return (
@@ -183,6 +192,14 @@ return (
              />
            </div>
 
+           <div>
+              <TextField
+                label="alias"
+                placeholder="alias"
+                value={alias.alias}
+                onChange={(e) => handleConductChange('insurance_id', e)}
+              />
+            </div>
          
            <div>
               <TextField

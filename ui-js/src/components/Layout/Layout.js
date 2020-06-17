@@ -54,7 +54,7 @@ function Layout() {
                 <Route path="/app/citizeninvite" component={CitizenInvite} />
                 <Route path="/app/citizenupdate" component={CitizenUpdate} />
                 <Route path="/app/citizenalias" component={CitizenAlias} />
-                <Route path="/app/citizenalias" component={CitizenConnection} />
+                <Route path="/app/citizenconnection" component={CitizenConnection} />
                 <Route path="/app/testrequest" component={TestRequest} />
                 <Route path="/app/testappointment" component={TestAppointment} />
                 <Route path="/app/covid19test" component={Covid19Test} />  

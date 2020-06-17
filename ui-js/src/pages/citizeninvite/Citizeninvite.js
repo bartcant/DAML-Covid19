@@ -116,7 +116,7 @@ function CitizenInvite({ dispatch }) {
 
         columns={[
           ["ContractId", "contractId"],
-          ["HealthClinic", "payload.citizen"]
+          ["Citizen", "payload.citizen"]
         ]}
 
         actions={[

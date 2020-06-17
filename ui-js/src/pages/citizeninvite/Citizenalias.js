@@ -1,7 +1,6 @@
   
 import React from "react";
-import Contracts from "../../components/Contracts/Contracts";
-import { useStreamQuery, useParty, useLedger } from "@daml/react";
+import { useParty, useLedger } from "@daml/react";
 import { Main, Registration } from "@daml2js/Covid19-0.0.1/";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -12,9 +11,16 @@ import Button from '@material-ui/core/Button';
 
 import axios from 'axios';
 
+// redirect
+import { useHistory } from "react-router-dom";
+// redux connect
+import { connect } from 'react-redux'
+// import actions
+import { conductclick } from '../../actions.js';
+
 axios.defaults.baseURL = 'http://localhost:3002/';
 
-export default function CreateAlias({dispatch}) {
+function CreateAlias({dispatch}) {
 
   
   const citizen = useParty();
@@ -22,7 +28,7 @@ export default function CreateAlias({dispatch}) {
   const ledger = useLedger();
   const healthclinic = "AtriumHealth"
   const statehealth = "NCHealth"; 
-  
+  const history = useHistory();
   
 
 
@@ -60,7 +66,14 @@ export default function CreateAlias({dispatch}) {
     // const {contracts, loading} = useStreamFetchByKey(Registration.AliasCitizen, () => key, [dep1, dep2, ...])
     // I need to collect the contractId from previous action so it can be set as an AliasCid in the CitizenRegistration
 
+    dispatch(conductclick({
+  
+    }));
+    history.push("/app/citizenconnection");
   }
+
+
+
 
 
 
@@ -99,4 +112,14 @@ return (
         </div>
   
         )
-     }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  }
+}
+
+
+
+export default connect(null, mapDispatchToProps)(CreateAlias);

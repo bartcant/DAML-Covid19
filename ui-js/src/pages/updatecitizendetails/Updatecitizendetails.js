@@ -17,18 +17,22 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 export default function CitizenUpdate() {
 
-  // This function displays the details of the Citizen in a lits and an "Update" button that brings up the Form with the detais of "Citizendetails"
+  // This function displays the details of the Citizen in a list and an "Update" button that brings up the Form with the detais of "Citizendetails"
   // Upon submission the updated details are submitted to the ledger again via the ledger.exercise function
 
   
   const citizen = useParty();
   const operator = "Operator"; 
   const ledger = useLedger();
-  const assets = useStreamQuery (Main.CitizenRole);
+
+  const assets = useStreamQuery(Main.CitizenRole);
+ 
+  // const {assets, loading} = useStreamQuery(Main.CitizenRole, () => ({citizendetails: citizendetails})) ;
 
 
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
   const [curContractId, setContractId] = React.useState('');
+
   const [citizendetails, setConductForm] = React.useState({
     idtype: '',
     ssn: '',
@@ -40,6 +44,8 @@ export default function CitizenUpdate() {
     hippa_accept: '',
     insurance_id: ''
   });
+
+  
 
   const [state,setState] = React.useState({
     checkedA: true
@@ -86,10 +92,10 @@ export default function CitizenUpdate() {
     console.log("citizen : " + citizen);
     console.log("cid: " + curContractId);
     console.log("citizendetails: " + JSON.stringify(citizendetails));
-    
+    let aliasCid = "test";
 
-    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails } ); };
-    
+    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, aliasCid });
+  }
   
 return (
     <>
@@ -99,13 +105,12 @@ return (
         columns={[
             ["ContractId", "contractId"],
             ["Citizen", "payload.citizen"],
-            ["ID Type", "payload.citizendetails.idtype"]
+            ["ID Type", "payload.citizendetails.idtype"],
             ["Did", "payload.citizendetails.did"]
-            ["SSN", "payload.citizendetails.ssn"]
           ]}
 
         actions={[
-            ["Update Details", (c) => { handleConductModalOpen(c.contractId);}], 
+            ["Update Details", (c) => { handleConductModalOpen(c.contractId);}]
         ]}
       
         />
@@ -116,7 +121,7 @@ return (
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           >
-          <DialogTitle id="alert-dialog-title">{"Citizen Registration"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Update Citizen Registration"}</DialogTitle>
           <DialogContent>
             <div>
               <TextField
@@ -140,7 +145,7 @@ return (
               <TextField
                 label="DID"
                 placeholder="DID"
-                value={this.state.citizendetails.did}
+                value={citizendetails.did}
                 onChange={(e) => handleConductChange('did', e)}
               />
             </div>
@@ -149,7 +154,7 @@ return (
               <TextField
                 label="lastname"
                 placeholder="lastname"
-                value={this.state.citizendetails.lastname}
+                value={citizendetails.lastname}
                 onChange={(e) => handleConductChange('lastname', e)}
               />
             </div>
@@ -157,7 +162,7 @@ return (
               <TextField
                 label="firstname"
                 placeholder="firstname"
-                value={this.state.citizendetails.firstname}
+                value={citizendetails.firstname}
                 onChange={(e) => handleConductChange('firstname', e)}
               />
             </div>
@@ -166,7 +171,7 @@ return (
               <TextField
                 label="email"
                 placeholder="email"
-                value={this.state.citizendetails.email}
+                value={citizendetails.email}
                 onChange={(e) => handleConductChange('email', e)}
               />
             </div>
@@ -174,7 +179,7 @@ return (
             <div>
                <FormControl component="acceptcredentials">
                  <FormLabel component="legend"> Credential Type</FormLabel>
-                    <RadioGroup aria-label="Accept Type" name="accepttype" value={this.state.citizendetails.accept_vcoremail} onChange={(e) => handleConductChange('accept_vcoremail', e)}>
+                    <RadioGroup aria-label="Accept Type" name="accepttype" value={citizendetails.accept_vcoremail} onChange={(e) => handleConductChange('accept_vcoremail', e)}>
                      <FormControlLabel  control={<Radio />} label="Email" value="email"  />
                      <FormControlLabel control={<Radio />} label="Verifiable Credential" value="vc"  />
                     </RadioGroup>
@@ -201,7 +206,7 @@ return (
               <TextField
                 label="insuranceid"
                 placeholder="Insurance id"
-                value={this.state.citizendetails.insurance_id}
+                value={citizendetails.insurance_id}
                 onChange={(e) => handleConductChange('insurance_id', e)}
               />
             </div>
@@ -222,3 +227,4 @@ return (
 
           );
         }
+    

@@ -13,6 +13,8 @@ import ClinicInvite from "../../pages/clinicinvite/Clinicinvite";
 import ClinicUpdate from "../../pages/updatehcdetails/Updatehcdetails";
 import CitizenInvite from "../../pages/citizeninvite/Citizeninvite";
 import CitizenUpdate from "../../pages/updatecitizendetails/Updatecitizendetails";
+import CitizenAlias from "../../pages/citizeninvite/Citizenalias";
+import CitizenConnection from "../../pages/citizeninvite/Citizenconnection";
 import TestRequest from "../../pages/testrequest/Testrequest";
 import TestAppointment from "../../pages/testappointment/Testappointment";
 import Covid19Test from "../../pages/covid19test/Covid19test";
@@ -51,6 +53,8 @@ function Layout() {
                 <Route path="/app/clinicupdate" component={ClinicUpdate} />
                 <Route path="/app/citizeninvite" component={CitizenInvite} />
                 <Route path="/app/citizenupdate" component={CitizenUpdate} />
+                <Route path="/app/citizenalias" component={CitizenAlias} />
+                <Route path="/app/citizenalias" component={CitizenConnection} />
                 <Route path="/app/testrequest" component={TestRequest} />
                 <Route path="/app/testappointment" component={TestAppointment} />
                 <Route path="/app/covid19test" component={Covid19Test} />  

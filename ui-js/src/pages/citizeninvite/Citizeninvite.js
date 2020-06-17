@@ -1,8 +1,8 @@
-  
+
 import React from "react";
 import Contracts from "../../components/Contracts/Contracts";
 import { useStreamQuery, useParty, useLedger } from "@daml/react";
-import { Main} from "@daml2js/Covid19-0.0.1/";
+import { Main } from "@daml2js/Covid19-0.0.1/";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -25,14 +25,14 @@ import { conductclick } from '../../actions.js';
 
 
 
-export default function Clinicinvite({dispatch}) {
+function CitizenInvite({ dispatch }) {
 
-  
+
   const citizen = useParty();
-  const operator = "Operator"; 
+  const operator = "Operator";
   const ledger = useLedger();
-  const assets = useStreamQuery (Main.CitizenInvitation);
- // const assets2 = useStreamQuery (Registration.CitizenAlias);
+  const assets = useStreamQuery(Main.CitizenInvitation);
+  // const assets2 = useStreamQuery (Registration.CitizenAlias);
   const history = useHistory();
 
 
@@ -44,7 +44,7 @@ export default function Clinicinvite({dispatch}) {
     did: '',
     firstname: '',
     lastname: '',
-    email:'',
+    email: '',
     accept_vcoremail: '',
     hippa_accept: true,
     insurance_id: ''
@@ -53,13 +53,13 @@ export default function Clinicinvite({dispatch}) {
     alias: ''
   });
 
-  const [state,setState] = React.useState({
+  const [state, setState] = React.useState({
     checkedA: true
   });
 
-  
+
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked  });
+    setState({ ...state, [event.target.name]: event.target.checked });
     handleConductChange('hippa_accept')
   };
 
@@ -82,11 +82,11 @@ export default function Clinicinvite({dispatch}) {
 
   const handleConductChange = (idx, event) => {
     setConductForm({
-      ...citizendetails,[idx]: event.target.value
+      ...citizendetails, [idx]: event.target.value
     })
   }
 
-  const exerciseCitizenAccept = function() {
+  const exerciseCitizenAccept = function () {
     setConductModalOpen(false);
 
 
@@ -94,39 +94,45 @@ export default function Clinicinvite({dispatch}) {
     console.log("citizen : " + citizen);
     console.log("cid: " + curContractId);
     console.log("citizendetails: " + JSON.stringify(citizendetails));
-    console.log("alias" + JSON.stringify(alias)); 
-    let aliasCid ="test";
+    console.log("alias" + JSON.stringify(alias));
+    let aliasCid = "test";
 
-    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, aliasCid } );
-    
+    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, aliasCid });
+
     dispatch(conductclick({
       citizen: citizen,
-     // healthclinic: healthclinic,
-     // contractId: cid
+      // healthclinic: healthclinic,
+      // contractId: cid
     }));
     history.push("/app/citizenalias");
   }
 
-    
-  
-return (
-      <div>
+
+
+  return (
+    <div>
       <Contracts
         contracts={assets.contracts}
+
+        columns={[
+          ["ContractId", "contractId"],
+          ["HealthClinic", "payload.citizen"]
+        ]}
+
         actions={[
-         ["Accept Invitation", (c) => { handleConductModalOpen(c.contractId);}], 
+          ["Accept Invitation", (c) => { handleConductModalOpen(c.contractId); }],
 
         ]}
-      
-        />
 
-       <div>
+      />
+
+      <div>
         <Dialog
           open={conductModalOpen}
           onClose={handleConductModalClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          >
+        >
           <DialogTitle id="alert-dialog-title">{"Citizen Registration"}</DialogTitle>
           <DialogContent>
             <div>
@@ -146,7 +152,7 @@ return (
                 onChange={(e) => handleConductChange('ssn', e)}
               />
             </div>
-      
+
             <div>
               <TextField
                 label="DID"
@@ -181,33 +187,33 @@ return (
                 onChange={(e) => handleConductChange('email', e)}
               />
             </div>
-             
+
             <div>
-               <FormControl component="acceptcredentials">
-                 <FormLabel component="legend"> Credential Type</FormLabel>
-                    <RadioGroup aria-label="Accept Type" name="accepttype" value={citizendetails.accept_vcoremail} onChange={(e) => handleConductChange('accept_vcoremail', e)}>
-                     <FormControlLabel  control={<Radio />} label="Email" value="email"  />
-                     <FormControlLabel control={<Radio />} label="Verifiable Credential" value="vc"  />
-                    </RadioGroup>
-                </FormControl>
-      
+              <FormControl component="acceptcredentials">
+                <FormLabel component="legend"> Credential Type</FormLabel>
+                <RadioGroup aria-label="Accept Type" name="accepttype" value={citizendetails.accept_vcoremail} onChange={(e) => handleConductChange('accept_vcoremail', e)}>
+                  <FormControlLabel control={<Radio />} label="Email" value="email" />
+                  <FormControlLabel control={<Radio />} label="Verifiable Credential" value="vc" />
+                </RadioGroup>
+              </FormControl>
+
             </div>
 
             <div>
-            <FormControlLabel
-               control={
+              <FormControlLabel
+                control={
                   <Checkbox
-                  checked={state.checkedA} onChange={handleChange} name="accepthippa"
-                  value={citizendetails.hippa_accept}
+                    checked={state.checkedA} onChange={handleChange} name="accepthippa"
+                    value={citizendetails.hippa_accept}
                   />
-                  }
-                  label="AcceptHippa"
-      
-              
-             />
-           </div>
-         
-           <div>
+                }
+                label="AcceptHippa"
+
+
+              />
+            </div>
+
+            <div>
               <TextField
                 label="insuranceid"
                 placeholder="Insurance id"
@@ -227,17 +233,20 @@ return (
               Register
             </Button>
           </DialogActions>
-          </Dialog>
-        </div>
+        </Dialog>
+      </div>
 
-    
-     </div>
-        )
 
-  function mapDispatchToProps(dispatch) {
-    return {
-       dispatch,
-          }
-        }
-        
- }
+    </div>
+  )
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  }
+}
+
+
+
+export default connect(null, mapDispatchToProps)(CitizenInvite);

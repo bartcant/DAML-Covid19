@@ -32,7 +32,6 @@ export default function Network() {
         contracts={assets.contracts}
         columns={[
           ["ContractId", "contractId"],
-          ["TemplateId", "templateId"],
           ["Operator", "payload.operator"]
         
         ]}

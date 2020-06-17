@@ -20,18 +20,20 @@ export default function CreateAlias({dispatch}) {
   const citizen = useParty();
   const operator = "Operator"; 
   const ledger = useLedger();
+  const healthclinic = "AtriumHealth"
+  const statehealth = "NCHealth"; 
+  
   
 
 
   const [conductModalOpen, setConductModalOpen] = React.useState(true);
-  const [alias, setConductAlias] = React.useState({
-    alias: ''
+  const [newalias, setConductAlias] = React.useState({
+    newalias: ''
   });
 
 
 
   const handleConductModalOpen = (cid = '') => {
-    setContractId(cid);
     setConductModalOpen(true);
   };
 
@@ -42,8 +44,8 @@ export default function CreateAlias({dispatch}) {
 
 
   const handleAliasChange = (idx, event) => {
-    setConductForm({
-      ...alias,[idx]: event.target.value
+    setConductAlias({
+      ...newalias,[idx]: event.target.value
 
     })
   }
@@ -51,7 +53,10 @@ export default function CreateAlias({dispatch}) {
   // Create Alias
   const createAlias = function() {
     setConductModalOpen(false);
-    ledger.create(Registration.AliasCitizen, citizen, alias.alias) ; 
+    const alias = newalias.alias;
+    console.log("alias " + alias);
+    ledger.create(Registration.AliasCitizen, { citizen, alias, healthclinic, statehealth, operator } ); 
+    console.log();
     // const {contracts, loading} = useStreamFetchByKey(Registration.AliasCitizen, () => key, [dep1, dep2, ...])
     // I need to collect the contractId from previous action so it can be set as an AliasCid in the CitizenRegistration
 
@@ -76,7 +81,7 @@ return (
               <TextField
                 label="alias"
                 placeholder="alias"
-                value={alias.alias}
+                value={newalias.alias}
                 onChange={(e) => handleAliasChange('alias', e)}
               />
             </div>

@@ -2,18 +2,16 @@
 
 module Main where
 
-type AccountKey = (Party, CitizenDetails)
-
 data Locationstate = NC | SC | GA  | FL  -- Can I use a Map function here ? 
   deriving (Eq, Show)
+
 data Testresult = Positive | Negative | Pending
   deriving (Eq, Show)
 
 data CitizenDetails = CitizenDetails
  with 
       idtype : Text      
-      ssn: Text 
-      did: Text
+      id : Text 
       firstname: Text
       lastname: Text
       email: Text
@@ -22,6 +20,16 @@ data CitizenDetails = CitizenDetails
       insurance_id: Text
 
        deriving (Eq, Show)
+
+
+data VerifiableCredentials = VerifiableCredentials
+  with
+      connectionid : Text
+      holder_did : Text
+      issuer_did : Text
+
+        deriving (Eq, Show)
+      
 
 data HealthClinicDetails = HealthClinicDetails
  with 
@@ -108,20 +116,44 @@ template CitizenInvitation
      AcceptCitizenInvitation : ContractId CitizenRole
       with
        citizendetails : CitizenDetails
+       verifiablecredentials : VerifiableCredentials
 
       do
-       create CitizenRole with citizen, operator, citizendetails
+       create CitizenRole with citizen, operator, citizendetails, verifiablecredentials
+
+     UpdateCitizenRegistration : ContractId CitizenRole
+      with
+       newcitizendetails : CitizenDetails
+       
+      do  
+        (citizenRoleCid, oldCitizenRole) <- fetchByKey @CitizenRole (citizen)
+        archive citizenRoleCid
+  
+        create CitizenRole with citizen = key oldCitizenRole; citizendetails = newcitizendetails ; operator = operator ; verifiablecredentials = oldCitizenRole.verifiablecredentials
+      
+     SetVerifiableCredentials : ContractId CitizenRole
+       with
+        newverifiablecredentials : VerifiableCredentials
+       
+      do  
+         (citizenRoleCid, oldCitizenRole) <- fetchByKey @CitizenRole (citizen)
+         archive citizenRoleCid
+         create CitizenRole with citizen = key oldCitizenRole; citizendetails = oldCitizenRole.citizendetails ; operator = operator ; verifiablecredentials = newverifiablecredentials
+      
+
+
 
 template CitizenRole
   with 
     operator : Party
     citizen: Party
     citizendetails : CitizenDetails
+    verifiablecredentials : VerifiableCredentials
   where
     signatory citizen
 
-    key (citizen, citizendetails) : AccountKey
-    maintainer key._1
+    key citizen : Party
+    maintainer key
 
     controller citizen can 
       nonconsuming RequestTest : ContractId TestRequest
@@ -132,15 +164,8 @@ template CitizenRole
           create TestRequest with healthclinic, citizen 
           
           
-      UpdateCitizenRegistration : ContractId CitizenRole
-        with
-          newcitizendetails : CitizenDetails
-       
-       do
-          create this with 
-             citizen = citizen
-             operator = operator
-             citizendetails = newcitizendetails
+      
+
 
 
 
@@ -274,13 +299,9 @@ setup = scenario do
   submit operator do
     create CitizenInvitation with citizen = alice ; operator = operator
 
-  let citizendetails = CitizenDetails with idtype = "text" ; ssn = ""; did = "decentralized did"; firstname = "John" ;  lastname =  "Doe"; email = "john.doe@email.com" ; accept_vcoremail = "vc"; hippa_accept =  True;insurance_id = "12345"
-
+  let citizendetails = CitizenDetails with idtype = "text" ; id= ""; firstname = "John" ;  lastname =  "Doe"; email = "john.doe@email.com" ; accept_vcoremail = "vc"; hippa_accept =  True;insurance_id = ""
+  let verifiablecredentials = VerifiableCredentials with connectionid ="" ; holder_did = "", issuer_did = ""
   submit alice do
-    create CitizenRole with  citizen = alice ; operator = operator ; citizendetails = citizendetails
+    create CitizenRole with  citizen = alice ; operator = operator ; citizendetails = citizendetails ; verifiablecredentials = verifiablecredentials
 
-  let newcitizendetails = CitizenDetails with idtype = "text2" ; ssn = ""; did = "decentralized did"; firstname = "John" ;  lastname =  "Doe"; email = "john.doe@email.com" ; accept_vcoremail = "vc"; hippa_accept =  True;insurance_id = "12345"
- 
-  submit alice do 
-   create CitizenRole with  citizen = alice ; operator = operator ; citizendetails = newcitizendetails
 

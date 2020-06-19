@@ -4,22 +4,19 @@ module Registration where
 data CitizenInfo = CitizenInfo with
 
   idtype : Text
-  ssn : Text
-  did : Text
+  id : Text
   firstname : Text
   lastname : Text
   email : Text
   accept_vcoremail: Text
   hippa_accept : Bool
   insurance_id : Text
-  connectionid : Text
 
 
    deriving (Eq, Show)
 
 data CitizenKey = CitizenKey with
   citizen : Party
-  id : Text
    deriving (Eq, Show)
 
 template AliasCitizen
@@ -111,8 +108,8 @@ example = scenario do
 
   -- Bob Registratiom
 
-  let citizenkey = CitizenKey with citizen = bob ; id = "2" 
-  let citizeninfo = CitizenInfo with idtype = "idtype1" ; ssn ="ssn1" ; did = "did1" ; firstname = "firtsname1" ; lastname ="lastname1"; email ="email1"; accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid" ; connectionid ="connectionid1"
+  let citizenkey = CitizenKey with citizen = bob 
+  let citizeninfo = CitizenInfo with idtype = "idtype1" ; id ="id" ; firstname = "firtsname1" ; lastname ="lastname1"; email ="email1"; accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid" 
   (aliasbobCid, aliasbobdata) <- submit bob do fetchByKey @AliasCitizen bob
 
   bobregistration <- submit bob do 
@@ -121,8 +118,8 @@ example = scenario do
 
   -- Alice Registration
 
-  let citizenkey = CitizenKey with citizen = alice ; id = "1"
-  let citizeninfo = CitizenInfo with  idtype = "idtype1" ; ssn ="ssn1" ; did = "did1" ; firstname = "firtsname1" ; lastname ="lastname1"; email ="email1"; accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid" ; connectionid ="connectionid1"
+  let citizenkey = CitizenKey with citizen = alice
+  let citizeninfo = CitizenInfo with  idtype = "idtype1" ; id ="id"  ; firstname = "firtsname1" ; lastname ="lastname1"; email ="email1"; accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid" 
   (aliasaliceCid, aliasalicedata) <- submit alice do fetchByKey @AliasCitizen alice    
   
   aliceregistration <- submit alice do 
@@ -131,7 +128,7 @@ example = scenario do
   (oldRegistrationCid, oldRegistrationData) <- submit alice do fetchByKey @CitizenRegistration citizenkey
   
   let citizenkey = key oldRegistrationData
-  let newCitizenDetails = CitizenInfo with  idtype = "idtype2" ; ssn ="ssn2" ; did = "did2" ; firstname = "firtsname2" ; lastname ="lastname2"; email ="email2";  accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid2" ; connectionid ="connectionid2"
+  let newCitizenDetails = CitizenInfo with  idtype = "idtype2" ;  id = "id2" ; firstname = "firtsname2" ; lastname ="lastname2"; email ="email2";  accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid2" 
 
   aliceupdate <- submit alice do exercise aliceregistration UpdateRegistration with newCitizenDetails
 

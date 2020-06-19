@@ -45,6 +45,7 @@ app.post('/api/connection', cors(), async function (req, res) {
     cache.add("alice", invite.connectionId); 
     console.log("Cache invite.connectionId : " + invite.connectionId);
     res.status(200).send({ invite_url: invite.invitation });
+
 });
 
 const getInvite = async () => {
@@ -57,6 +58,12 @@ const getInvite = async () => {
         console.log(e.message || e.toString());
     }
 }
+
+
+// StoreconnectionID
+
+const connectid = cache.get("alice");
+
 
 
 // //FRONTEND ENDPOINT for issuing credentials

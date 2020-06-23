@@ -44,7 +44,7 @@ app.post('/api/connection', cors(), async function (req, res) {
     const invite = await getInvite();
     cache.add("alice", invite.connectionId); 
     console.log("Cache invite.connectionId : " + invite.connectionId);
-    res.status(200).send({ invite_url: invite.invitation });
+    res.status(200).send({ invite_url: invite.invitation, connectid : invite.connectionId });
 
 });
 
@@ -60,9 +60,18 @@ const getInvite = async () => {
 }
 
 
-// StoreconnectionID
+/* // StoreconnectionID
 
-const connectid = cache.get("alice");
+
+app.post('/api/connectionid', cors(), async function (req, res) {
+    const connectid = cache.get("alice");
+    let operator = "operator";
+    let citizen = " Alice"; 
+    ledger.exercise(Main.CitizenInvitation.SetVerifiableCredentials, curContractId, { operator, citizen, citizendetails, connectionid=connectid });
+
+    console.log("Cache invite.connectionId : " + invite.connectionId);
+    res.status(200).send({ connectionid: connectid });
+ */
 
 
 

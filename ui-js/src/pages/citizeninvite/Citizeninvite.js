@@ -53,6 +53,12 @@ function CitizenInvite({ dispatch }) {
     alias: ''
   });
 
+  const [verifiablecredentials, setConductVC] = React.useState({
+    connectionid: '',
+    holder_dis: '',
+    issuer_did: ''
+  });
+
   const [state, setState] = React.useState({
     checkedA: true
   });
@@ -95,9 +101,9 @@ function CitizenInvite({ dispatch }) {
     console.log("cid: " + curContractId);
     console.log("citizendetails: " + JSON.stringify(citizendetails));
     console.log("alias" + JSON.stringify(alias));
-    let aliasCid = "test";
+  
 
-    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, aliasCid });
+    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, verifiablecredentials });
 
     dispatch(conductclick({
       citizen: citizen,

@@ -24,6 +24,10 @@ export default class CitizenConnection extends Component{
             this.setState({ invite_url: "https://web.cloud.streetcred.id/link/?c_i=" + response.data.invite_url });
             console.log("invite url" + this.state.invite_url);
         });
+        axios.post('/api/connectionid').then((response) => {
+            console.log(response);
+        });
+        
         this.setState({
             qr_open: true,
             qr_placeholder: this.state

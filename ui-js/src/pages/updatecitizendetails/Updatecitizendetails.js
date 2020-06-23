@@ -35,8 +35,7 @@ export default function CitizenUpdate() {
 
   const [citizendetails, setConductForm] = React.useState({
     idtype: '',
-    ssn: '',
-    did: '',
+    id: '',
     firstname: '',
     lastname: '',
     email:'',
@@ -105,8 +104,8 @@ return (
         columns={[
             ["ContractId", "contractId"],
             ["Citizen", "payload.citizen"],
-            ["ID Type", "payload.citizendetails.idtype"],
-            ["Did", "payload.citizendetails.did"]
+            ["ID Type", "payload.citizendetails.id"],
+            ["Did", "payload.citizendetails.idtype"]
           ]}
 
         actions={[
@@ -134,21 +133,13 @@ return (
 
             <div>
               <TextField
-                label="SSN"
-                placeholder="SSN"
+                label="ID"
+                placeholder="id"
                 value={citizendetails.ssn}
-                onChange={(e) => handleConductChange('ssn', e)}
+                onChange={(e) => handleConductChange('id', e)}
               />
             </div>
       
-            <div>
-              <TextField
-                label="DID"
-                placeholder="DID"
-                value={citizendetails.did}
-                onChange={(e) => handleConductChange('did', e)}
-              />
-            </div>
 
             <div>
               <TextField

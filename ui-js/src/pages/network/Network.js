@@ -17,15 +17,32 @@ export default function Network() {
     console.log("operator :" + operator);
     console.log("healthclinic : " + healthclinic);
     console.log("cid: "+ cid);
-    ledger.exercise(Main.Network.InviteHealthClinic, cid, { operator, healthclinic } ); };
-    
+    let roletype = "Citizen"
+    ledger.exercise(Main.Network.InviteHealthClinic, cid, { operator, healthclinic , roletype } ); };
     
   const exerciseInviteCitizen = function(cid, citizen ) {
     console.log("operator :" + operator);
     console.log("citizen : " + citizen);
     console.log("cid: "+ cid);
-    ledger.exercise(Main.Network.InviteCitizen, cid, { operator, citizen } ); };
- 
+    let roletype = "HealthClinic"
+    ledger.exercise(Main.Network.InviteCitizen, cid, { operator, citizen , roletype } ); };
+
+  const exerciseInviteStateHealth = function(cid, statehealth) {
+    console.log("operator :" + operator);
+    console.log("citizen : " + statehealth);
+    console.log("cid: "+ cid);
+    let roletype = "StateHealth"
+    ledger.exercise(Main.Network.InviteStateHealth, cid, { operator, statehealth, roletype  } ); };
+  
+  const exerciseInviteInsuranceCompany = function(cid, insurancecompany ) {
+    console.log("operator :" + operator);
+    console.log("citizen : " + insurancecompany);
+    console.log("cid: "+ cid);
+    let roletype = "InsuranceCompany"
+    ledger.exercise(Main.Network.InviteInsuranceCompany, cid, { operator, insurancecompany, roletype  } ); };
+    
+
+
   return (
     <>
       <Contracts

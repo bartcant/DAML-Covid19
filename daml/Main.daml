@@ -2,10 +2,13 @@
 
 module Main where
 
-data Locationstate = NC | SC | GA  | FL  -- Can I use a Map function here ? 
+data Locationstate = NC | SC | GA  | FL 
   deriving (Eq, Show)
 
 data Testresult = Positive | Negative | Pending
+  deriving (Eq, Show)
+
+data Roletype = Citizen | HealthClinic | StateHealthAgency | InsuranceCompany
   deriving (Eq, Show)
 
 data CitizenDetails = CitizenDetails
@@ -55,13 +58,16 @@ template Network
     nonconsuming InviteHealthClinic : ContractId HealthClinicInvitation
       with 
         healthclinic : Party
+        roletype : Roletype
       do
-        create HealthClinicInvitation with healthclinic, operator
+        create HealthClinicInvitation with healthclinic, operator, roletype
     nonconsuming InviteCitizen : ContractId CitizenInvitation
       with 
         citizen : Party
+        roletype : Roletype
+
       do
-        create CitizenInvitation with citizen, operator
+        create CitizenInvitation with citizen, operator, roletype
 
 
 
@@ -71,6 +77,7 @@ template HealthClinicInvitation
   with
     operator : Party
     healthclinic : Party
+    roletype : Roletype
   where
     signatory operator
 
@@ -109,6 +116,7 @@ template CitizenInvitation
   with
     operator : Party
     citizen : Party
+    roletype : Roletype
   where
     signatory operator
 
@@ -165,9 +173,53 @@ template CitizenRole
           
           
       
+template StateHealthInvitation
+  with
+    operator : Party
+    statehealth : Party
+    roletype : Roletype
+  where
+    signatory operator
+
+    controller statehealth can
+     AcceptStateHealthInvitation : ContractId StateHealthRole
+
+      do
+       create StateHealthRole with statehealth, operator, roletype
+
+
+template StateHealthRole
+  with 
+    operator : Party
+    statehealth : Party
+    roletype : Roletype
+  where
+    signatory statehealth
+
+      
+template InsuranceInvitation
+  with
+    operator : Party
+    insurancecompany : Party
+    roletype : Roletype
+  where
+    signatory operator
+
+    controller insurancecompany can
+     AcceptInsuranceCompanyInvitation : ContractId InsuranceCompanyRole
+
+      do
+       create InsuranceCompanyRole with insurancecompany, operator, roletype
 
 
 
+template InsuranceCompanyRole
+  with 
+    operator : Party
+    insurancecompany : Party
+    roletype : Roletype
+  where
+    signatory insurancecompany
 
 
 template TestRequest
@@ -295,9 +347,9 @@ setup = scenario do
   alice <- getParty "Alice"
 
   submit operator do
-    create HealthClinicInvitation with healthclinic = atriumhealth ; operator = operator
+    create HealthClinicInvitation with healthclinic = atriumhealth ; operator = operator ; roletype = HealthClinic
   submit operator do
-    create CitizenInvitation with citizen = alice ; operator = operator
+    create CitizenInvitation with citizen = alice ; operator = operator ; roletype = Citizen
 
   let citizendetails = CitizenDetails with idtype = "text" ; id= ""; firstname = "John" ;  lastname =  "Doe"; email = "john.doe@email.com" ; accept_vcoremail = "vc"; hippa_accept =  True;insurance_id = ""
   let verifiablecredentials = VerifiableCredentials with connectionid ="" ; holder_did = "", issuer_did = ""

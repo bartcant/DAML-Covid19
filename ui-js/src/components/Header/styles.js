@@ -21,6 +21,24 @@ export default makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
+  appBarAlice: {
+    width: "100vw",
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(["margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    backgroundColor: '#FFB030',
+  },
+  appBarAtriumHealth: {
+    width: "100vw",
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(["margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    backgroundColor: '#B0E0E6',
+  },
   toolbar: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),

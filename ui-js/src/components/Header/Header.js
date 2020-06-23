@@ -19,8 +19,9 @@ function Header({ history }) {
   const reload = useReload();
 
   return (
-    <AppBar position="fixed" className={classes.appBar}>
-      <Toolbar className={classes.toolbar}>
+
+  <AppBar position="fixed" className={userState.role === 'Alice' ? classes.appBarAlice : classes.appBarAtriumHealth}>
+    <Toolbar className={classes.toolbar}>
         <IconButton
           color="inherit"
           onClick={() => toggleSidebar(layoutDispatch)}
@@ -47,7 +48,7 @@ function Header({ history }) {
           )}
         </IconButton>
         <Typography variant="h6" weight="medium" className={classes.logotype}>
-          DAML App Template
+         { userState.role === 'Alice' ? 'Citizen Portal' : 'HealthClinic Portal' }
         </Typography>
         <div className={classes.grow} />
         <Typography variant="h6" weight="medium">User: {userState.party}</Typography>

@@ -7,8 +7,10 @@ import classNames from "classnames";
 import useStyles from "./styles";
 import SidebarLink from "./components/SidebarLink/SidebarLink";
 import { useLayoutState, useLayoutDispatch, toggleSidebar } from "../../context/LayoutContext";
+import { useUserState } from "../../context/UserContext";
 
 function Sidebar({ location }) {
+  const user = useUserState();
   var classes = useStyles();
   var theme = useTheme();
 
@@ -69,7 +71,7 @@ function Sidebar({ location }) {
           location={location}
           isSidebarOpened={isSidebarOpened}
         />
-         
+         { user.role === 'AtriumHealth' &&
          <SidebarLink
           key="Clinicinvite"
           label="Clinicinvite"
@@ -77,7 +79,9 @@ function Sidebar({ location }) {
           icon={(<EditSharp />)}
           location={location}
           isSidebarOpened={isSidebarOpened}
+          
         />
+         }
          <SidebarLink
           key="Clinicupdate"
           label="Clinicupdate"
@@ -86,6 +90,8 @@ function Sidebar({ location }) {
           location={location}
           isSidebarOpened={isSidebarOpened}
         />
+
+        { user.role === 'Alice' &&
         <SidebarLink
           key="Citizeninvite"
           label="Citizeninvite"
@@ -94,6 +100,7 @@ function Sidebar({ location }) {
           location={location}
           isSidebarOpened={isSidebarOpened}
         />
+        }
         <SidebarLink
           key="Citizenupdate"
           label="Citizenupdate"
@@ -102,6 +109,7 @@ function Sidebar({ location }) {
           location={location}
           isSidebarOpened={isSidebarOpened}
         />
+        { user.role === 'Alice' &&
         <SidebarLink
           key="TestRequest"
           label="TestRequest"
@@ -110,6 +118,8 @@ function Sidebar({ location }) {
           location={location}
           isSidebarOpened={isSidebarOpened}
         />
+       }
+       { user.role === 'AtriumHealth' &&
         <SidebarLink
           key="TestAppointment"
           label="TestAppointment"
@@ -118,6 +128,7 @@ function Sidebar({ location }) {
           location={location}
           isSidebarOpened={isSidebarOpened}
         />
+       }
         <SidebarLink
 
           key="Covid19Test"

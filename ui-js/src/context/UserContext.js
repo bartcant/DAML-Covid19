@@ -7,7 +7,7 @@ var UserDispatchContext = React.createContext();
 function userReducer(state, action) {
   switch (action.type) {
     case "LOGIN_SUCCESS":
-      return { ...state, isAuthenticated: true, token: action.token, party: action.party };
+      return { ...state, isAuthenticated: true, token: action.token, party: action.party,  type: action.role };
     case "LOGIN_FAILURE":
       return { ...state, isAuthenticated: false };
     case "SIGN_OUT_SUCCESS":
@@ -21,11 +21,15 @@ function userReducer(state, action) {
 function UserProvider({ children }) {
   const party = localStorage.getItem("daml.party")
   const token = localStorage.getItem("daml.token")
+  const role = localStorage.getItem("daml.role")
+
+
 
   var [state, dispatch] = React.useReducer(userReducer, {
     isAuthenticated: !!token,
     token,
-    party
+    party,
+    role
   });
 
   return (
@@ -56,6 +60,15 @@ function useUserDispatch() {
 
 // ###########################################################
 
+// func - generate rand role - Alice or AtriumHealth
+function generateRandRole() {
+  let min = 1, max = 2;
+  let rand = Math.floor(Math.random() * (max - min + 1) + min);
+  return rand === 1 ? 'Alice' : 'AtriumHealth';
+}
+
+
+
 function loginUser(dispatch, party, userToken, history, setIsLoading, setError) {
   setError(false);
   setIsLoading(true);
@@ -64,8 +77,13 @@ function loginUser(dispatch, party, userToken, history, setIsLoading, setError) 
     const token = userToken || createToken(party)
     localStorage.setItem("daml.party", party);
     localStorage.setItem("daml.token", token);
+     // start - randomize state
+     let role = generateRandRole();
+     localStorage.setItem("daml.role", role);
+     // end - randomize state
 
-    dispatch({ type: "LOGIN_SUCCESS", token, party });
+    dispatch({ type: "LOGIN_SUCCESS", token, party, role });
+    console.log ("role" + role);
     setError(null);
     setIsLoading(false);
     history.push("/app");
@@ -84,6 +102,8 @@ function signOut(event, dispatch, history) {
   event.preventDefault();
   localStorage.removeItem("daml.party");
   localStorage.removeItem("daml.token");
+    // remove rand state
+  localStorage.removeItem("daml.role");
 
   dispatch({ type: "SIGN_OUT_SUCCESS" });
   history.push("/login");

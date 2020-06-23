@@ -17,7 +17,7 @@ initialize: LedgerParties -> Script ()
 initialize parties = do
 
   networkCid <- submit parties.operator do createCmd Network with operator = parties.operator
-  healthClinicCid <- submit parties.operator do exerciseCmd networkCid InviteHealthClinic with healthclinic = parties.atriumhealth
+  healthClinicCid <- submit parties.operator do exerciseCmd networkCid InviteHealthClinic with healthclinic = parties.atriumhealth ; roletype = HealthClinic
 
   pure ()
 

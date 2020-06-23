@@ -49,15 +49,14 @@ function Layout() {
               <Switch>
                 <Route path="/app/default" component={Default} />
                 <Route path="/app/network" component={Network} />
-                <Route path="/app/clinicinvite" component={ClinicInvite} />
+              
                 <Route path="/app/clinicupdate" component={ClinicUpdate} />
-                <Route path="/app/citizeninvite" component={CitizenInvite} />
+               
                 <Route path="/app/citizenupdate" component={CitizenUpdate} />
                 <Route path="/app/citizenalias" component={CitizenAlias} />
                 <Route path="/app/citizenconnection" component={CitizenConnection} />
-                <Route path="/app/testrequest" component={TestRequest} />
-                <Route path="/app/testappointment" component={TestAppointment} />
-                <Route path="/app/covid19test" component={Covid19Test} />  
+               
+                
                 <Route path="/app/streetcred" component={StreetCred} />
                 <Route path="/app/streetcred_C" component={StreetCredC} />
                 <Route path="/app/streetcred_S" component={StreetCredS} />
@@ -65,6 +64,22 @@ function Layout() {
                 <Route path="/app/testlist" component={TestList} />
                 <Route path="/app/finalform" component={StartFormAlt} />
                 <Route path="/app/vclist" component={VCList} />
+
+                { user.role === 'AtriumHealth' &&
+                <Route path="/app/clinicinvite" component={ClinicInvite} />	                     
+                 }              
+                { user.role === 'Alice' &&                 
+                <Route path="/app/citizeninvite" component={CitizenInvite} />
+                }
+                { user.role === 'Alice' &&
+                  <Route path="/app/testrequest" component={TestRequest} />
+                }
+                { user.role === 'AtriumHealth' &&
+                  <Route path="/app/testappointment" component={TestAppointment} />
+                }
+                { user.role === 'AtriumHealth' &&
+                  <Route path="/app/covid19test" component={Covid19Test} />
+                }
 
               </Switch>
             </div>

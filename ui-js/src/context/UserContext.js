@@ -78,7 +78,7 @@ function loginUser(dispatch, party, userToken, history, setIsLoading, setError) 
     localStorage.setItem("daml.party", party);
     localStorage.setItem("daml.token", token);
      // start - randomize state
-     let role = generateRandRole();
+     let role = localStorage.getItem("daml.party",party);
      localStorage.setItem("daml.role", role);
      // end - randomize state
 

@@ -7,7 +7,7 @@ var UserDispatchContext = React.createContext();
 function userReducer(state, action) {
   switch (action.type) {
     case "LOGIN_SUCCESS":
-      return { ...state, isAuthenticated: true, token: action.token, party: action.party,  type: action.role };
+      return { ...state, isAuthenticated: true, token: action.token, party: action.party, role: action.role };
     case "LOGIN_FAILURE":
       return { ...state, isAuthenticated: false };
     case "SIGN_OUT_SUCCESS":
@@ -78,7 +78,7 @@ function loginUser(dispatch, party, userToken, history, setIsLoading, setError) 
     localStorage.setItem("daml.party", party);
     localStorage.setItem("daml.token", token);
      // start - randomize state
-     let role = localStorage.getItem("daml.party",party);
+    const role = localStorage.getItem("daml.party",party);
      localStorage.setItem("daml.role", role);
      // end - randomize state
 
@@ -86,6 +86,7 @@ function loginUser(dispatch, party, userToken, history, setIsLoading, setError) 
     console.log ("role" + role);
     setError(null);
     setIsLoading(false);
+
     history.push("/app");
   } else {
     dispatch({ type: "LOGIN_FAILURE" });
@@ -104,6 +105,8 @@ function signOut(event, dispatch, history) {
   localStorage.removeItem("daml.token");
     // remove rand state
   localStorage.removeItem("daml.role");
+
+  console.log ("dam")
 
   dispatch({ type: "SIGN_OUT_SUCCESS" });
   history.push("/login");

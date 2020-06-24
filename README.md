@@ -61,7 +61,7 @@ Step1 : Building and installing DAML Postgress
         yarn run start
 
 
-<h2> Initiation of the Network
+<h2> Initiation of the Network </h2>
 
 The network can be initiate with pushing a JSON file via Postman
 

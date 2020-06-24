@@ -20,18 +20,24 @@ Step1 : Building and installing DAML Postgress
         For more information :
         Setup a new DB: 'test'
         Setup a Postgress User: 'Bart' with password: 'password'
+        
+   note: when you create a new daml file then 'delete database' and recreate it
 
 3. Build locally .dar file
+
         daml build
 
 4. UX code generation:
+
         daml codegen js -o daml2js .daml/dist/covid19-0.0.1.dar
 
 5. Change to ui-js directory
+
         Cd ui-js directory
 
 6. Install User interface code
-        yarn install
+
+        yarn install --force --frozen-lockfile
 
 
 <h2> Step 2 : Deploying DAML and UX in local environment </h2>

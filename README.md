@@ -61,6 +61,55 @@ Step1 : Building and installing DAML Postgress
         yarn run start
 
 
+<h2> Initiation of the Network
+
+The network can be initiate with pushing a JSON file via Postman
+
+1. Download and install Postman
+
+2. Authentication:
+
+        bearer token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl19fQ.7zUo-7pRVr9QO3Y1xzbbWh-Z5n36MeOuQ-x2GwS3M44
+
+3. Send Post instruction 
+
+        POST localhost:7575/v1/create
+
+        Body:
+
+        {
+                 "templateId": "Main:Network",
+                 "payload": {
+                   "operator": "Operator"
+                 }
+        }
+
+4. You can verify the Network via login in as "Operator" and navigating to the Network left NavBar
+
+
+<H2> Login and Process
+
+1. Login as "Operator"
+
+        go to  
+
+
+2. Login as "Atriumhealth"
+
+
+
+3. Login as "Alice"
+
+
+4. Login as "NCHealth"
+
+
+
+5. Login as "BCBSNC"
+
+
+
+
 
 <h2>For quick reference on DAML: </h2>
 

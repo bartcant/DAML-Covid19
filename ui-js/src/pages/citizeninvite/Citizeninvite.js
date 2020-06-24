@@ -40,8 +40,7 @@ function CitizenInvite({ dispatch }) {
   const [curContractId, setContractId] = React.useState('');
   const [citizendetails, setConductForm] = React.useState({
     idtype: '',
-    ssn: '',
-    did: '',
+    id: '',
     firstname: '',
     lastname: '',
     email: '',
@@ -152,21 +151,13 @@ function CitizenInvite({ dispatch }) {
 
             <div>
               <TextField
-                label="SSN"
-                placeholder="SSN"
-                value={citizendetails.ssn}
-                onChange={(e) => handleConductChange('ssn', e)}
+                label="ID"
+                placeholder="ID"
+                value={citizendetails.id}
+                onChange={(e) => handleConductChange('id', e)}
               />
             </div>
 
-            <div>
-              <TextField
-                label="DID"
-                placeholder="DID"
-                value={citizendetails.did}
-                onChange={(e) => handleConductChange('did', e)}
-              />
-            </div>
 
             <div>
               <TextField

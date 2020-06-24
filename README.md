@@ -87,11 +87,10 @@ The network can be initiate with pushing a JSON file via Postman
 4. You can verify the Network via login in as "Operator" and navigating to the Network left NavBar
 
 
-<H2> Login and Process
+<H2> Login and Process </h2>
 
 1. Login as "Operator"
 
-        go to  
 
 
 2. Login as "Atriumhealth"

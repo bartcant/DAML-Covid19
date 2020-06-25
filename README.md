@@ -27,6 +27,7 @@ Step1 : Building and installing DAML Postgress
 
         daml build
 
+        note: if you rebuilding, then deleted first your .daml and daml2js folders
 4. UX code generation:
 
         daml codegen js -o daml2js .daml/dist/covid19-0.0.1.dar

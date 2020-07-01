@@ -45,7 +45,7 @@ function CitizenInvite({ dispatch }) {
     lastname: '',
     email: '',
     accept_vcoremail: '',
-    hippa_accept: 'True',
+    hippa_accept: true,
     insurance_id: ''
   });
   const [alias, setConductAlias] = React.useState({

@@ -45,7 +45,7 @@ function CitizenInvite({ dispatch }) {
     lastname: '',
     email: '',
     accept_vcoremail: '',
-    hippa_accept: true,
+    hippa_accept: 'True',
     insurance_id: ''
   });
   const [alias, setConductAlias] = React.useState({
@@ -58,13 +58,17 @@ function CitizenInvite({ dispatch }) {
     issuer_did: ''
   });
 
-  const [state, setState] = React.useState({
-    checkedA: true
-  });
+  // const [state, setState] = React.useState({
+  //   checkedA: true
+  // });
 
 
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    if (event.target.name === 'accepthippa') {
+      setState({ ...state, [event.target.name]: event.target.checked ? 'True' : 'False' });  
+    } else {
+      setState({ ...state, [event.target.name]: event.target.checked });
+    }
     handleConductChange('hippa_accept')
   };
 
@@ -106,9 +110,11 @@ function CitizenInvite({ dispatch }) {
 
     dispatch(conductclick({
       citizen: citizen,
+      avcore: citizendetails.accept_vcoremail
       // healthclinic: healthclinic,
       // contractId: cid
     }));
+
     history.push("/app/citizenalias");
   }
 
@@ -200,8 +206,8 @@ function CitizenInvite({ dispatch }) {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.checkedA} onChange={handleChange} name="accepthippa"
-                    value={citizendetails.hippa_accept}
+                    checked={state.hippa_accept === 'True' ? true : false} onChange={handleChange} name="accepthippa"
+                    value={citizendetails.hippa_accept === 'True' ? true : false}
                   />
                 }
                 label="AcceptHippa"

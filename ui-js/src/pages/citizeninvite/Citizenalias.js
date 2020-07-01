@@ -20,7 +20,7 @@ import { conductclick } from '../../actions.js';
 
 axios.defaults.baseURL = 'http://localhost:3002/';
 
-function CreateAlias({dispatch}) {
+function CreateAlias({avcore, dispatch}) {
 
   
   const citizen = useParty();
@@ -69,7 +69,11 @@ function CreateAlias({dispatch}) {
     dispatch(conductclick({
   
     }));
-    history.push("/app/citizenconnection");
+
+    
+    if (avcore !== '' && avcore === 'vc') {
+      history.push("/app/citizenconnection");
+    }
   }
 
 
@@ -120,6 +124,12 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+function mapStateToProps(state) {
+  const { conduct } = state
+
+  return { avcore: conduct.avcore }
+}
 
 
-export default connect(null, mapDispatchToProps)(CreateAlias);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateAlias);

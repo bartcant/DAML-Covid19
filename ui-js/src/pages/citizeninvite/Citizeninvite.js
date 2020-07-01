@@ -202,8 +202,8 @@ function CitizenInvite({ dispatch }) {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={citizendetails.hippa_accept === 'True' ? true : false} onChange={(e) => handleConductChange('hippa_accept', e)} name="hippa_accept"
-                    value={citizendetails.hippa_accept === 'True' ? true : false}
+                    checked={citizendetails.hippa_accept} onChange={(e) => handleConductChange('hippa_accept', e)} name="hippa_accept"
+                    value={citizendetails.hippa_accept}
                   />
                 }
                 label="AcceptHippa"

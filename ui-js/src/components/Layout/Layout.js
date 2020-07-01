@@ -18,7 +18,7 @@ import CitizenConnection from "../../pages/citizeninvite/Citizenconnection";
 import TestRequest from "../../pages/testrequest/Testrequest";
 import TestAppointment from "../../pages/testappointment/Testappointment";
 import Covid19Test from "../../pages/covid19test/Covid19test";
-import StartForm from "../../pages/finalform/Start";
+// import StartForm from "../../pages/finalform/Start";
 import StreetCred from "../../pages/streetcred/Streetcred";
 import StreetCredS from "../../pages/streetcred/Streetcred_submission";
 import StreetCredC from "../../pages/streetcred/Streetcred_connection";

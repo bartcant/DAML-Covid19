@@ -54,8 +54,11 @@ export default function App() {
       }
       localStorage.setItem("daml.party", party);
       localStorage.setItem("daml.token", token);
+    // localStorage.setItem("party.role", role);
 
       userDispatch({ type: "LOGIN_SUCCESS", token, party });
+    //  userDispatch({ type: "LOGIN_SUCCESS", token, party, role });
+      
     })
 
     return (

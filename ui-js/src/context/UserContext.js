@@ -61,11 +61,11 @@ function useUserDispatch() {
 // ###########################################################
 
 // func - generate rand role - Alice or AtriumHealth
-function generateRandRole() {
-  let min = 1, max = 2;
-  let rand = Math.floor(Math.random() * (max - min + 1) + min);
-  return rand === 1 ? 'Alice' : 'AtriumHealth';
-}
+//function generateRandRole() {
+//  let min = 1, max = 2;
+//  let rand = Math.floor(Math.random() * (max - min + 1) + min);
+//  return rand === 1 ? 'Alice' : 'AtriumHealth';
+//}
 
 
 
@@ -77,10 +77,19 @@ function loginUser(dispatch, party, userToken, history, setIsLoading, setError) 
     const token = userToken || createToken(party)
     localStorage.setItem("daml.party", party);
     localStorage.setItem("daml.token", token);
-     // start - randomize state
-    const role = localStorage.getItem("daml.party",party);
-     localStorage.setItem("daml.role", role);
-     // end - randomize state
+  
+    // Role is retrieved from party Name
+    const role = localStorage.getItem("daml.party",party)
+    localStorage.setItem("daml.role", role);
+
+    // Role is retrieved from DAML Contract
+    //const ledger = useLedger();
+    //const assets = useStreamQuery (Main.CitizenInvitation);
+    //const obj = JSON.stringify(assets);
+    //console.log ("obj" + obj);
+    //const obj2 = JSON.parse(obj); 
+    //console.log ("obj results roletype" + obj2.contracts[0].results.payload.roletype);
+
 
     dispatch({ type: "LOGIN_SUCCESS", token, party, role });
     console.log ("role" + role);

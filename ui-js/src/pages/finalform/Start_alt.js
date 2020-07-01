@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
+import React from 'react'
 // import { render } from 'react-dom'
 //import ReactDOM from 'react-dom';
 import Styles from './Styles'
-import { Form, Field } from 'react-final-form'
+import {Form, Field}  from 'react-final-form'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import TextField from 'material-ui/TextField'
@@ -11,7 +11,7 @@ import states from './states'
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { useStreamQuery, useParty, useLedger } from "@daml/react";
+import { useLedger } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
 // redux connect
 import { connect } from 'react-redux'
@@ -160,4 +160,4 @@ function mapStateToProps(state) {
   return { conduct: state.conduct };
 }
 
-export default connect(mapStateToProps)(StartForm);
+export default connect( mapStateToProps)(StartForm);

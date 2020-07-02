@@ -110,11 +110,12 @@ function CitizenInvite({ dispatch }) {
 
     dispatch(conductclick({
       citizen: citizen,
+      avcore: citizendetails.accept_vcoremail
       // healthclinic: healthclinic,
       // contractId: cid
     }));
 
-    history.push(citizendetails.accept_vcoremail === 'vc' ? "/app/citizenconnection" : "/app/citizenalias");
+    history.push("/app/citizenalias");
   }
 
 

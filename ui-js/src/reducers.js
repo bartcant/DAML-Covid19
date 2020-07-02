@@ -10,13 +10,15 @@ import {
 const conductReducer = (state = {
   citizen: '',
   healthclinic: '',
-  contractId: ''
+  contractId: '',
+  avcore: '',
 }, action) => {
   if (action.type === CONDUCT_CLICKED) {
     return {
       citizen: action.payload.citizen,
       healthclinic: action.payload.healthclinic,
-      contractId: action.payload.contractId
+      contractId: action.payload.contractId,
+      avcore: action.payload.avcore,
     }
   }
 

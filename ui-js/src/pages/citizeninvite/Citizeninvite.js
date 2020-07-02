@@ -113,7 +113,8 @@ function CitizenInvite({ dispatch }) {
       // healthclinic: healthclinic,
       // contractId: cid
     }));
-    history.push("/app/citizenalias");
+
+    history.push(citizendetails.accept_vcoremail === 'vc' ? "/app/citizenconnection" : "/app/citizenalias");
   }
 
 

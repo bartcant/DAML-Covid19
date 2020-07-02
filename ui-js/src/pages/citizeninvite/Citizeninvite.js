@@ -88,7 +88,10 @@ function CitizenInvite({ dispatch }) {
   const handleConductChange = (idx, event) => {
     setConductForm({
       ...citizendetails, [idx]: event.target.value
-    })
+    });
+    console.log ("handle idx" + idx );
+    console.log ("handle event.target.value" + event.target.value );
+
   }
 
   const exerciseCitizenAccept = function () {

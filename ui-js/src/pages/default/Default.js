@@ -27,21 +27,22 @@ export default function Default() {
 // } 
 
 const assets = useQuery(Main.CitizenInvitation); 
-const obj = JSON.stringify(assets);
-console.log ("asset : " + obj);
-const obj2 = JSON.parse(obj); 
-console.log ("obj contracts : " + JSON.stringify(obj2.contracts[0]));
-console.log ("templateId : " +  JSON.stringify(obj2.contracts[0].templateId));
+//const obj = JSON.stringify(assets);
+//console.log ("asset : " + obj);
+//const obj2 = JSON.parse(assets); 
+//console.log ("obj contracts : " + obj2.contracts[0]);
+// console.log ("templateId : " +  JSON.stringify(obj2.contracts[0].templateId));
+console.log ("roletype : " + assets.contracts[0].payload);
 
 
   return (
     <>
       {/*  <Contracts
         contracts={assets.contracts}
-          */}
+         
     
        
-      />
+       /> */}
     </>
   );
 

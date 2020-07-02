@@ -20,7 +20,7 @@ import { conductclick } from '../../actions.js';
 
 axios.defaults.baseURL = 'http://localhost:3002/';
 
-function CreateAlias({conductCitizen, dispatch}) {
+function CreateAlias({avcore, dispatch}) {
 
   
   const citizen = useParty();

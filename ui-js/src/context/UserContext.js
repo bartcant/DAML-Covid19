@@ -75,12 +75,12 @@ function loginUser(dispatch, party, userToken, history, setIsLoading, setError) 
 
     // Role is retrieved from DAML Contract
    
-    // NEW CODE HERE TO RETRIEVE ROLE FROM CITIZENINVITATION (Role data element)
+    // NEW CODE HERE TO RETRIEVE ROLE FROM CITIZEN (Role data element)
 
    /* const getRole = async () => {
       try {
         const assets = await post('/v1/query', {
-          body:  [Main:CitizenInvitation],  "query" : "citizen: daml.party"})
+          body:  [Main:Citizen],  "query" : "citizen: daml.party"})
          
          })
         }};

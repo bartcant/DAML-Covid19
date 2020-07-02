@@ -26,14 +26,11 @@ export default function Default() {
  // const obj2 = JSON.parse(obj); 
 // } 
 
-const assets = useQuery(Main.CitizenInvitation); 
-//const obj = JSON.stringify(assets);
-//console.log ("asset : " + obj);
-//const obj2 = JSON.parse(assets); 
-//console.log ("obj contracts : " + obj2.contracts[0]);
-// console.log ("templateId : " +  JSON.stringify(obj2.contracts[0].templateId));
-console.log ("roletype : " + assets.contracts[0].payload);
 
+const QueryResult = useQuery(Main.CitizenInvitation); 
+const assets = QueryResult.contracts.map(c => c.payload.roletype);
+const roletype = JSON.stringify (assets);
+console.log ("Roletype : " + roletype)
 
   return (
     <>

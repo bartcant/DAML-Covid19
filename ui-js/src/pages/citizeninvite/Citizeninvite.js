@@ -63,14 +63,10 @@ function CitizenInvite({ dispatch }) {
   // });
 
 
-  const handleChange = (event) => {
-    if (event.target.name === 'accepthippa') {
-      setState({ ...state, [event.target.name]: event.target.checked ? 'True' : 'False' });  
-    } else {
-      setState({ ...state, [event.target.name]: event.target.checked });
-    }
-    handleConductChange('hippa_accept')
-  };
+  // const handleChange = (event) => {
+  //   setState({ ...state, [event.target.name]: event.target.checked });
+  //   handleConductChange('hippa_accept')
+  // };
 
 
   const handleOptionChange = function (changeEvent) {
@@ -90,9 +86,15 @@ function CitizenInvite({ dispatch }) {
 
 
   const handleConductChange = (idx, event) => {
-    setConductForm({
-      ...citizendetails, [idx]: event.target.value
-    })
+    if (idx === 'hippa_accept') {
+      setConductForm({
+        ...citizendetails, [idx]: (event.target.value ? 'True' : 'False')
+      })
+    } else {
+      setConductForm({
+        ...citizendetails, [idx]: event.target.value
+      })
+    }
   }
 
   const exerciseCitizenAccept = function () {
@@ -206,7 +208,7 @@ function CitizenInvite({ dispatch }) {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.hippa_accept === 'True' ? true : false} onChange={handleChange} name="accepthippa"
+                    checked={state.hippa_accept === 'True' ? true : false} onChange={(e) => handleConductChange('hippa_accept', e)} name="hippa_accept"
                     value={citizendetails.hippa_accept === 'True' ? true : false}
                   />
                 }

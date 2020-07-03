@@ -1,4 +1,9 @@
 import defaultTheme from "./default";
+import aliceTheme from "./alice";
+import atriumTheme from "./atrium";
+import bobTheme from "./bob";
+import ncTheme from "./nc";
+import operatorTheme from "./operator";
 
 import { createMuiTheme } from "@material-ui/core";
 
@@ -27,4 +32,9 @@ const overrides = {
 
 export default {
   default: createMuiTheme({ ...defaultTheme, ...overrides }),
+  alice: createMuiTheme({ ...defaultTheme, ...overrides, ...aliceTheme }),
+  atrium: createMuiTheme({ ...defaultTheme, ...overrides, ...atriumTheme }),
+  bob: createMuiTheme({ ...defaultTheme, ...overrides, ...bobTheme }),
+  nc: createMuiTheme({ ...defaultTheme, ...overrides, ...ncTheme }),
+  operator: createMuiTheme({ ...defaultTheme, ...overrides, ...operatorTheme })
 };

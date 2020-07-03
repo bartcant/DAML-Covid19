@@ -35,7 +35,7 @@ function Header({ history }) {
 
   return (
 
-  <AppBar position="fixed" className={userState.role === 'Alice' ? classes.appBarAlice : classes.appBarAtriumHealth}>
+  <AppBar position="fixed" className={classes.appBar}>
     <Toolbar className={classes.toolbar}>
         <IconButton
           color="inherit"

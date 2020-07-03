@@ -7,7 +7,9 @@ import { useUserState, useUserDispatch } from "../context/UserContext";
 // import redux & store
 import { createStore, combineReducers } from "redux";
 import { Provider, connect } from 'react-redux';
+import { ThemeProvider } from "@material-ui/styles";
 
+import Themes from "../themes";
 import rootReducer from '../reducers';
 
 // Store
@@ -19,22 +21,46 @@ const store = createStore(
 export default function App() {
   const userState = useUserState();
 
+  let theme;
+  switch (userState.role) {
+    case 'Alice':
+      theme = Themes.alice;
+      break;
+    case 'AtriumHealth':
+      theme = Themes.atrium;
+      break;
+    case 'Bob':
+      theme = Themes.bob;
+      break;
+    case 'Operator':
+      theme = Themes.operator;
+      break;
+    case 'NCHealth':
+      theme = Themes.nc;
+      break;
+    default:
+      theme = Themes.default;
+      break;
+  }
+
   return (
-    <Provider store={store}>
-      <HashRouter>
-        <Switch>
-          <Route exact path="/" component={RootRoute} />
-          <Route
-            exact
-            path="/app"
-            render={() => <Redirect to="/app/report" />}
-          />
-          <PrivateRoute path="/app" component={Layout} />
-          <PublicRoute path="/login" component={Login} />
-          <Route component={Error} />
-        </Switch>
-      </HashRouter>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <HashRouter>
+          <Switch>
+            <Route exact path="/" component={RootRoute} />
+            <Route
+              exact
+              path="/app"
+              render={() => <Redirect to="/app/report" />}
+            />
+            <PrivateRoute path="/app" component={Layout} />
+            <PublicRoute path="/login" component={Login} />
+            <Route component={Error} />
+          </Switch>
+        </HashRouter>
+      </Provider>
+    </ThemeProvider>
   );
 
   // #######################################################################

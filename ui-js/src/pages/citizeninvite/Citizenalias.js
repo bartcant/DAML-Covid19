@@ -62,7 +62,8 @@ function CreateAlias({avcore, dispatch}) {
     const alias = newalias.alias;
     console.log("alias " + alias);
     ledger.create(Registration.AliasCitizen, { citizen, alias, healthclinic, statehealth, operator } ); 
-    console.log();
+    alert("Alias Information is succesfully stored on the Ledger");
+
     // const {contracts, loading} = useStreamFetchByKey(Registration.AliasCitizen, () => key, [dep1, dep2, ...])
     // I need to collect the contractId from previous action so it can be set as an AliasCid in the CitizenRegistration
 

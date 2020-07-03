@@ -2,7 +2,7 @@ import React from 'react'
 // import { render } from 'react-dom'
 //import ReactDOM from 'react-dom';
 import Styles from './Styles'
-import {Form, Field}  from 'react-final-form'
+import {Form }  from 'react-final-form'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import TextField from 'material-ui/TextField'

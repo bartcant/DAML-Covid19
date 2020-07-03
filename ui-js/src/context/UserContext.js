@@ -112,8 +112,6 @@ function signOut(event, dispatch, history) {
     // remove rand state
   localStorage.removeItem("daml.role");
 
-  console.log ("dam")
-
   dispatch({ type: "SIGN_OUT_SUCCESS" });
   history.push("/login");
 }

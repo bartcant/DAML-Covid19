@@ -18,21 +18,22 @@ function Header({ history }) {
   const userDispatch = useUserDispatch();
   const reload = useReload();
 
-/* 
-  const { Portalheading } =
+
+  let Portalheader = '';
   switch (userState.role) {
-    case 'Alice':
-      return 'CitizenPortal';
-    case 'Atriumhealth':
-      return { portalheading: 'HealthClinicPortal' };
-    case 'Operator':
-      return { portalheading: 'HealthClinicPortal' };
-    default:
-      return null; */
-  
-
-
-
+      case 'Alice':
+        Portalheader = "Citizen Portal";
+        break;
+      case 'AtriumHealth':
+        Portalheader = "Clinic Portal";
+        break;
+      case 'Operator':
+        Portalheader = "Covid19 State Surveillance Operator Portal";
+        break;
+      case 'NCHealth':
+        Portalheader = "Covid19 State Surveillance Agency Portal";
+        break;
+  }
   return (
 
   <AppBar position="fixed" className={classes.appBar}>
@@ -63,11 +64,7 @@ function Header({ history }) {
           )}
         </IconButton>
         <Typography variant="h6" weight="medium" className={classes.logotype}>
-
-         { userState.role === 'Alice' ? 'Citizen Portal' : 'Covid19-State Surveillance  Portal' }
-
-          {/* {PortalHeading}  */}
-
+        {Portalheader}
         </Typography>
         <div className={classes.grow} />
         <Typography variant="h6" weight="medium">User: {userState.party}</Typography>

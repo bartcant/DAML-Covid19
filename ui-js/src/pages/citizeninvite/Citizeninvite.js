@@ -32,7 +32,6 @@ function CitizenInvite({ dispatch }) {
   const operator = "Operator";
   const ledger = useLedger();
   const assets = useStreamQuery(Main.CitizenInvitation);
-  // const assets2 = useStreamQuery (Registration.CitizenAlias);
   const history = useHistory();
 
 
@@ -54,7 +53,7 @@ function CitizenInvite({ dispatch }) {
 
   const [verifiablecredentials, setConductVC] = React.useState({
     connectionid: '',
-    holder_dis: '',
+    holder_did: '',
     issuer_did: ''
   });
 
@@ -108,14 +107,21 @@ function CitizenInvite({ dispatch }) {
     console.log("citizendetails: " + JSON.stringify(citizendetails));
     console.log("alias" + JSON.stringify(alias));
   
-
     ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, verifiablecredentials });
+    alert("Citizen Information is succesfully stored on the Ledger");
+
+    /* try {
+    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, verifiablecredentials });
+    }
+    catch(e) {
+      console.error(e);
+      alert("Something went wrong");
+    } */
+
 
     dispatch(conductclick({
       citizen: citizen,
       avcore: citizendetails.accept_vcoremail
-      // healthclinic: healthclinic,
-      // contractId: cid
     }));
 
     history.push("/app/citizenalias");
@@ -195,7 +201,7 @@ function CitizenInvite({ dispatch }) {
             </div>
 
             <div>
-              <FormControl component="acceptcredentials">
+              <FormControl>
                 <FormLabel component="legend"> Credential Type</FormLabel>
                 <RadioGroup aria-label="Accept Type" name="accepttype" value={citizendetails.accept_vcoremail} onChange={(e) => handleConductChange('accept_vcoremail', e)}>
                   <FormControlLabel control={<Radio />} label="Email" value="email" />

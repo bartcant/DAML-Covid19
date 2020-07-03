@@ -168,7 +168,7 @@ return (
             </div>
              
             <div>
-               <FormControl component="acceptcredentials">
+               <FormControl>
                  <FormLabel component="legend"> Credential Type</FormLabel>
                     <RadioGroup aria-label="Accept Type" name="accepttype" value={citizendetails.accept_vcoremail} onChange={(e) => handleConductChange('accept_vcoremail', e)}>
                      <FormControlLabel  control={<Radio />} label="Email" value="email"  />

@@ -1,5 +1,5 @@
 export default {
     appBar: {
-        backgroundColor: '#036b02'
+        backgroundColor: '#eed202'
     }
 };

@@ -5,8 +5,8 @@ import Error from "../pages/error/Error";
 import Login from "../pages/login/Login";
 import { useUserState, useUserDispatch } from "../context/UserContext";
 // import redux & store
-import { createStore, combineReducers } from "redux";
-import { Provider, connect } from 'react-redux';
+import { createStore } from "redux";
+import { Provider } from 'react-redux';
 import { ThemeProvider } from "@material-ui/styles";
 
 import Themes from "../themes";
@@ -24,19 +24,19 @@ export default function App() {
   let theme;
   switch (userState.role) {
     case 'Alice':
-      theme = Themes.alice;
+      theme = Themes.citizen;
       break;
     case 'AtriumHealth':
-      theme = Themes.atrium;
+      theme = Themes.clinic;
       break;
     case 'Bob':
-      theme = Themes.bob;
+      theme = Themes.citizen;
       break;
     case 'Operator':
       theme = Themes.operator;
       break;
     case 'NCHealth':
-      theme = Themes.nc;
+      theme = Themes.agency;
       break;
     default:
       theme = Themes.default;

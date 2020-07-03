@@ -1,13 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Drawer, IconButton, List } from "@material-ui/core";
-import { Home, List as ListIcon, ArrowBack, EditSharp } from "@material-ui/icons";
+import {
+  Home,
+  ArrowBack,
+  EditSharp,
+  LocalHospital,
+  Person,
+  NoteAdd,
+  Extension,
+  ListAlt,
+  Healing,
+} from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
 import { withRouter } from "react-router-dom";
 import classNames from "classnames";
 import useStyles from "./styles";
 import SidebarLink from "./components/SidebarLink/SidebarLink";
-import { useLayoutState, useLayoutDispatch, toggleSidebar } from "../../context/LayoutContext";
+import {
+  useLayoutState,
+  useLayoutDispatch,
+  toggleSidebar,
+} from "../../context/LayoutContext";
 import { useUserState } from "../../context/UserContext";
+// import { covid19_icon } from "./components/covid19.png";
 
 function Sidebar({ location }) {
   const user = useUserState();
@@ -21,7 +36,7 @@ function Sidebar({ location }) {
   // local
   var [isPermanent, setPermanent] = useState(true);
 
-  useEffect(function() {
+  useEffect(function () {
     window.addEventListener("resize", handleWindowWidthChange);
     handleWindowWidthChange();
     return function cleanup() {
@@ -57,111 +72,103 @@ function Sidebar({ location }) {
       <List className={classes.sidebarList}>
         <SidebarLink
           key="default"
-          label="Default"
+          label="Experiments"
           path="/app/default"
-          icon={(<Home />)}
+          icon={<Home />}
           location={location}
           isSidebarOpened={isSidebarOpened}
         />
-        <SidebarLink
-          key="Network"
-          label="Network"
-          path="/app/network"
-          icon={(<ListIcon />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-        />
-         { user.role === 'AtriumHealth' &&
-         <SidebarLink
-          key="Clinicinvite"
-          label="Clinicinvite"
-          path="/app/clinicinvite"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-          
-        />
-         }
-         <SidebarLink
-          key="Clinicupdate"
-          label="Clinicupdate"
-          path="/app/clinicupdate"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-        />
-
-        { user.role === 'Alice' &&
-        <SidebarLink
-          key="Citizeninvite"
-          label="Citizeninvite"
-          path="/app/citizeninvite"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-        />
+        {user.role === "Operator" && 
+          <SidebarLink
+            key="Network"
+            label="Network"
+            path="/app/network"
+            icon={<Extension />}
+            location={location}
+            isSidebarOpened={isSidebarOpened}
+          />
         }
-        <SidebarLink
-          key="Citizenupdate"
-          label="Citizenupdate"
-          path="/app/citizenupdate"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-        />
-        { user.role === 'Alice' &&
-        <SidebarLink
-          key="TestRequest"
-          label="TestRequest"
-          path="/app/testrequest"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-        />
-       }
-       { user.role === 'AtriumHealth' &&
-        <SidebarLink
-          key="TestAppointment"
-          label="TestAppointment"
-          path="/app/testappointment"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-        />
-       }
-        <SidebarLink
-
-          key="Covid19Test"
-          label="Covid19Test"
-          path="/app/covid19test"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-      />
-        <SidebarLink
-          key="Covid19TestAlt"
-          label="Covid19TestAlst"
-          path="/app/covid19testalt"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-      />
-        <SidebarLink
-          key="Testlist"
-          label="Test List"
-          path="/app/testlist"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-      />
-         <SidebarLink
-          key="VCList"
-          label="VC List"
-          path="/app/vclist"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-      />
+        {user.role === "AtriumHealth" && 
+          <SidebarLink
+            key="Clinicinvite"
+            label="Clinicinvite"
+            path="/app/clinicinvite"
+            icon={<LocalHospital />}
+            location={location}
+            isSidebarOpened={isSidebarOpened}
+          />
+        }
+        {user.role === "AtriumHealth" && 
+          <SidebarLink
+            key="Clinicupdate"
+            label="Clinicupdate"
+            path="/app/clinicupdate"
+            icon={<NoteAdd />}
+            location={location}
+            isSidebarOpened={isSidebarOpened}
+          />
+        }
+        {user.role === ("Alice" && "Bob")  && 
+          <SidebarLink
+            key="Citizeninvite"
+            label="Citizeninvite"
+            path="/app/citizeninvite"
+            icon={<Person />}
+            location={location}
+            isSidebarOpened={isSidebarOpened}
+          />
+        }
+        {user.role === ("Alice" && "Bob")  && 
+          <SidebarLink
+            key="Citizenupdate"
+            label="Citizenupdate"
+            path="/app/citizenupdate"
+            icon={<NoteAdd />}
+            location={location}
+            isSidebarOpened={isSidebarOpened}
+          />
+        }
+        {user.role === ("Alice" && "Bob")  && 
+          <SidebarLink
+            key="TestRequest"
+            label="TestRequest"
+            path="/app/testrequest"
+            icon={<Healing />}
+            location={location}
+            isSidebarOpened={isSidebarOpened}
+          />
+        }
+        {user.role === "AtriumHealth" && 
+          <SidebarLink
+            key="TestAppointment"
+            label="TestAppointment"
+            path="/app/testappointment"
+            icon={<Healing />}
+            location={location}
+            isSidebarOpened={isSidebarOpened}
+          />
+        }
+        {user.role == ("NCHealth" && "Operator")  && 
+          <SidebarLink
+            key="Testlist"
+            label="Test List"
+            path="/app/testlist"
+            icon={<EditSharp />}
+            location={location}
+            isSidebarOpened={isSidebarOpened}
+          />
+        }
+        {user.role ===  ("NCHealth" && "Operator") && 
+          <SidebarLink
+            key="VCList"
+            label="VC List"
+            path="/app/vclist"
+            icon={<ListAlt />}
+            location={location}
+            isSidebarOpened={isSidebarOpened}
+          />
+        }
+        {/* 
           <SidebarLink
           key="StreetCred"
           label="StreetCred"
@@ -187,8 +194,7 @@ function Sidebar({ location }) {
           icon={(<EditSharp />)}
           location={location}
           isSidebarOpened={isSidebarOpened}
-      />
-
+      /> */}
       </List>
     </Drawer>
   );

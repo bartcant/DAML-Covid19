@@ -86,9 +86,15 @@ function CitizenInvite({ dispatch }) {
 
 
   const handleConductChange = (idx, event) => {
-    setConductForm({
-      ...citizendetails, [idx]: event.target.value
-    })
+    if (idx === 'hippa_accept') {
+      setConductForm({
+        ...citizendetails, [idx]: event.target.value === "true" ? true : false
+      })
+    } else {
+      setConductForm({
+        ...citizendetails, [idx]: event.target.value
+      })
+    }
   }
 
   const exerciseCitizenAccept = function () {

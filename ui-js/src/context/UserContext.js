@@ -1,5 +1,6 @@
 import React from "react";
 import { createToken, dablLoginUrl } from "../config";
+import { CitizenRole } from "@daml2js/Covid19-0.0.1/lib/Main";
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
@@ -77,16 +78,56 @@ function loginUser(dispatch, party, userToken, history, setIsLoading, setError) 
    
     // NEW CODE HERE TO RETRIEVE ROLE FROM CITIZEN (Role data element)
 
-   /* const getRole = async () => {
+    const fetchUpdate = async () => {
       try {
-        const assets = await post('/v1/query', {
-          body:  [Main:Citizen],  "query" : "citizen: daml.party"})
-         
-         })
-        }};
-      const roletype = assets.contracts.map(c => c.payload.roletype)
+        const contractResponse = await post('/v1/query', {
+          body: {
+            "templateIds": ["Main:CitizenInvitation"],
+            "query" : {"citizen" : "Alice"}
+                 }
+         });
+        
+         const citizenContractResponse = await contractResponse.json();
+         const assets = citizenContractResponse.contracts.map(c => c.payload.roletype);
+         const roletype = JSON.stringify (assets);
+         console.log ("Roletype : " + roletype);
+        
+      }
+      catch(err) {
+        alert("Something went wrong");
+      }
+    }; 
 
-    */
+
+    // Sample code from another project called dablechat - https://github.com/digital-asset/dablchat
+      /* const fetchUpdate = async () => {
+        try {
+          const allContractsResponse = await post('/v1/query', {
+            body: JSON.stringify({ 'templateIds': [
+              CHAT_TEMPLATE,
+              MESSAGE_TEMPLATE,
+              USER_TEMPLATE,
+              ADDRESS_BOOK_TEMPLATE,
+              SELF_ALIAS_TEMPLATE
+            ] })
+          });
+    
+          const allPublicContractsResponse = await postPublic('/v1/query', {
+            body: JSON.stringify({ 'templateIds': [
+              SELF_ALIAS_TEMPLATE
+            ] })
+          });
+    
+          const allContracts = await allContractsResponse.json();
+    
+          const chats = allContracts.result.filter(c => c.templateId.endsWith(CHAT_TEMPLATE));
+          const messages = allContracts.result.filter(m => m.templateId.endsWith(MESSAGE_TEMPLATE));
+          const user = allContracts.result.find(u => u.templateId.endsWith(USER_TEMPLATE));
+          const selfAlias = allContracts.result.find(ma => ma.templateId.endsWith(SELF_ALIAS_TEMPLATE));
+          const addressBook = allContracts.result.find(ma => ma.templateId.endsWith(ADDRESS_BOOK_TEMPLATE));
+ */
+
+  
 
     dispatch({ type:"LOGIN_SUCCESS", token, party, role });
     console.log ("role" + role);

@@ -108,7 +108,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         }
-        {user.role === ("Alice" && "Bob")  && 
+        {user.role === ("Alice")  && 
           <SidebarLink
             key="Citizeninvite"
             label="Citizeninvite"

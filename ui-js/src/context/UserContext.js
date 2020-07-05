@@ -78,7 +78,7 @@ function loginUser(dispatch, party, userToken, history, setIsLoading, setError) 
    
     // NEW CODE HERE TO RETRIEVE ROLE FROM CITIZEN (Role data element)
 
-    const fetchUpdate = async () => {
+    /* const fetchUpdate = async () => {
       try {
         const contractResponse = await post('/v1/query', {
           body: {
@@ -96,7 +96,7 @@ function loginUser(dispatch, party, userToken, history, setIsLoading, setError) 
       catch(err) {
         alert("Something went wrong");
       }
-    }; 
+    };  */
 
 
     // Sample code from another project called dablechat - https://github.com/digital-asset/dablchat

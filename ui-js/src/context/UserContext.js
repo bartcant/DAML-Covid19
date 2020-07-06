@@ -1,6 +1,5 @@
 import React from "react";
 import { createToken, dablLoginUrl } from "../config";
-import { CitizenRole } from "@daml2js/Covid19-0.0.1/lib/Main";
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
@@ -65,6 +64,42 @@ function loginUser(dispatch, party, userToken, history, setIsLoading, setError) 
   setError(false);
   setIsLoading(true);
 
+ const token = 
+ "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIkFsaWNlIl19fQ.tNx_JrnCsqLu9l6wFXbmjVB4j16PdJ2wa4TG-zx2ixQ"
+  const headers = {
+    "Authorization": `Bearer ${token.toString()}`,
+    'Content-Type': 'application/json'
+  }
+
+  const siteSubDomain = (path = '/data/') => {
+    if (window.location.hostname === 'localhost') {
+        return window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+    }
+
+    let host = window.location.host.split('.')
+    const ledgerId = host[0];
+    let apiUrl = host.slice(1)
+    apiUrl.unshift('api')
+
+    return apiUrl.join('.') + (window.location.port ? ':' + window.location.port : '') + path + ledgerId;
+  }
+
+  const post = (url, options = {}) => {
+    Object.assign(options, { method: 'POST', headers });
+
+    return fetch('//' + siteSubDomain() + url, options);
+  }
+
+  const fetchPublicToken = async () => {
+    const response = await fetch('//' + siteSubDomain('/api/ledger/') + '/public/token', { method: 'POST' });
+    const jsonResp = await response.json();
+    const accessToken = jsonResp['access_token'];
+    return accessToken;
+  }
+
+
+
+
   if (!!party) {
     const token = userToken || createToken(party)
     localStorage.setItem("daml.party", party);
@@ -78,7 +113,8 @@ function loginUser(dispatch, party, userToken, history, setIsLoading, setError) 
    
     // NEW CODE HERE TO RETRIEVE ROLE FROM CITIZEN (Role data element)
 
-    /* const fetchUpdate = async () => {
+    const fetchUpdate = async () => {
+      console.log("insidefetch");
       try {
         const contractResponse = await post('/v1/query', {
           body: {
@@ -94,9 +130,9 @@ function loginUser(dispatch, party, userToken, history, setIsLoading, setError) 
         
       }
       catch(err) {
-        alert("Something went wrong");
+        alert("Something went wrong with roletype");
       }
-    };  */
+    }; 
 
 
     // Sample code from another project called dablechat - https://github.com/digital-asset/dablchat

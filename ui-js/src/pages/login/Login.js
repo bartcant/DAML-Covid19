@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Grid, CircularProgress, Typography, Button, TextField, Fade } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import useStyles from "./styles";
-import logo from "./logo.svg";
 import { useUserDispatch, loginUser, loginDablUser } from "../../context/UserContext";
 import { isLocalDev } from "../../config";
+import logortledgers from "./400dpiLogoCropped.jpg"
 
 function Login(props) {
   var classes = useStyles();
@@ -21,8 +21,8 @@ function Login(props) {
   return (
     <Grid container className={classes.container}>
       <div className={classes.logotypeContainer}>
-        <img src={logo} alt="logo" className={classes.logotypeImage} />
-        <Typography className={classes.logotypeText}>App Template</Typography>
+        <img src={logortledgers} alt="logo" className={classes.logotypeImage} />
+        <Typography className={classes.logotypeText}>Covid19 State Surveillance System</Typography>
       </div>
       <div className={classes.formContainer}>
         <div className={classes.form}>

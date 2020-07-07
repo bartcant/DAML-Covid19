@@ -53,8 +53,15 @@ export default function Network() {
     let roletype = "HealthClinic"
     let healthclinic = partyname.namehealthclinic
     console.log("healthclinic : " + healthclinic);
-    ledger.exercise(Main.Network.InviteHealthClinic, curContractId, { operator, healthclinic , roletype } );
-    console.log("HealthClinic Registerd: " + healthclinic) };
+    ledger.exercise(Main.Network.InviteHealthClinic, curContractId, { operator, healthclinic , roletype } )
+    .then(() => {
+      alert("HealthClinic is successfully stored!");
+    })
+    .catch((error) => {
+      alert("Something went wrong!\n\n"+error);
+    });
+    console.log("HealthClinic Registerd: " + healthclinic)
+  };
     
   const exerciseInviteCitizen = function() {
 
@@ -63,22 +70,43 @@ export default function Network() {
     let roletype = "Citizen"
     let citizen = partyname.namecitizen
     console.log("citizen : " + citizen);
-    ledger.exercise(Main.Network.InviteCitizen, curContractId, { operator, citizen , roletype } );
-    console.log("Citizen Registerd: " + citizen) };
+    ledger.exercise(Main.Network.InviteCitizen, curContractId, { operator, citizen , roletype } )
+    .then(() => {
+      alert("Citizen is successfully stored!");
+    })
+    .catch((error) => {
+      alert("Something went wrong!\n\n"+error);
+    });
+    console.log("Citizen Registerd: " + citizen)
+  };
 
   const exerciseInviteStateHealth = function(cid, statehealth) {
     console.log("operator :" + operator);
     console.log("citizen : " + statehealth);
     console.log("cid: "+ cid);
     let roletype = "StateHealth"
-    ledger.exercise(Main.Network.InviteStateHealth, cid, { operator, statehealth, roletype  } ); };
+    ledger.exercise(Main.Network.InviteStateHealth, cid, { operator, statehealth, roletype  } )
+    .then(() => {
+      alert("StateHealth is successfully stored!");
+    })
+    .catch((error) => {
+      alert("Something went wrong!\n\n"+error);
+    });
+  };
   
   const exerciseInviteInsuranceCompany = function(cid, insurancecompany ) {
     console.log("operator :" + operator);
     console.log("citizen : " + insurancecompany);
     console.log("cid: "+ cid);
     let roletype = "InsuranceCompany"
-    ledger.exercise(Main.Network.InviteInsuranceCompany, cid, { operator, insurancecompany, roletype  } ); };
+    ledger.exercise(Main.Network.InviteInsuranceCompany, cid, { operator, insurancecompany, roletype  } )
+    .then(() => {
+      alert("InsuranceCompany is successfully stored!");
+    })
+    .catch((error) => {
+      alert("Something went wrong!\n\n"+error);
+    });
+  };
     
 
 

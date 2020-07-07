@@ -120,8 +120,8 @@ function loginUser(dispatch, party, userToken, history, setIsLoading, setError) 
           body: {
             "templateIds": ["Main:CitizenInvitation"],
             "query" : {"citizen" : "Alice"}
-                 }
-         });
+          }
+        });
         
          const citizenContractResponse = await contractResponse.json();
          const assets = citizenContractResponse.contracts.map(c => c.payload.roletype);

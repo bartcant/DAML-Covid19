@@ -97,7 +97,7 @@ function CitizenInvite({ dispatch }) {
 
   }
 
-  const exerciseCitizenAccept = function () {
+  const exerciseCitizenAccept = async () => {
     setConductModalOpen(false);
 
 
@@ -106,25 +106,28 @@ function CitizenInvite({ dispatch }) {
     console.log("cid: " + curContractId);
     console.log("citizendetails: " + JSON.stringify(citizendetails));
     console.log("alias" + JSON.stringify(alias));
+
+    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, verifiablecredentials })
+    .then(() => {
+      dispatch(conductclick({
+        citizen: citizen,
+        avcore: citizendetails.accept_vcoremail
+      }));
   
-    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, verifiablecredentials });
-    alert("Citizen Information is succesfully stored on the Ledger");
+      history.push("/app/citizenalias");
+    })
+    .catch(events => {
+      let message = '';
+      console.log(events.errors)
+      events.errors.forEach(msg => {
+        console.log(msg)
+        message += msg;
+        message += '\n';
+      });
+      alert("Something went wrong!\n\nMessage: "+message);
 
-    /* try {
-    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, verifiablecredentials });
-    }
-    catch(e) {
-      console.error(e);
-      alert("Something went wrong");
-    } */
-
-
-    dispatch(conductclick({
-      citizen: citizen,
-      avcore: citizendetails.accept_vcoremail
-    }));
-
-    history.push("/app/citizenalias");
+      return false;
+    });
   }
 
 
@@ -241,7 +244,7 @@ function CitizenInvite({ dispatch }) {
             <Button onClick={handleConductModalClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => exerciseCitizenAccept()} color="primary" autoFocus>
+            <Button onClick={async () => await exerciseCitizenAccept()} color="primary" autoFocus>
               Register
             </Button>
           </DialogActions>

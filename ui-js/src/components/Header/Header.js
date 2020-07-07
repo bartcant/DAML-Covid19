@@ -21,7 +21,7 @@ function Header({ history }) {
 
   let Portalheader = '';
   switch (userState.role) {
-      case 'Alice':
+      case 'Citizen':
         Portalheader = "Citizen Portal";
         break;
       case 'AtriumHealth':

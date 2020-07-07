@@ -108,7 +108,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         }
-        {user.role === ("Alice")  && 
+        {user.role === ("Citizen")  && 
           <SidebarLink
             key="Citizeninvite"
             label="Citizeninvite"
@@ -118,7 +118,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         }
-        {user.role === ("Alice" && "Bob")  && 
+        {user.role === ("Citizen" && "Bob")  && 
           <SidebarLink
             key="Citizenupdate"
             label="Citizenupdate"
@@ -128,7 +128,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         }
-        {user.role === ("Alice" && "Bob")  && 
+        {user.role === ("Citizen" && "Bob")  && 
           <SidebarLink
             key="TestRequest"
             label="TestRequest"

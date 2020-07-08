@@ -26,6 +26,7 @@ import Covid19TestAlt from "../../pages/covid19test/Covid19test_alt";
 import StartFormAlt from "../../pages/finalform/Start_alt";
 import TestList from "../../pages/testlist/Testlist";
 import VCList from "../../pages/vclist/Vclist";
+import Welcome from "../../pages/welcome/welcome";
 import { wsBaseUrl, httpBaseUrl } from "../../config";
 
 
@@ -64,6 +65,7 @@ function Layout() {
                 <Route path="/app/testlist" component={TestList} />
                 <Route path="/app/finalform" component={StartFormAlt} />
                 <Route path="/app/vclist" component={VCList} />
+                <Route path="/app/welcome" component={Welcome} />
 
                 { user.role === 'AtriumHealth' &&
                 <Route path="/app/clinicinvite" component={ClinicInvite} />	                     

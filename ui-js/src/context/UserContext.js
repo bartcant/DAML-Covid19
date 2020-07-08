@@ -60,7 +60,7 @@ function useUserDispatch() {
 
 
 
-function loginUser(dispatch, party, userToken, history, setIsLoading, setError) {
+async function loginUser(dispatch, party, userToken, history, setIsLoading, setError) {
   setError(false);
   setIsLoading(true);
 
@@ -99,41 +99,50 @@ function loginUser(dispatch, party, userToken, history, setIsLoading, setError) 
 
 
 
-
+  let role = 'Citizen';
   if (!!party) {
+    // NEW CODE HERE TO RETRIEVE ROLE FROM CITIZEN (Role data element)
+
+    let failedStatus = false;
+    const fetchUpdate = async () => {
+      console.log("insidefetch");
+      try {
+        const contractResponse = await post('/v1/query', {
+          body: JSON.stringify({
+            "templateIds": ["Main:CitizenInvitation"],
+            "query" : {"citizen" : party}
+          })
+        });
+        
+        const citizenContractResponse = await contractResponse.json();
+        if (citizenContractResponse.status === 200) {
+          role = citizenContractResponse.result[0].payload.roletype
+          console.log(role);
+        }
+        
+      }
+      catch(err) {
+        alert("Something went wrong with roletype");
+        role = party;
+        // dispatch({ type: "LOGIN_FAILURE" });
+        // setError(true);
+        // setIsLoading(false);
+        // failedStatus = true;
+      }
+    };
+
+    await fetchUpdate();
+
+    // if (failedStatus) return;
     const token = userToken || createToken(party)
     localStorage.setItem("daml.party", party);
     localStorage.setItem("daml.token", token);
   
     // Role is retrieved from party Name
-    const role = localStorage.getItem("daml.party",party)
+    // const role = localStorage.getItem("daml.party",party)
     localStorage.setItem("daml.role", role);
 
     // Role is retrieved from DAML Contract
-   
-    // NEW CODE HERE TO RETRIEVE ROLE FROM CITIZEN (Role data element)
-
-    const fetchUpdate = async () => {
-      console.log("insidefetch");
-      try {
-        const contractResponse = await post('/v1/query', {
-          body: {
-            "templateIds": ["Main:CitizenInvitation"],
-            "query" : {"citizen" : "Alice"}
-          }
-        });
-        
-         const citizenContractResponse = await contractResponse.json();
-         const assets = citizenContractResponse.contracts.map(c => c.payload.roletype);
-         const roletype = JSON.stringify (assets);
-         console.log ("Roletype : " + roletype);
-        
-      }
-      catch(err) {
-        alert("Something went wrong with roletype");
-      }
-    }; 
-
 
     // Sample code from another project called dablechat - https://github.com/digital-asset/dablchat
       /* const fetchUpdate = async () => {

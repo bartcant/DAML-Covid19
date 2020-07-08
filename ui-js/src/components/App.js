@@ -23,7 +23,7 @@ export default function App() {
 
   let theme;
   switch (userState.role) {
-    case 'Alice':
+    case 'Citizen':
       theme = Themes.citizen;
       break;
     case 'AtriumHealth':

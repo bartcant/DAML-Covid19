@@ -68,10 +68,10 @@ function Layout() {
                 { user.role === 'AtriumHealth' &&
                 <Route path="/app/clinicinvite" component={ClinicInvite} />	                     
                  }              
-                { user.role === 'Alice' &&                 
+                { user.role === 'Citizen' &&                 
                 <Route path="/app/citizeninvite" component={CitizenInvite} />
                 }
-                { user.role === 'Alice' &&
+                { user.role === 'Citizen' &&
                   <Route path="/app/testrequest" component={TestRequest} />
                 }
                 { user.role === 'AtriumHealth' &&

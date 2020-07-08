@@ -22,7 +22,7 @@ export default makeStyles(theme => ({
     }),
     backgroundColor: theme.appBar.backgroundColor,
   },
-  appBarAlice: {
+  appBarCitizen: {
     width: "100vw",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["margin"], {

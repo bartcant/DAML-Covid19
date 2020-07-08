@@ -129,27 +129,7 @@ template CitizenInvitation
       do
        create CitizenRole with citizen, operator, citizendetails, verifiablecredentials
 
-     UpdateCitizenRegistration : ContractId CitizenRole
-      with
-       newcitizendetails : CitizenDetails
-       
-      do  
-        (citizenRoleCid, oldCitizenRole) <- fetchByKey @CitizenRole (citizen)
-        archive citizenRoleCid
-  
-        create CitizenRole with citizen = key oldCitizenRole; citizendetails = newcitizendetails ; operator = operator ; verifiablecredentials = oldCitizenRole.verifiablecredentials
-      
-     SetVerifiableCredentials : ContractId CitizenRole
-       with
-        newverifiablecredentials : VerifiableCredentials
-       
-      do  
-         (citizenRoleCid, oldCitizenRole) <- fetchByKey @CitizenRole (citizen)
-         archive citizenRoleCid
-         create CitizenRole with citizen = key oldCitizenRole; citizendetails = oldCitizenRole.citizendetails ; operator = operator ; verifiablecredentials = newverifiablecredentials
-      
-
-
+     
 
 template CitizenRole
   with 
@@ -170,7 +150,28 @@ template CitizenRole
 
         do
           create TestRequest with healthclinic, citizen 
-          
+
+      UpdateCitizenRegistration : ContractId CitizenRole
+        with
+         newcitizendetails : CitizenDetails
+        
+        do  
+          (citizenRoleCid, oldCitizenRole) <- fetchByKey @CitizenRole (citizen)
+          archive citizenRoleCid
+    
+          create CitizenRole with citizen = key oldCitizenRole; citizendetails = newcitizendetails ; operator = operator ; verifiablecredentials = oldCitizenRole.verifiablecredentials
+        
+      SetVerifiableCredentials : ContractId CitizenRole
+        with
+          newverifiablecredentials : VerifiableCredentials
+        
+        do  
+          (citizenRoleCid, oldCitizenRole) <- fetchByKey @CitizenRole (citizen)
+          archive citizenRoleCid
+          create CitizenRole with citizen = key oldCitizenRole; citizendetails = oldCitizenRole.citizendetails ; operator = operator ; verifiablecredentials = newverifiablecredentials
+      
+
+     
           
       
 template StateHealthInvitation

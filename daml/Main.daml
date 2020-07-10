@@ -164,7 +164,7 @@ template CitizenRole
       SetVerifiableCredentials : ContractId CitizenRole
         with
           newverifiablecredentials : VerifiableCredentials
-        
+          
         do  
           (citizenRoleCid, oldCitizenRole) <- fetchByKey @CitizenRole (citizen)
           archive citizenRoleCid

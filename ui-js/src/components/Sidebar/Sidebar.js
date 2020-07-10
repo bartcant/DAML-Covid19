@@ -118,7 +118,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         }
-        {user.role === ("Citizen" && "Bob")  && 
+        {user.role === ("Citizen")  && 
           <SidebarLink
             key="Citizenupdate"
             label="Citizenupdate"
@@ -128,7 +128,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         }
-        {user.role === ("Citizen" && "Bob")  && 
+        {user.role === ("Citizen")  && 
           <SidebarLink
             key="TestRequest"
             label="TestRequest"

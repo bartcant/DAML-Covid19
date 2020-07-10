@@ -111,6 +111,7 @@ function CitizenInvite({ dispatch }) {
     .then(() => {
       dispatch(conductclick({
         citizen: citizen,
+        contractId: curContractId,
         avcore: citizendetails.accept_vcoremail
       }));
   

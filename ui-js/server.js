@@ -44,9 +44,29 @@ app.post('/api/connection', cors(), async function (req, res) {
     const invite = await getInvite();
     cache.add("alice", invite.connectionId); 
     console.log("Cache invite.connectionId : " + invite.connectionId);
-    res.status(200).send({ invite_url: invite.invitation, connectid : invite.connectionId });
+    console.log(invite);
+    // const connection = await getConnection(invite.connectionId);
+    // console.log("*** getConnection");
+    // console.log(connection)
+
+    res.status(200).send({
+        invite_url: invite.invitation,
+        connectid : invite.connectionId,
+        holder_did: invite.hasOwnProperty('myDid') ? invite.myDid : '',
+        issuer_did: invite.hasOwnProperty('theirDid') ? invite.theirDid : ''
+    });
 
 });
+
+const getConnection = async (connectionId) => {
+    try {
+        return await client.getConnection(connectionId);
+    } catch (e) {
+        console.log("Get connection problem");
+        console.log(e.message || e.toString());
+        return false;
+    }
+}
 
 const getInvite = async () => {
     try {
@@ -60,18 +80,18 @@ const getInvite = async () => {
 }
 
 
-/* // StoreconnectionID
+// StoreconnectionID
 
 
 app.post('/api/connectionid', cors(), async function (req, res) {
     const connectid = cache.get("alice");
-    let operator = "operator";
-    let citizen = " Alice"; 
-    ledger.exercise(Main.CitizenInvitation.SetVerifiableCredentials, curContractId, { operator, citizen, citizendetails, connectionid=connectid });
+    let citizen = "Alice";
+    // ledger.exercise(Main.CitizenInvitation.SetVerifiableCredentials, curContractId, { operator, citizen, citizendetails, connectionid=connectid });
+    // ledger.exercise(Main.CitizenRole.SetVerifiableCredentials, curContractId, { citizen, verifiablecredentials });
 
-    console.log("Cache invite.connectionId : " + invite.connectionId);
+    console.log("Cache invite.connectionId : " + connectid);
     res.status(200).send({ connectionid: connectid });
- */
+});
 
 
 

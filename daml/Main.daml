@@ -121,7 +121,7 @@ template CitizenInvitation
     signatory operator
 
     controller citizen can
-     AcceptCitizenInvitation : ContractId CitizenRole
+     nonconsuming AcceptCitizenInvitation : ContractId CitizenRole
       with
        citizendetails : CitizenDetails
        verifiablecredentials : VerifiableCredentials

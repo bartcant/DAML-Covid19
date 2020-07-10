@@ -78,7 +78,7 @@ function Sidebar({ location }) {
           location={location}
           isSidebarOpened={isSidebarOpened}
         />
-        {user.role === "Operator" && 
+        {user.role === "Operator" && (
           <SidebarLink
             key="Network"
             label="Network"
@@ -87,8 +87,8 @@ function Sidebar({ location }) {
             location={location}
             isSidebarOpened={isSidebarOpened}
           />
-        }
-        {user.role === "AtriumHealth" && 
+        )}
+        {user.role === "AtriumHealth" && (
           <SidebarLink
             key="Clinicinvite"
             label="Clinicinvite"
@@ -97,8 +97,8 @@ function Sidebar({ location }) {
             location={location}
             isSidebarOpened={isSidebarOpened}
           />
-        }
-        {user.role === "AtriumHealth" && 
+        )}
+        {user.role === "AtriumHealth" && (
           <SidebarLink
             key="Clinicupdate"
             label="Clinicupdate"
@@ -107,8 +107,8 @@ function Sidebar({ location }) {
             location={location}
             isSidebarOpened={isSidebarOpened}
           />
-        }
-        {user.role === ("Citizen")  && 
+        )}
+        {user.role === "Citizen" && (
           <SidebarLink
             key="Citizeninvite"
             label="Citizeninvite"
@@ -117,8 +117,8 @@ function Sidebar({ location }) {
             location={location}
             isSidebarOpened={isSidebarOpened}
           />
-        }
-        {user.role === ("Citizen")  && 
+        )}
+        {user.role === "Citizen" && (
           <SidebarLink
             key="Citizenupdate"
             label="Citizenupdate"
@@ -127,8 +127,8 @@ function Sidebar({ location }) {
             location={location}
             isSidebarOpened={isSidebarOpened}
           />
-        }
-        {user.role === ("Citizen")  && 
+        )}
+        {user.role === "Citizen" && (
           <SidebarLink
             key="TestRequest"
             label="TestRequest"
@@ -137,8 +137,8 @@ function Sidebar({ location }) {
             location={location}
             isSidebarOpened={isSidebarOpened}
           />
-        }
-        {user.role === "AtriumHealth" && 
+        )}
+        {user.role === "AtriumHealth" && (
           <SidebarLink
             key="TestAppointment"
             label="TestAppointment"
@@ -147,8 +147,8 @@ function Sidebar({ location }) {
             location={location}
             isSidebarOpened={isSidebarOpened}
           />
-        }
-        {user.role == ("NCHealth" && "Operator")  && 
+        )}
+        {user.role == "Operator" && (
           <SidebarLink
             key="Testlist"
             label="Test List"
@@ -157,8 +157,8 @@ function Sidebar({ location }) {
             location={location}
             isSidebarOpened={isSidebarOpened}
           />
-        }
-        {user.role ===  ("NCHealth" && "Operator") && 
+        )}
+        {user.role === "Operator" && (
           <SidebarLink
             key="VCList"
             label="VC List"
@@ -167,7 +167,7 @@ function Sidebar({ location }) {
             location={location}
             isSidebarOpened={isSidebarOpened}
           />
-        }
+        )}
         {/* 
           <SidebarLink
           key="StreetCred"

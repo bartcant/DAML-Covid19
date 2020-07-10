@@ -95,7 +95,8 @@ export default function Network() {
         message: 'Error: Invalid Citizen'
       });
     });
-    console.log("Citizen Registerd: " + citizen)
+    console.log("Citizen Registered: " + citizen);
+    console.log("citzenrole registered "  +  roletype);
   };
 
   const exerciseInviteStateHealth = function(cid, statehealth) {

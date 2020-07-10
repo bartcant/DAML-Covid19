@@ -53,7 +53,19 @@ Step1 : Building and installing DAML Postgress
 
 3. Start JSON-API  in a new console window
 
-        daml json-api --ledger-host localhost --ledger-port 6865  --http-port 7575 --max-inbound-message-size 4194304 --package-reload-interval 5s --application-id HTTP-JSON-API-Gateway --static-content "prefix=static,directory=./static-content"  --query-store-jdbc-config "driver=org.postgresql.Driver,url=jdbc:postgresql://localhost:5432/test?&ssl=false,user=Bart,password=password,createSchema=false"
+daml json-api --ledger-host localhost --ledger-port 6865  --http-port 7575 --max-inbound-message-size 4194304 --package-reload-interval 5s --application-id HTTP-JSON-API-Gateway --static-content "prefix=static,directory=./static-content"  --access-token-file ./token/token   --query-store-jdbc-config "driver=org.postgresql.Driver,url=jdbc:postgresql://localhost:5432/test?&ssl=false,user=Bart,password=password,createSchema=false"
+
+This now links to token authorization file which can be found in ./token directory
+
+Note: In order to be able to retrieve filtered contracts through the JSON-API a new Schema must be created. 
+To achieve this, execute the following command before making any transactions in the ledger
+
+daml json-api --ledger-host localhost --ledger-port 6865  --http-port 7575 --max-inbound-message-size 4194304 --package-reload-interval 5s --application-id HTTP-JSON-API-Gateway --static-content "prefix=static,directory=./static-content"  --access-token-file ./token/token   --query-store-jdbc-config "driver=org.postgresql.Driver,url=jdbc:postgresql://localhost:5432/test?&ssl=false,user=Bart,password=password,createSchema=true"
+
+After the command has completed, then you can start up the JSON-API the regular way:
+
+daml json-api --ledger-host localhost --ledger-port 6865  --http-port 7575 --max-inbound-message-size 4194304 --package-reload-interval 5s --application-id HTTP-JSON-API-Gateway --static-content "prefix=static,directory=./static-content"  --access-token-file ./token/token   --query-store-jdbc-config "driver=org.postgresql.Driver,url=jdbc:postgresql://localhost:5432/test?&ssl=false,user=Bart,password=password,createSchema=false"        
+         
 
 4. Start Frontend and Backend solution in a new console window in ui-js directory
 
@@ -88,24 +100,7 @@ The network can be initiate with pushing a JSON file via Postman
 4. You can verify the Network via login in as "Operator" and navigating to the Network left NavBar
 
 
-<H2> Login and Process </h2>
 
-1. Login as "Operator"
-
-
-
-2. Login as "Atriumhealth"
-
-
-
-3. Login as "Alice"
-
-
-4. Login as "NCHealth"
-
-
-
-5. Login as "BCBSNC"
 
 
 

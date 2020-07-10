@@ -67,9 +67,9 @@ function CreateAlias({avcore, dispatch}) {
     // const {contracts, loading} = useStreamFetchByKey(Registration.AliasCitizen, () => key, [dep1, dep2, ...])
     // I need to collect the contractId from previous action so it can be set as an AliasCid in the CitizenRegistration
 
-    dispatch(conductclick({
+    // dispatch(conductclick({
   
-    }));
+    // }));
 
     
     if (avcore !== '' && avcore === 'vc') {

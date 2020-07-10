@@ -157,7 +157,7 @@ export default function Network() {
       <DialogTitle id="alert-dialog-title">{"Setup Parties"}</DialogTitle>
       <DialogContent>
         { formMsg.status === 0 && formMsg.message !== '' &&
-          <h2 style={{color: '#2196f3'}}>{ formMsg.message }</h2>
+          <h2 style={{color: '#2196f3', marginTop: 0}}>{ formMsg.message }</h2>
         }
         <div>
           <Grid container spacing={2}>

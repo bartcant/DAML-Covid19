@@ -7,6 +7,7 @@ export default function TestRequest() {
 
   const citizen = "Alice";
   const healthclinic = useParty(); 
+  const operator = "Operator"
   const ledger = useLedger();
   const assets = useStreamQuery (Main.TestRequest);
 
@@ -15,7 +16,7 @@ export default function TestRequest() {
     console.log("citizen : " + citizen); 
     console.log("appointmentdate : "+ appointmentdate);
     console.log("cid: "+ cid);
-    ledger.exercise(Main.TestRequest.ConfirmTestAppointment, cid, {citizen, healthclinic, appointmentdate} ); };
+    ledger.exercise(Main.TestRequest.ConfirmTestAppointment, cid, {citizen, healthclinic, operator, appointmentdate} ); };
     
     
   return (

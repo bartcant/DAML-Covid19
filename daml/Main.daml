@@ -98,6 +98,7 @@ template HealthClinicRole
     healthclinicdetails : HealthClinicDetails
   where
     signatory healthclinic
+    observer operator
 
     controller healthclinic can
      UpdateRegistration : ContractId HealthClinicRole
@@ -139,6 +140,7 @@ template CitizenRole
     verifiablecredentials : VerifiableCredentials
   where
     signatory citizen
+    observer operator
 
     key citizen : Party
     maintainer key
@@ -149,7 +151,7 @@ template CitizenRole
           healthclinic: Party
 
         do
-          create TestRequest with healthclinic, citizen 
+          create TestRequest with healthclinic, citizen, operator
 
       nonconsuming UpdateCitizenRegistration : ContractId CitizenRole
         with
@@ -195,6 +197,7 @@ template StateHealthRole
     roletype : Roletype
   where
     signatory statehealth
+    observer operator
 
       
 template InsuranceInvitation
@@ -220,21 +223,24 @@ template InsuranceCompanyRole
     roletype : Roletype
   where
     signatory insurancecompany
+    observer operator
 
 
 template TestRequest
   with 
+    operator : Party
     healthclinic : Party
     citizen: Party
   where
     signatory citizen
+    observer operator
 
     controller healthclinic can 
       nonconsuming ConfirmTestAppointment : ContractId TestAppointment
         with
           appointmentdate : Date 
         do
-          create TestAppointment with citizen, healthclinic, appointmentdate
+          create TestAppointment with citizen, healthclinic, appointmentdate, operator
 
 data Covid19TestData = Covid19TestData
  with 
@@ -252,10 +258,12 @@ template TestAppointment
   with
     healthclinic : Party
     citizen: Party
+    operator: Party
     appointmentdate : Date
 
   where
     signatory healthclinic
+    observer operator
 
     controller healthclinic can 
       nonconsuming Covid19TestAppointment : ContractId Covid19Test
@@ -263,7 +271,7 @@ template TestAppointment
           covid19testdata :  Covid19TestData
           statehealth : Party
         do
-          create Covid19Test with covid19testdata, healthclinic, statehealth, citizen
+          create Covid19Test with covid19testdata, healthclinic, statehealth, citizen, operator
         
 
 data ImmunityVC = ImmunityVC
@@ -282,19 +290,21 @@ template Covid19Test
     covid19testdata : Covid19TestData 
     healthclinic : Party
     citizen : Party
+    operator : Party
     statehealth : Party
 
   where
     signatory healthclinic
     observer citizen
     observer statehealth
+    observer operator
 
     controller statehealth can 
        nonconsuming SupplyVC : ContractId SupplyImmunityVC
         with
           immunityvc : ImmunityVC 
         do
-          create SupplyImmunityVC with immunityvc, statehealth , citizen
+          create SupplyImmunityVC with immunityvc, statehealth , citizen, operator
 
 
 template SupplyImmunityVC
@@ -302,6 +312,7 @@ template SupplyImmunityVC
     immunityvc : ImmunityVC 
     statehealth : Party
     citizen : Party
+    operator : Party
   where
     signatory statehealth
     observer citizen

@@ -62,10 +62,10 @@ export default function TestAppointment() {
     console.log("statehealth : " + statehealth);
     console.log("cid: " + curContractId);
 
-
+    const operator = "Operator"; 
     console.log({citizen, healthclinic, covid19testdata});
 
-    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {covid19testdata, statehealth, citizen, healthclinic});
+    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {covid19testdata, statehealth, citizen, healthclinic, operator});
     
 
   };

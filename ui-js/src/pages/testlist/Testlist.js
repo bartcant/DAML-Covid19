@@ -21,7 +21,8 @@ export default function TestList() {
 
   const assets = useStreamQuery (Main.Covid19Test);
   const statehealth = "NCHealth";
-  const citizen = "Alice"
+  const citizen = "Alice";
+  const operator ="Operator";
   const ledger = useLedger();
 
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
@@ -61,7 +62,7 @@ export default function TestList() {
     console.log("citizen : " + citizen);
     console.log("statehealth : " + statehealth);
     console.log("cid: " + curContractId);
-    ledger.exercise(Main.Covid19Test.SupplyVC,  curContractId, { statehealth, immunityvc } ); };
+    ledger.exercise(Main.Covid19Test.SupplyVC,  curContractId, { statehealth, immunityvc, operator } ); };
 
     
     const getVCSchemas = () => {

@@ -32,7 +32,7 @@ function CitizenInvite({ dispatch }) {
   const citizen = useParty();
   const operator = "Operator";
   const ledger = useLedger();
-  const assets = useStreamQuery(Main.CitizenInvitation);
+  const assets = useStreamQuery(Main.CitizenInvitation, () => ({ citizen : citizen }),);
   const history = useHistory();
 
 
@@ -108,7 +108,7 @@ function CitizenInvite({ dispatch }) {
     console.log("citizendetails: " + JSON.stringify(citizendetails));
     console.log("alias" + JSON.stringify(alias));
 
-    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, verifiablecredentials })
+    await ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, verifiablecredentials })
     .then(() => {
       dispatch(conductclick({
         citizen: citizen,

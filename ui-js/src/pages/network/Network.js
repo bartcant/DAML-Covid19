@@ -15,6 +15,7 @@ import Grid from '@material-ui/core/Grid';
 
 export default function Network() {
 
+  
   const operator = useParty();
   const ledger = useLedger();
   const assets = useStreamQuery (Main.Network);
@@ -90,6 +91,7 @@ export default function Network() {
       });
     })
     .catch((error) => {
+      console.log("error: " + error); 
       setValidate({
         status: 1,
         message: 'Error: Invalid Citizen'
@@ -109,6 +111,7 @@ export default function Network() {
       alert("StateHealth is successfully stored!");
     })
     .catch((error) => {
+      console.log("error: " + error); 
       alert("Something went wrong!\n\n"+error);
     });
   };

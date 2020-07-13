@@ -4,5 +4,6 @@
 /daml2js
 sandbox.log
 navigator.log
+/ui-js/yarn.lock
 .env
 /ui-js/scr/pages/streetcred/.env

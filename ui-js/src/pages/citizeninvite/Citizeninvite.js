@@ -22,6 +22,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux'
 // import actions
 import { conductclick } from '../../actions.js';
+import { Party } from "@daml/types";
 
 
 
@@ -117,18 +118,21 @@ function CitizenInvite({ dispatch }) {
   
       history.push("/app/citizenalias");
     })
-    .catch(events => {
+      .catch(events => {
       let message = '';
+  
       console.log(events.errors)
+
       events.errors.forEach(msg => {
         console.log(msg)
         message += msg;
         message += '\n';
       });
       alert("Something went wrong!\n\nMessage: "+message);
-
+     
       return false;
-    });
+    }); 
+    
   }
 
 

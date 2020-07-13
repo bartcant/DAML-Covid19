@@ -54,6 +54,7 @@ template Network
   where
    signatory operator
 
+
    controller operator can 
     nonconsuming InviteHealthClinic : ContractId HealthClinicInvitation
       with 
@@ -120,8 +121,13 @@ template CitizenInvitation
     roletype : Roletype
   where
     signatory operator
+    observer citizen
 
-    controller citizen can
+    key (operator, citizen) : (Party, Party)
+    maintainer key._1
+
+
+    controller operator can
      nonconsuming AcceptCitizenInvitation : ContractId CitizenRole
       with
        citizendetails : CitizenDetails
@@ -135,17 +141,17 @@ template CitizenInvitation
 template CitizenRole
   with 
     operator : Party
-    citizen: Party
+    citizen : Party
     citizendetails : CitizenDetails
     verifiablecredentials : VerifiableCredentials
   where
-    signatory citizen
-    observer operator
+    signatory operator
+    observer citizen
 
-    key citizen : Party
-    maintainer key
+    key (operator, citizen) : (Party, Party)
+    maintainer key._1
 
-    controller citizen can 
+    controller operator can 
       nonconsuming RequestTest : ContractId TestRequest
         with
           healthclinic: Party
@@ -158,11 +164,9 @@ template CitizenRole
          newcitizendetails : CitizenDetails
         
         do  
-          (citizenRoleCid, oldCitizenRole) <- fetchByKey @CitizenRole (citizen)
-          archive citizenRoleCid
-    
-          create CitizenRole with citizen = key oldCitizenRole; citizendetails = newcitizendetails ; operator = operator ; verifiablecredentials = oldCitizenRole.verifiablecredentials
-        
+          archive self
+          create this with citizendetails = newcitizendetails
+
       nonconsuming SetVerifiableCredentials : ContractId CitizenRole
         with
           newverifiablecredentials : VerifiableCredentials
@@ -232,10 +236,11 @@ template TestRequest
     healthclinic : Party
     citizen: Party
   where
-    signatory citizen
-    observer operator
+    signatory operator
+    observer citizen
+    observer healthclinic
 
-    controller healthclinic can 
+    controller operator can 
       nonconsuming ConfirmTestAppointment : ContractId TestAppointment
         with
           appointmentdate : Date 
@@ -262,10 +267,10 @@ template TestAppointment
     appointmentdate : Date
 
   where
-    signatory healthclinic
-    observer operator
+    signatory operator
+    observer healthclinic
 
-    controller healthclinic can 
+    controller operator can 
       nonconsuming Covid19TestAppointment : ContractId Covid19Test
         with
           covid19testdata :  Covid19TestData
@@ -294,12 +299,12 @@ template Covid19Test
     statehealth : Party
 
   where
-    signatory healthclinic
+    signatory operator
     observer citizen
     observer statehealth
-    observer operator
+    observer healthclinic
 
-    controller statehealth can 
+    controller operator can 
        nonconsuming SupplyVC : ContractId SupplyImmunityVC
         with
           immunityvc : ImmunityVC 
@@ -314,43 +319,12 @@ template SupplyImmunityVC
     citizen : Party
     operator : Party
   where
-    signatory statehealth
+    signatory operator
+    observer statehealth
     observer citizen
 
    
   
-{- 
-    -- choice UpdateTest : ContractId Covid19Test
-   
-        -- Here I want to give an opportunity to update a previous specific Contract with new information
-        -- How do preserve (and display) previous information and allow for some fields to be updated ?
-
-    -- with 
-     --  citizen: Citizen
-     --  healthprovider: Party
-     --  statehealth: Party
-     -- controller healthprovider
-    --   do
-    --     update Covid19Test with testnumber, healthprovider, citizen, statehealth, testtype, testdate, testresult, locationstate, testupdate
-
--- This currently creates a compile error
--- Do I need to do a search on Contract ID first  ?
-
-
-
-
--- I want to setup the following scenarios:
-
-
--- 0. All parties get initialized
--- 1. Citizen submits Self Party Information
--- 2. Health Provider submits Covid19 test
--- 3. Health Provider updates Covid19 test to "Positive"
--- 4. State Agency creates Immunity Proof "Positive"
--- 5. State Agency creates Quarantine Notice
--- 6. State Agency lifts Qurantine Notice
--- 7. State Agency creates Immunity Proof "Negative"
--}
 
 setup = scenario do
   operator <- getParty "Operator"
@@ -364,7 +338,7 @@ setup = scenario do
 
   let citizendetails = CitizenDetails with idtype = "text" ; id= ""; firstname = "John" ;  lastname =  "Doe"; email = "john.doe@email.com" ; accept_vcoremail = "vc"; hippa_accept =  True;insurance_id = ""
   let verifiablecredentials = VerifiableCredentials with connectionid ="" ; holder_did = "", issuer_did = ""
-  submit alice do
+  submit operator do
     create CitizenRole with  citizen = alice ; operator = operator ; citizendetails = citizendetails ; verifiablecredentials = verifiablecredentials
 
 

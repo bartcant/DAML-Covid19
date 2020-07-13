@@ -64,8 +64,8 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
   setError(false);
   setIsLoading(true);
 
- const token = 
- "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIkFsaWNlIl19fQ.tNx_JrnCsqLu9l6wFXbmjVB4j16PdJ2wa4TG-zx2ixQ"
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl19fQ.7zUo-7pRVr9QO3Y1xzbbWh-Z5n36MeOuQ-x2GwS3M44"
   const headers = {
     "Authorization": `Bearer ${token.toString()}`,
     'Content-Type': 'application/json'
@@ -73,7 +73,7 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
 
   const siteSubDomain = (path = '/data/') => {
     if (window.location.hostname === 'localhost') {
-        return window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+      return window.location.hostname + (window.location.port ? ':' + window.location.port : '');
     }
 
     let host = window.location.host.split('.')
@@ -110,18 +110,18 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
         const contractResponse = await post('/v1/query', {
           body: JSON.stringify({
             "templateIds": ["Main:CitizenInvitation"],
-            "query" : {"citizen" : party}
+            "query": { "citizen": party }
           })
         });
-        
+
         const citizenContractResponse = await contractResponse.json();
         if (citizenContractResponse.status === 200) {
           role = citizenContractResponse.result[0].payload.roletype
           console.log(role);
         }
-        
+
       }
-      catch(err) {
+      catch (err) {
         alert("Something went wrong with roletype");
         role = party;
         // dispatch({ type: "LOGIN_FAILURE" });
@@ -134,10 +134,10 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
     await fetchUpdate();
 
     // if (failedStatus) return;
-    const token = userToken || createToken(party)
+    // const token = userToken || createToken(party)
     localStorage.setItem("daml.party", party);
     localStorage.setItem("daml.token", token);
-  
+
     // Role is retrieved from party Name
     // const role = localStorage.getItem("daml.party",party)
     localStorage.setItem("daml.role", role);
@@ -145,37 +145,37 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
     // Role is retrieved from DAML Contract
 
     // Sample code from another project called dablechat - https://github.com/digital-asset/dablchat
-      /* const fetchUpdate = async () => {
-        try {
-          const allContractsResponse = await post('/v1/query', {
-            body: JSON.stringify({ 'templateIds': [
-              CHAT_TEMPLATE,
-              MESSAGE_TEMPLATE,
-              USER_TEMPLATE,
-              ADDRESS_BOOK_TEMPLATE,
-              SELF_ALIAS_TEMPLATE
-            ] })
-          });
-    
-          const allPublicContractsResponse = await postPublic('/v1/query', {
-            body: JSON.stringify({ 'templateIds': [
-              SELF_ALIAS_TEMPLATE
-            ] })
-          });
-    
-          const allContracts = await allContractsResponse.json();
-    
-          const chats = allContracts.result.filter(c => c.templateId.endsWith(CHAT_TEMPLATE));
-          const messages = allContracts.result.filter(m => m.templateId.endsWith(MESSAGE_TEMPLATE));
-          const user = allContracts.result.find(u => u.templateId.endsWith(USER_TEMPLATE));
-          const selfAlias = allContracts.result.find(ma => ma.templateId.endsWith(SELF_ALIAS_TEMPLATE));
-          const addressBook = allContracts.result.find(ma => ma.templateId.endsWith(ADDRESS_BOOK_TEMPLATE));
- */
-
+    /* const fetchUpdate = async () => {
+      try {
+        const allContractsResponse = await post('/v1/query', {
+          body: JSON.stringify({ 'templateIds': [
+            CHAT_TEMPLATE,
+            MESSAGE_TEMPLATE,
+            USER_TEMPLATE,
+            ADDRESS_BOOK_TEMPLATE,
+            SELF_ALIAS_TEMPLATE
+          ] })
+        });
   
+        const allPublicContractsResponse = await postPublic('/v1/query', {
+          body: JSON.stringify({ 'templateIds': [
+            SELF_ALIAS_TEMPLATE
+          ] })
+        });
+  
+        const allContracts = await allContractsResponse.json();
+  
+        const chats = allContracts.result.filter(c => c.templateId.endsWith(CHAT_TEMPLATE));
+        const messages = allContracts.result.filter(m => m.templateId.endsWith(MESSAGE_TEMPLATE));
+        const user = allContracts.result.find(u => u.templateId.endsWith(USER_TEMPLATE));
+        const selfAlias = allContracts.result.find(ma => ma.templateId.endsWith(SELF_ALIAS_TEMPLATE));
+        const addressBook = allContracts.result.find(ma => ma.templateId.endsWith(ADDRESS_BOOK_TEMPLATE));
+*/
 
-    dispatch({ type:"LOGIN_SUCCESS", token, party, role });
-    console.log ("role" + role);
+
+
+    dispatch({ type: "LOGIN_SUCCESS", token, party, role });
+    console.log("role" + role);
     setError(null);
     setIsLoading(false);
 
@@ -195,7 +195,7 @@ function signOut(event, dispatch, history) {
   event.preventDefault();
   localStorage.removeItem("daml.party");
   localStorage.removeItem("daml.token");
-    // remove rand state
+  // remove rand state
   localStorage.removeItem("daml.role");
 
   dispatch({ type: "SIGN_OUT_SUCCESS" });

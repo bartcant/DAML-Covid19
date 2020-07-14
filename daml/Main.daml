@@ -56,74 +56,27 @@ template Network
 
 
    controller operator can 
-    nonconsuming InviteHealthClinic : ContractId HealthClinicInvitation
+    nonconsuming InviteParty : ContractId PartyInvitation
       with 
-        healthclinic : Party
-        roletype : Roletype
-      do
-        create HealthClinicInvitation with healthclinic, operator, roletype
-    nonconsuming InviteCitizen : ContractId CitizenInvitation
-      with 
-        citizen : Party
+        party : Party
         roletype : Roletype
 
       do
-        create CitizenInvitation with citizen, operator, roletype
+        create PartyInvitation with party, operator, roletype
 
 
 
 
-
-template HealthClinicInvitation
+template PartyInvitation
   with
     operator : Party
-    healthclinic : Party
+    party : Party
     roletype : Roletype
   where
     signatory operator
+    observer party
 
-    controller healthclinic can
-     AcceptInvitation : ContractId HealthClinicRole
-        with
-        healthclinicdetails : HealthClinicDetails
-      do
-       create HealthClinicRole with healthclinic, operator, healthclinicdetails
-
-
-
-
-template HealthClinicRole
-  with 
-    operator : Party
-    healthclinic : Party
-    healthclinicdetails : HealthClinicDetails
-  where
-    signatory healthclinic
-    observer operator
-
-    controller healthclinic can
-     UpdateRegistration : ContractId HealthClinicRole
-        with
-        newhealthclinicdetails : HealthClinicDetails
-      do
-       create this with 
-        healthclinic = healthclinic
-        operator = operator
-        healthclinicdetails = newhealthclinicdetails
-
-
-
-
-template CitizenInvitation
-  with
-    operator : Party
-    citizen : Party
-    roletype : Roletype
-  where
-    signatory operator
-    observer citizen
-
-    key (operator, citizen) : (Party, Party)
+    key (operator, party) : (Party, Party)
     maintainer key._1
 
 
@@ -132,11 +85,50 @@ template CitizenInvitation
       with
        citizendetails : CitizenDetails
        verifiablecredentials : VerifiableCredentials
+       citizen : Party
 
       do
        create CitizenRole with citizen, operator, citizendetails, verifiablecredentials
 
-     
+    controller operator can
+     nonconsuming AcceptHealthClinicInvitation : ContractId HealthClinicRole
+        with
+        healthclinicdetails : HealthClinicDetails
+        healthclinic : Party
+      do
+       create HealthClinicRole with healthclinic, operator, healthclinicdetails
+
+
+    controller operator can
+     nonconsuming AcceptStateAgencyInvitation : ContractId StateAgencyRole
+        with
+      
+        stateagency : Party
+      do
+       create StateAgencyRole with stateagency, operator
+
+
+template HealthClinicRole
+  with 
+    operator : Party
+    healthclinic : Party
+    healthclinicdetails : HealthClinicDetails
+  where
+    signatory operator
+    observer healthclinic
+
+    key (operator, healthclinic) : (Party, Party)
+    maintainer key._1
+
+    controller operator can
+     UpdateRegistration : ContractId HealthClinicRole
+        with
+        newhealthclinicdetails : HealthClinicDetails
+      do
+       create this with 
+        healthclinic = healthclinic
+        operator = operator
+        healthclinicdetails = newhealthclinicdetails
 
 template CitizenRole
   with 
@@ -176,47 +168,17 @@ template CitizenRole
           create this with verifiablecredentials = newverifiablecredentials
       
 
-     
-          
-      
-template StateHealthInvitation
-  with
-    operator : Party
-    statehealth : Party
-    roletype : Roletype
-  where
-    signatory operator
 
-    controller statehealth can
-     AcceptStateHealthInvitation : ContractId StateHealthRole
-
-      do
-       create StateHealthRole with statehealth, operator, roletype
-
-
-template StateHealthRole
+template StateAgencyRole
   with 
     operator : Party
-    statehealth : Party
-    roletype : Roletype
-  where
-    signatory statehealth
-    observer operator
-
-      
-template InsuranceInvitation
-  with
-    operator : Party
-    insurancecompany : Party
-    roletype : Roletype
+    stateagency : Party
   where
     signatory operator
+    observer stateagency
 
-    controller insurancecompany can
-     AcceptInsuranceCompanyInvitation : ContractId InsuranceCompanyRole
-
-      do
-       create InsuranceCompanyRole with insurancecompany, operator, roletype
+    key (operator, stateagency) : (Party, Party)
+    maintainer key._1
 
 
 
@@ -226,8 +188,11 @@ template InsuranceCompanyRole
     insurancecompany : Party
     roletype : Roletype
   where
-    signatory insurancecompany
-    observer operator
+    signatory operator
+    observer insurancecompany
+
+    key (operator, insurancecompany) : (Party, Party)
+    maintainer key._1
 
 
 template TestRequest
@@ -271,7 +236,7 @@ template TestAppointment
     observer healthclinic
 
     controller operator can 
-      nonconsuming Covid19TestAppointment : ContractId Covid19Test
+       Covid19TestAppointment : ContractId Covid19Test
         with
           covid19testdata :  Covid19TestData
           statehealth : Party
@@ -281,11 +246,9 @@ template TestAppointment
 
 data ImmunityVC = ImmunityVC
  with
-      date : Date      
-      did : Text
+      vcdate : Date      
       vc_schema : Text
-      citizen : Party
-      statehealth: Party
+      authorizedby : Text
       vc_message : Text
        deriving (Eq, Show)
 
@@ -332,9 +295,9 @@ setup = scenario do
   alice <- getParty "Alice"
 
   submit operator do
-    create HealthClinicInvitation with healthclinic = atriumhealth ; operator = operator ; roletype = HealthClinic
+    create PartyInvitation with party = atriumhealth ; operator = operator ; roletype = HealthClinic
   submit operator do
-    create CitizenInvitation with citizen = alice ; operator = operator ; roletype = Citizen
+    create PartyInvitation with party = alice ; operator = operator ; roletype = Citizen
 
   let citizendetails = CitizenDetails with idtype = "text" ; id= ""; firstname = "John" ;  lastname =  "Doe"; email = "john.doe@email.com" ; accept_vcoremail = "vc"; hippa_accept =  True;insurance_id = ""
   let verifiablecredentials = VerifiableCredentials with connectionid ="" ; holder_did = "", issuer_did = ""

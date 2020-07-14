@@ -65,11 +65,11 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
   setIsLoading(true);
 
   const token =
-  //  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl19fQ.7zUo-7pRVr9QO3Y1xzbbWh-Z5n36MeOuQ-x2GwS3M44"
-  //  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIkFsaWNlIl19fQ.tNx_JrnCsqLu9l6wFXbmjVB4j16PdJ2wa4TG-zx2ixQ"
-   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl0sInJlYWRBcyI6WyJPcGVyYXRvciJdfX0.JklciDh0-GzkvrPkSJ_H3sYX39LFU4C3uVWd7qsMPNo"
-  
-   const headers = {
+    //  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl19fQ.7zUo-7pRVr9QO3Y1xzbbWh-Z5n36MeOuQ-x2GwS3M44"
+    //  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIkFsaWNlIl19fQ.tNx_JrnCsqLu9l6wFXbmjVB4j16PdJ2wa4TG-zx2ixQ"
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl0sInJlYWRBcyI6WyJPcGVyYXRvciJdfX0.JklciDh0-GzkvrPkSJ_H3sYX39LFU4C3uVWd7qsMPNo"
+
+  const headers = {
     "Authorization": `Bearer ${token.toString()}`,
     'Content-Type': 'application/json'
   }
@@ -112,8 +112,8 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
       try {
         const contractResponse = await post('/v1/query', {
           body: JSON.stringify({
-            "templateIds": ["Main:CitizenInvitation"],
-            "query": { "citizen": party }
+            "templateIds": ["Main:PartyInvitation"],
+            "query": { "party": party }
           })
         });
 
@@ -144,36 +144,6 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
     // Role is retrieved from party Name
     // const role = localStorage.getItem("daml.party",party)
     localStorage.setItem("daml.role", role);
-
-    // Role is retrieved from DAML Contract
-
-    // Sample code from another project called dablechat - https://github.com/digital-asset/dablchat
-    /* const fetchUpdate = async () => {
-      try {
-        const allContractsResponse = await post('/v1/query', {
-          body: JSON.stringify({ 'templateIds': [
-            CHAT_TEMPLATE,
-            MESSAGE_TEMPLATE,
-            USER_TEMPLATE,
-            ADDRESS_BOOK_TEMPLATE,
-            SELF_ALIAS_TEMPLATE
-          ] })
-        });
-  
-        const allPublicContractsResponse = await postPublic('/v1/query', {
-          body: JSON.stringify({ 'templateIds': [
-            SELF_ALIAS_TEMPLATE
-          ] })
-        });
-  
-        const allContracts = await allContractsResponse.json();
-  
-        const chats = allContracts.result.filter(c => c.templateId.endsWith(CHAT_TEMPLATE));
-        const messages = allContracts.result.filter(m => m.templateId.endsWith(MESSAGE_TEMPLATE));
-        const user = allContracts.result.find(u => u.templateId.endsWith(USER_TEMPLATE));
-        const selfAlias = allContracts.result.find(ma => ma.templateId.endsWith(SELF_ALIAS_TEMPLATE));
-        const addressBook = allContracts.result.find(ma => ma.templateId.endsWith(ADDRESS_BOOK_TEMPLATE));
-*/
 
 
 

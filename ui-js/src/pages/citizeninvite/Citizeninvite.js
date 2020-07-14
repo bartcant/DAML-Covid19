@@ -32,7 +32,7 @@ function CitizenInvite({ dispatch }) {
   const citizen = useParty();
   const operator = "Operator";
   const ledger = useLedger();
-  const assets = useStreamQuery(Main.CitizenInvitation, () => ({ citizen: citizen }),);
+  const assets = useStreamQuery(Main.PartyInvitation, () => ({ party: citizen }),);
   const history = useHistory();
 
 
@@ -107,7 +107,7 @@ function CitizenInvite({ dispatch }) {
     console.log("citizendetails: " + JSON.stringify(citizendetails));
     console.log("alias" + JSON.stringify(alias));
 
-    await ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, verifiablecredentials })
+    await ledger.exercise(Main.PartyInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, verifiablecredentials })
     .then(() => {
       dispatch(conductclick({
         citizen: citizen,
@@ -143,7 +143,7 @@ function CitizenInvite({ dispatch }) {
 
         columns={[
           ["ContractId", "contractId"],
-          ["Citizen", "payload.citizen"]
+          ["Citizen", "payload.party"]
         ]}
 
         actions={[

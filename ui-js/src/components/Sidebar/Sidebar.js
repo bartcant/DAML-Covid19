@@ -88,7 +88,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         )}
-        {user.role === "AtriumHealth" && (
+        {user.role === "HealthClinic" && (
           <SidebarLink
             key="Clinicinvite"
             label="Clinicinvite"
@@ -98,7 +98,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         )}
-        {user.role === "AtriumHealth" && (
+        {user.role === "HealthClinic" && (
           <SidebarLink
             key="Clinicupdate"
             label="Clinicupdate"
@@ -138,7 +138,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         )}
-        {user.role === "AtriumHealth" && (
+        {user.role === "HealthClinic" && (
           <SidebarLink
             key="TestAppointment"
             label="TestAppointment"
@@ -148,7 +148,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         )}
-        {user.role === "AtriumHealth" && (
+        {user.role === "HealthClinic" && (
           <SidebarLink
             key="CovidTest"
             label="CovidTest"

@@ -67,7 +67,7 @@ function Layout() {
                 <Route path="/app/vclist" component={VCList} />
                 <Route path="/app/welcome" component={Welcome} />
 
-                { user.role === 'AtriumHealth' &&
+                { user.role === 'HealthClinic' &&
                 <Route path="/app/clinicinvite" component={ClinicInvite} />	                     
                  }              
                 { user.role === 'Citizen' &&                 
@@ -76,10 +76,10 @@ function Layout() {
                 { user.role === 'Citizen' &&
                   <Route path="/app/testrequest" component={TestRequest} />
                 }
-                { user.role === 'AtriumHealth' &&
+                { user.role === 'HealthClinic' &&
                   <Route path="/app/testappointment" component={TestAppointment} />
                 }
-                { user.role === 'AtriumHealth' &&
+                { user.role === 'HealthClinic' &&
                   <Route path="/app/covid19test" component={Covid19Test} />
                 }
 

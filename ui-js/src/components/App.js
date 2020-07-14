@@ -26,7 +26,7 @@ export default function App() {
     case 'Citizen':
       theme = Themes.citizen;
       break;
-    case 'AtriumHealth':
+    case 'HealthClinic':
       theme = Themes.clinic;
       break;
     case 'Bob':

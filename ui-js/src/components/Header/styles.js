@@ -31,7 +31,7 @@ export default makeStyles(theme => ({
     }),
     backgroundColor: '#FFB030',
   },
-  appBarAtriumHealth: {
+  appBarHealthClinic: {
     width: "100vw",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["margin"], {

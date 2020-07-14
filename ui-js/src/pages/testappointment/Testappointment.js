@@ -5,13 +5,13 @@ import { Main } from "@daml2js/Covid19-0.0.1/";
 
 export default function TestRequest() {
 
-  const citizen = "Alice";
+
   const healthclinic = useParty(); 
   const operator = "Operator"
   const ledger = useLedger();
-  const assets = useStreamQuery (Main.TestRequest);
+  const assets = useStreamQuery (Main.TestRequest, () => ({ healthclinic : healthclinic }));
 
-  const exerciseAppointment = function(cid, appointmentdate ) {
+  const exerciseAppointment = function(cid, citizen, appointmentdate ) {
     console.log("healthclinic : " + healthclinic);
     console.log("citizen : " + citizen); 
     console.log("appointmentdate : "+ appointmentdate);
@@ -30,7 +30,7 @@ export default function TestRequest() {
         ]}
          
        actions={[
-         ["AppointmentDate", (c, appointmentdate) => { exerciseAppointment(c.contractId, appointmentdate); },"Appointment Date" ]  
+         ["AppointmentDate", (c, appointmentdate) => { exerciseAppointment(c.contractId,c.payload.citizen, appointmentdate); },"Appointment Date" ]  
         ]}
       />
     </>

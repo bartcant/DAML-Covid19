@@ -148,6 +148,16 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         )}
+        {user.role === "AtriumHealth" && (
+          <SidebarLink
+            key="CovidTest"
+            label="CovidTest"
+            path="/app/covid19test"
+            icon={<Healing />}
+            location={location}
+            isSidebarOpened={isSidebarOpened}
+          />
+        )}
         {user.role == "Operator" && (
           <SidebarLink
             key="Testlist"

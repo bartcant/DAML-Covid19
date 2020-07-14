@@ -32,7 +32,7 @@ function CitizenInvite({ dispatch }) {
   const citizen = useParty();
   const operator = "Operator";
   const ledger = useLedger();
-  const assets = useStreamQuery(Main.CitizenInvitation, () => ({ citizen : citizen }),);
+  const assets = useStreamQuery(Main.CitizenInvitation, () => ({ citizen: citizen }),);
   const history = useHistory();
 
 
@@ -97,7 +97,6 @@ function CitizenInvite({ dispatch }) {
     }
 
   }
-
   const exerciseCitizenAccept = async () => {
     setConductModalOpen(false);
 

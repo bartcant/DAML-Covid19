@@ -15,7 +15,6 @@ import Grid from '@material-ui/core/Grid';
 
 export default function Network() {
 
-  
   const operator = useParty();
   const ledger = useLedger();
   const assets = useStreamQuery (Main.Network);

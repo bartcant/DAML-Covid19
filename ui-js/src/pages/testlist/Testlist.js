@@ -23,7 +23,7 @@ export default function TestList() {
 
 
   const assets = useStreamQuery(Main.Covid19Test);
-  const partyquery = useQuery(Main.CitizenRole , () => ({ citizen: "Alice" }));
+  const partyquery = useQuery(Main.CitizenRole , () => ({ citizen: "Mark" }));
   const operator = useParty();
   const ledger = useLedger();
  

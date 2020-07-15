@@ -19,21 +19,22 @@ import states from "../finalform/states"
 
 export default function TestAppointment() {
 
+
+  const [curcitizen, setCitizen] = React.useState('');
   const healthclinic = useParty();
   const statehealth = "NCHealth";
   const ledger = useLedger();
-  const queryResult = useQuery(Main.CitizenRole);
-
-
   const assets = useStreamQuery (Main.TestAppointment);
+  const queryResult = useQuery(Main.CitizenRole , () => ({ citizen: curcitizen }), [curcitizen]);
 
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
   const [curContractId, setContractId] = React.useState('');
   const [connectionId, setConnectionId] = React.useState('');
+ 
   const [covid19testdata, setConductForm] = React.useState({
     testdate: '',
     healthclinic: healthclinic,
-    citizen: 'Alice',
+    citizen: '',
     statehealth: statehealth,
     testtype: '',
     testnumber: '',
@@ -41,12 +42,12 @@ export default function TestAppointment() {
     locationstate: ''
   });
 
-  const handleConductModalOpen = (cid = '', citizen = 'Alice') => {
-    // const connectionId = JSON.stringify(partyquery.contracts[0].payload.verifiablecredentials.connectionid);
-    // console.log("connectionId = ", connectionId);
-    // console.log(connectionId);
+
+  const handleConductModalOpen = (cid = '', c = '', citizen = '') => {
+    console.log(c)
     setConnectionId(connectionId);
     setContractId(cid);
+    setCitizen(citizen); 
     setConductModalOpen(true);
     setConductForm({
       ...covid19testdata,
@@ -66,15 +67,19 @@ export default function TestAppointment() {
   }
 
   const exercisestarttest = function() {
+   
+    
+    
     setConductModalOpen(false);
     const citizen = covid19testdata.citizen;
     console.log("healthclinic : " + healthclinic);
-    console.log("citizen : " + citizen);
+    console.log("citizen : " + curcitizen);
     console.log("statehealth : " + statehealth);
     console.log("cid: " + curContractId);
 
     const operator = "Operator"; 
-    console.log({citizen, healthclinic, covid19testdata});
+    console.log({curcitizen, healthclinic, covid19testdata});
+    const citizen = curcitizen; 
 
     const res = queryResult.contracts.find((c) => c.payload.citizen = citizen);
     console.log(res);
@@ -85,9 +90,16 @@ export default function TestAppointment() {
     }
 
     ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {covid19testdata, statehealth, citizen, healthclinic, operator});
-    
+
+// Start VC to Trinsic
+
+
+    console.log ("connectionId" + JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid)); 
+    const connectionId = JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid);
+
     console.log("start Axios here")
-    axios.post('/api/issue', {cid: res.payload.verifiablecredentials.connectionid, covid19testdata}).then((response) => {
+    axios.post('/api/issue', covid19testdata, connectionId).then((response) => {
+
       console.log(response);
     });
   };
@@ -113,9 +125,8 @@ export default function TestAppointment() {
         ]}
 
         actions={[
+          ["Conduct Test", (c) => { handleConductModalOpen(c.contractId, c, c.payload.citizen); }
 
-       
-          ["Conduct Test", (c) => { handleConductModalOpen(c.contractId, c.payload.citizen); }
 
         ]
         ]}

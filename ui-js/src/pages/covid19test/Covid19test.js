@@ -76,9 +76,16 @@ export default function TestAppointment() {
     console.log("cid: " + curContractId);
 
     const operator = "Operator"; 
-    console.log({curcitizen, healthclinic, covid19testdata});
     const citizen = curcitizen; 
+    
+    console.log("covid19testdata : " + JSON.stringify(covid19testdata)); 
 
+
+    // Need to update covid19testdate with "citizen" : curcitizen". Currently it is empty
+    
+
+
+    
     ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {covid19testdata, statehealth, citizen, healthclinic, operator});
     
   

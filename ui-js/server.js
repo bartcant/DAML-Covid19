@@ -45,9 +45,7 @@ app.post('/api/connection', cors(), async function (req, res) {
     cache.add("alice", invite.connectionId); 
     console.log("Cache invite.connectionId : " + invite.connectionId);
     console.log(invite);
-    // const connection = await getConnection(invite.connectionId);
-    // console.log("*** getConnection");
-    // console.log(connection)
+   
 
     res.status(200).send({
         invite_url: invite.invitation,
@@ -80,32 +78,21 @@ const getInvite = async () => {
 }
 
 
-// StoreconnectionID
-
-
-app.post('/api/connectionid', cors(), async function (req, res) {
-    const connectid = cache.get("alice");
-    let citizen = "Alice";
-    // ledger.exercise(Main.CitizenInvitation.SetVerifiableCredentials, curContractId, { operator, citizen, citizendetails, connectionid=connectid });
-    // ledger.exercise(Main.CitizenRole.SetVerifiableCredentials, curContractId, { citizen, verifiablecredentials });
-
-    console.log("Cache invite.connectionId : " + connectid);
-    res.status(200).send({ connectionid: connectid });
-});
 
 
 
-// //FRONTEND ENDPOINT for issuing credentials
+// //FRONTEND ENDPOINT for issuing credentials for Covid19test
 app.post('/api/issue', cors(), async function (req, res) {
     const attribs = JSON.stringify(req.body);
     console.log("attribs in app.post" + attribs);
-    const connectid = cache.get("alice");
+    const connectid = JSON.stringify(req.body.connectionid);
+    console.log ("connectionid" + connectid); 
     console.log()
     console.log ("We are starting the credentials part");
         let param_obj = JSON.parse(attribs);
         let params = {
             credentialOfferParameters: {
-                definitionId: process.env.CRED_DEF_ID,
+                definitionId: process.env.CRED_DEF_ID_COVIDVC,
                 connectionId: connectid,
                 automaticIssuance: true,
                 credentialValues: {
@@ -124,6 +111,37 @@ app.post('/api/issue', cors(), async function (req, res) {
         await client.createCredential(params);
     
 });
+
+// //FRONTEND ENDPOINT for issuing credentials for ImmunityVC
+app.post('/api/immunityvc', cors(), async function (req, res) {
+    const attribs = JSON.stringify(req.body);
+    console.log("attribs in app.post" + attribs);
+    const connectid = JSON.stringify(req.body.connectionid);
+    console.log ("connectionid" + connectid); 
+    console.log()
+    console.log ("We are starting the credentials part");
+        let param_obj = JSON.parse(attribs);
+        let params = {
+            credentialOfferParameters: {
+                definitionId: process.env.CRED_DEF_ID_IMMVC,
+                connectionId: connectid,
+                automaticIssuance: true,
+                credentialValues: {
+                    "vc_schema": param_obj["vc_schema"],
+                    "vcdate": param_obj["vcdate"],
+                    "authorizedby": param_obj["authorizedby"],
+                    "citizen": param_obj["citizen"],
+                    "testdate": param_obj["testdate"],
+                    "testresult": param_obj["testresult"],
+                    "vc_message": param_obj["vc_message"]
+                }
+            }
+        }
+        console.log("Client.createCredential");
+        await client.createCredential(params);
+    
+});
+
 
 
 

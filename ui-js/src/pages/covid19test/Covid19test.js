@@ -19,6 +19,7 @@ import states from "../finalform/states"
 
 export default function TestAppointment() {
 
+
   const [curcitizen, setCitizen] = React.useState('');
   const healthclinic = useParty();
   const statehealth = "NCHealth";
@@ -39,19 +40,19 @@ export default function TestAppointment() {
     testnumber: '',
     testresult: '',
     locationstate: ''
-    
   });
+
 
   const handleConductModalOpen = (cid = '', c = '', citizen = '') => {
     console.log(c)
-    //console.log(QueryResult)
-    // const connectionId = JSON.stringify(partyquery.contracts[0].payload.verifiablecredentials.connectionid);
-    // console.log("connectionId = ", connectionId);
-    // console.log(connectionId);
     setConnectionId(connectionId);
     setContractId(cid);
     setCitizen(citizen); 
     setConductModalOpen(true);
+    setConductForm({
+      ...covid19testdata,
+      citizen: citizen
+    })
   };
 
   const handleConductModalClose = () => {
@@ -70,6 +71,7 @@ export default function TestAppointment() {
     
     
     setConductModalOpen(false);
+    const citizen = covid19testdata.citizen;
     console.log("healthclinic : " + healthclinic);
     console.log("citizen : " + curcitizen);
     console.log("statehealth : " + statehealth);
@@ -79,9 +81,16 @@ export default function TestAppointment() {
     console.log({curcitizen, healthclinic, covid19testdata});
     const citizen = curcitizen; 
 
+    const res = queryResult.contracts.find((c) => c.payload.citizen = citizen);
+    console.log(res);
+
+    if (res.payload.verifiablecredentials.connectionid === '' || res.payload.verifiablecredentials.connectionid === undefined) {
+      alert('Empty ContractId');
+      return;
+    }
+
     ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {covid19testdata, statehealth, citizen, healthclinic, operator});
-    
-  
+
 // Start VC to Trinsic
 
 
@@ -90,6 +99,7 @@ export default function TestAppointment() {
 
     console.log("start Axios here")
     axios.post('/api/issue', covid19testdata, connectionId).then((response) => {
+
       console.log(response);
     });
   };
@@ -115,9 +125,8 @@ export default function TestAppointment() {
         ]}
 
         actions={[
-
-       
           ["Conduct Test", (c) => { handleConductModalOpen(c.contractId, c, c.payload.citizen); }
+
 
         ]
         ]}

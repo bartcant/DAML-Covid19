@@ -194,6 +194,27 @@ template InsuranceCompanyRole
     key (operator, insurancecompany) : (Party, Party)
     maintainer key._1
 
+template AliasCitizen
+  with
+    citizen : Party  -- user's party identifier
+    alias : Text  -- user's preferred public name
+    healthclinic : Party
+    statehealth : Party
+    operator : Party
+
+  where
+    signatory  operator
+    observer healthclinic, statehealth, citizen
+    
+    key (operator, citizen) : (Party, Party)
+    maintainer key._1
+
+
+    controller operator can
+      nonconsuming SetAlias : ContractId AliasCitizen with
+         newAlias : Text
+       do
+         create this with alias = newAlias
 
 template TestRequest
   with 

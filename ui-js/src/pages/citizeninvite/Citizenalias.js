@@ -61,7 +61,7 @@ function CreateAlias({avcore, dispatch}) {
     setConductModalOpen(false);
     const alias = newalias.alias;
     console.log("alias " + alias);
-    ledger.create(Registration.AliasCitizen, { citizen, alias, healthclinic, statehealth, operator } ); 
+    ledger.create(Main.AliasCitizen, { citizen, alias, healthclinic, statehealth, operator } ); 
     alert("Alias Information is succesfully stored on the Ledger");
 
     // const {contracts, loading} = useStreamFetchByKey(Registration.AliasCitizen, () => key, [dep1, dep2, ...])

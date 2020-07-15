@@ -28,22 +28,16 @@ template AliasCitizen
     operator : Party
 
   where
-    signatory  citizen
-    observer healthclinic, statehealth, operator
+    signatory  operator
+    observer healthclinic, statehealth, citizen
     key citizen : Party
     maintainer key
-    controller citizen can
+    controller operator can
       nonconsuming SetAlias : ContractId AliasCitizen with
          newAlias : Text
        do
          create this with alias = newAlias
-    controller citizen can
-      nonconsuming UpdateAlias : ContractId AliasCitizen with
-         newAlias : Text
-       do  
-         (aliasCitizenCid, oldAliasData) <- fetchByKey @AliasCitizen (key this)
-         archive aliasCitizenCid
-         create this with citizen = key oldAliasData ; alias = newAlias
+ 
       
 
 
@@ -106,34 +100,7 @@ example = scenario do
 
 
 
-  -- Bob Registratiom
-
-  let citizenkey = CitizenKey with citizen = bob 
-  let citizeninfo = CitizenInfo with idtype = "idtype1" ; id ="id" ; firstname = "firtsname1" ; lastname ="lastname1"; email ="email1"; accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid" 
-  (aliasbobCid, aliasbobdata) <- submit bob do fetchByKey @AliasCitizen bob
-
-  bobregistration <- submit bob do 
-    create CitizenRegistration with 
-        registrationCid = citizenkey; registrationData = citizeninfo ; aliasCid = aliasbobCid
-
-  -- Alice Registration
-
-  let citizenkey = CitizenKey with citizen = alice
-  let citizeninfo = CitizenInfo with  idtype = "idtype1" ; id ="id"  ; firstname = "firtsname1" ; lastname ="lastname1"; email ="email1"; accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid" 
-  (aliasaliceCid, aliasalicedata) <- submit alice do fetchByKey @AliasCitizen alice    
   
-  aliceregistration <- submit alice do 
-    create CitizenRegistration with registrationCid = citizenkey; registrationData = citizeninfo ; aliasCid = aliasaliceCid
-
-  (oldRegistrationCid, oldRegistrationData) <- submit alice do fetchByKey @CitizenRegistration citizenkey
-  
-  let citizenkey = key oldRegistrationData
-  let newCitizenDetails = CitizenInfo with  idtype = "idtype2" ;  id = "id2" ; firstname = "firtsname2" ; lastname ="lastname2"; email ="email2";  accept_vcoremail = "vc"; hippa_accept = True; insurance_id ="insuranceid2" 
-
-  aliceupdate <- submit alice do exercise aliceregistration UpdateRegistration with newCitizenDetails
-
-  return (aliceregistration,bobregistration,aliceupdate,alicealias, updatealicealias)
-
 
   
 

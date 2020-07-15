@@ -11,7 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 
 import Contracts from "../../components/Contracts/Contracts";
-import { useStreamQuery, useLedger, useParty } from "@daml/react";
+import { useStreamQuery, useQuery, useLedger, useParty } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
 
 import vcschemas from "../testlist/vcschemas"
@@ -23,8 +23,13 @@ export default function TestList() {
 
 
   const assets = useStreamQuery(Main.Covid19Test);
+  const partyquery = useQuery(Main.CitizenRole , () => ({ citizen: "Alice" }));
   const operator = useParty();
   const ledger = useLedger();
+ 
+
+
+
 
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
   const [curContractId, setContractId] = React.useState('');
@@ -37,6 +42,10 @@ export default function TestList() {
     vc_message: ''
 
   });
+
+
+
+
 
   const handleConductModalOpen = (cid = '', citizen = '', statehealth = '') => {
     setContractId(cid);
@@ -59,7 +68,7 @@ export default function TestList() {
 
 
 
-  const exerciseStateHealthVC = function () {
+  const exerciseStateHealthVC = async function () {
     setConductModalOpen(false);
 
     console.log("citizen : " + curCitizen);
@@ -68,67 +77,20 @@ export default function TestList() {
     let statehealth = curStateHealth;
     console.log("cid: " + curContractId);
     ledger.exercise(Main.Covid19Test.SupplyVC, curContractId, { statehealth, immunityvc, operator, citizen });
-    const trinsiccall = trinsic();
-    console.log ("COnnectionID " + trinsiccall); 
-  }
-
-    // Retrieve Connectionid for the User from CitizenRole
-
-    async function trinsic() {
-    console.log("start TRinsic VC")
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl0sInJlYWRBcyI6WyJPcGVyYXRvciJdfX0.JklciDh0-GzkvrPkSJ_H3sYX39LFU4C3uVWd7qsMPNo"
-
-    const headers = {
-      "Authorization": `Bearer ${token.toString()}`,
-      'Content-Type': 'application/json'
-    }
-
-    const siteSubDomain = (path = '/data/') => {
-      if (window.location.hostname === 'localhost') {
-        return window.location.hostname + (window.location.port ? ':' + window.location.port : '');
-      }
-
-      let host = window.location.host.split('.')
-      const ledgerId = host[0];
-      let apiUrl = host.slice(1)
-      apiUrl.unshift('api')
-
-      return apiUrl.join('.') + (window.location.port ? ':' + window.location.port : '') + path + ledgerId;
-    }
-
-    const post = (url, options = {}) => {
-      Object.assign(options, { method: 'POST', headers });
-
-      return fetch('//' + siteSubDomain() + url, options);
-    }
-
-
-
-    let connectionId = '';
-    const fetchUpdate = async () => {
+    
   
-        console.log("Inside fetchUpdate"); 
-        const contractResponse = await post('/v1/query', {
-          body: JSON.stringify({
-            "templateIds": ["Main:CitizenRole"],
-            "query": { "citizen": curCitizen }
-          })
-        });
+    // Retrieve Connectionid for the User from CitizenRole - VerifiableCredentials
 
-        const connectionResponse = await contractResponse.json();
-        if (connectionResponse.status === 200) {
-          connectionId = connectionResponse.result[0].payload.verifiablecredentials.connectionId
-          console.log(connectionId);
-        }
-
-      await fetchUpdate();
-      return connectionId
-
-    }
-
-  }
+    
+    console.log ("connectionId" + JSON.stringify(partyquery.contracts[0].payload.verifiablecredentials.connectionid)); 
+    connectionId = JSON.stringify(partyquery.contracts[0].payload.verifiablecredentials.connectionid);
   
+    }; 
+
+
+
+
+   
     // Send  VC information and ConnectionId to Trinsic Server.js
     let connectionId = ''; 
     axios.post('/api/immunityvc', immunityvc, connectionId).then((response) => {

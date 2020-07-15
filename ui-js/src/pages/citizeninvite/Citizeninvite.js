@@ -108,10 +108,11 @@ function CitizenInvite({ dispatch }) {
     console.log("alias" + JSON.stringify(alias));
 
     await ledger.exercise(Main.PartyInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, verifiablecredentials })
-    .then(() => {
+    .then((res) => {
+      console.log(res);
       dispatch(conductclick({
         citizen: citizen,
-        contractId: curContractId,
+        contractId: res[0],
         avcore: citizendetails.accept_vcoremail
       }));
   

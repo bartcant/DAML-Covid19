@@ -24,7 +24,7 @@ function Header({ history }) {
       case 'Citizen':
         Portalheader = "Citizen Portal";
         break;
-      case 'AtriumHealth':
+      case 'HealthClinic':
         Portalheader = "Clinic Portal";
         break;
       case 'Operator':

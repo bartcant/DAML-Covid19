@@ -34,7 +34,7 @@ export default function TestList() {
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
   const [curContractId, setContractId] = React.useState('');
   const [curTestDate, setTestDate] = React.useState('');
-  const [curTestResult, setRestResult] = React.useState('');
+  const [curTestResult, setTestResult] = React.useState('');
   const [curStateHealth, setStateHealth] = React.useState('');
   const [immunityvc, setConductForm] = React.useState({
     vcdate: '',
@@ -91,7 +91,7 @@ export default function TestList() {
 
     // Send  VC information and ConnectionId to Trinsic Server.js
 
-    axios.post('/api/immunityvc', immunityvc, { "connectionid": connectionId }, { "citizen": curcitizen }, { "testdate": testdate }, { "testresult": testresult } {}).then((response) => {
+    axios.post('/api/immunityvc', immunityvc, { "connectionid": connectionId }, { "citizen": curcitizen }, { "testdate": testdate }, { "testresult": testresult }).then((response) => {
       console.log(response);
     });
 

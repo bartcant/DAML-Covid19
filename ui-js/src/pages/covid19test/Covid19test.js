@@ -19,11 +19,10 @@ import states from "../finalform/states"
 
 export default function TestAppointment() {
 
-  const citizen = "Alice";
   const healthclinic = useParty();
   const statehealth = "NCHealth";
   const ledger = useLedger();
-  const QueryResult = useQuery(Main.CitizenRole);
+  const queryResult = useQuery(Main.CitizenRole);
 
 
   const assets = useStreamQuery (Main.TestAppointment);
@@ -34,24 +33,25 @@ export default function TestAppointment() {
   const [covid19testdata, setConductForm] = React.useState({
     testdate: '',
     healthclinic: healthclinic,
-    citizen: citizen,
+    citizen: 'Alice',
     statehealth: statehealth,
     testtype: '',
     testnumber: '',
     testresult: '',
     locationstate: ''
-    
   });
 
-  const handleConductModalOpen = (cid = '', c = '') => {
-    console.log(c)
-    console.log(QueryResult)
+  const handleConductModalOpen = (cid = '', citizen = 'Alice') => {
     // const connectionId = JSON.stringify(partyquery.contracts[0].payload.verifiablecredentials.connectionid);
     // console.log("connectionId = ", connectionId);
     // console.log(connectionId);
     setConnectionId(connectionId);
     setContractId(cid);
     setConductModalOpen(true);
+    setConductForm({
+      ...covid19testdata,
+      citizen: citizen
+    })
   };
 
   const handleConductModalClose = () => {
@@ -67,6 +67,7 @@ export default function TestAppointment() {
 
   const exercisestarttest = function() {
     setConductModalOpen(false);
+    const citizen = covid19testdata.citizen;
     console.log("healthclinic : " + healthclinic);
     console.log("citizen : " + citizen);
     console.log("statehealth : " + statehealth);
@@ -75,11 +76,18 @@ export default function TestAppointment() {
     const operator = "Operator"; 
     console.log({citizen, healthclinic, covid19testdata});
 
+    const res = queryResult.contracts.find((c) => c.payload.citizen = citizen);
+    console.log(res);
+
+    if (res.payload.verifiablecredentials.connectionid === '' || res.payload.verifiablecredentials.connectionid === undefined) {
+      alert('Empty ContractId');
+      return;
+    }
+
     ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {covid19testdata, statehealth, citizen, healthclinic, operator});
     
-
     console.log("start Axios here")
-    axios.post('/api/issue', covid19testdata).then((response) => {
+    axios.post('/api/issue', {cid: res.payload.verifiablecredentials.connectionid, covid19testdata}).then((response) => {
       console.log(response);
     });
   };
@@ -107,7 +115,7 @@ export default function TestAppointment() {
         actions={[
 
        
-          ["Conduct Test", (c) => { handleConductModalOpen(c.contractId, c); }
+          ["Conduct Test", (c) => { handleConductModalOpen(c.contractId, c.payload.citizen); }
 
         ]
         ]}

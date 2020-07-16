@@ -99,29 +99,30 @@ app.post('/api/connectionid', cors(), async function (req, res) {
 app.post('/api/issue', cors(), async function (req, res) {
     const attribs = JSON.stringify(req.body);
     console.log("attribs in app.post" + attribs);
-    const connectid = cache.get("alice");
+    // const connectid = cache.get("alice");
+    let param_obj = JSON.parse(attribs);
+    const connectid = param_obj["cid"];
     console.log()
     console.log ("We are starting the credentials part");
-        let param_obj = JSON.parse(attribs);
-        let params = {
-            credentialOfferParameters: {
-                definitionId: process.env.CRED_DEF_ID,
-                connectionId: connectid,
-                automaticIssuance: true,
-                credentialValues: {
-                    "testdate": param_obj["testdate"],
-                    "healthclinic": param_obj["healthclinic"],
-                    "citizen": param_obj["citizen"],
-                    "statehealth": param_obj["statehealth"],
-                    "testtype": param_obj["testtype"],
-                    "testnumber": param_obj["testnumber"],
-                    "testresult": param_obj["testresult"],
-                    "locationstate": param_obj["locationstate"]
-                }
+    let params = {
+        credentialOfferParameters: {
+            definitionId: process.env.CRED_DEF_ID,
+            connectionId: connectid,
+            automaticIssuance: true,
+            credentialValues: {
+                "testdate": param_obj["covid19testdata"]["testdate"],
+                "healthclinic": param_obj["covid19testdata"]["healthclinic"],
+                "citizen": param_obj["covid19testdata"]["citizen"],
+                "statehealth": param_obj["covid19testdata"]["statehealth"],
+                "testtype": param_obj["covid19testdata"]["testtype"],
+                "testnumber": param_obj["covid19testdata"]["testnumber"],
+                "testresult": param_obj["covid19testdata"]["testresult"],
+                "locationstate": param_obj["covid19testdata"]["locationstate"]
             }
         }
-        console.log("Client.createCredential");
-        await client.createCredential(params);
+    }
+    console.log("Client.createCredential");
+    await client.createCredential(params);
     
 });
 

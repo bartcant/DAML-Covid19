@@ -37,8 +37,6 @@ function CitizenConnection () {
                 issuer_did: response.data.issuer_did
             };
             ledger.exercise(Main.CitizenRole.SetVerifiableCredentials, contractId, { citizen, newverifiablecredentials});
-            localStorage.removeItem('aciti');
-            localStorage.removeItem('acid');
             setQrState({...qrState, invite_url: "https://web.cloud.streetcred.id/link/?c_i=" + response.data.invite_url});
             console.log("invite url" + qrState.invite_url);
         });

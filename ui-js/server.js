@@ -23,14 +23,13 @@ app.get('*', function (req, res) {
 });
 
 // WEBHOOK ENDPOINT
- app.post('/webhook', async function (req, res) {
+app.post('/webhook', async function (req, res) {
     try {
         console.log("got webhook" + req + "   type: " + req.body.message_type);
-        if (req.body.message_type === 'new_connection') 
-        {
+        if (req.body.message_type === 'new_connection') {
             console.log("new connection notif");
-            console.log("Connection Complete with connectionid : " + req.body.object_id );
-               
+            console.log("Connection Complete with connectionid : " + req.body.object_id);
+
         }
 
     }
@@ -43,16 +42,14 @@ app.get('*', function (req, res) {
 //FRONTEND ENDPOINT for creating a connection
 app.post('/api/connection', cors(), async function (req, res) {
     const invite = await getInvite();
-    cache.add("alice", invite.connectionId); 
+    cache.add("alice", invite.connectionId);
     console.log("Cache invite.connectionId : " + invite.connectionId);
     console.log(invite);
-    // const connection = await getConnection(invite.connectionId);
-    // console.log("*** getConnection");
-    // console.log(connection)
+
 
     res.status(200).send({
         invite_url: invite.invitation,
-        connectid : invite.connectionId,
+        connectid: invite.connectionId,
         holder_did: invite.hasOwnProperty('myDid') ? invite.myDid : '',
         issuer_did: invite.hasOwnProperty('theirDid') ? invite.theirDid : ''
     });
@@ -75,36 +72,25 @@ const getInvite = async () => {
             connectionInvitationParameters: {}
         });
     } catch (e) {
-        console.log ("Get invite problem");
+        console.log("Get invite problem");
         console.log(e.message || e.toString());
     }
 }
 
 
-// StoreconnectionID
-
-
-app.post('/api/connectionid', cors(), async function (req, res) {
-    const connectid = cache.get("alice");
-    let citizen = "Alice";
-    // ledger.exercise(Main.CitizenInvitation.SetVerifiableCredentials, curContractId, { operator, citizen, citizendetails, connectionid=connectid });
-    // ledger.exercise(Main.CitizenRole.SetVerifiableCredentials, curContractId, { citizen, verifiablecredentials });
-
-    console.log("Cache invite.connectionId : " + connectid);
-    res.status(200).send({ connectionid: connectid });
-});
 
 
 
-// //FRONTEND ENDPOINT for issuing credentials
+// //FRONTEND ENDPOINT for issuing credentials for Covid19test
 app.post('/api/issue', cors(), async function (req, res) {
     const attribs = JSON.stringify(req.body);
     console.log("attribs in app.post" + attribs);
+
     // const connectid = cache.get("alice");
     let param_obj = JSON.parse(attribs);
     const connectid = param_obj["cid"];
     console.log()
-    console.log ("We are starting the credentials part");
+    console.log("We are starting the credentials part");
     let params = {
         credentialOfferParameters: {
             definitionId: process.env.CRED_DEF_ID_COVIDVC,
@@ -119,14 +105,46 @@ app.post('/api/issue', cors(), async function (req, res) {
                 "testnumber": param_obj["covid19testdata"]["testnumber"],
                 "testresult": param_obj["covid19testdata"]["testresult"],
                 "locationstate": param_obj["covid19testdata"]["locationstate"]
+
             }
         }
     }
     console.log(params);
     console.log("Client.createCredential");
     await client.createCredential(params);
-    
+
 });
+
+// //FRONTEND ENDPOINT for issuing credentials for ImmunityVC
+app.post('/api/immunityvc', cors(), async function (req, res) {
+    const attribs = JSON.stringify(req.body);
+    console.log("attribs in app.post" + attribs);
+    const connectid = JSON.stringify(req.body.connectionid);
+    console.log("connectionid" + connectid);
+    console.log()
+    console.log("We are starting the credentials part");
+    let param_obj = JSON.parse(attribs);
+    let params = {
+        credentialOfferParameters: {
+            definitionId: process.env.CRED_DEF_ID_IMMVC,
+            connectionId: connectid,
+            automaticIssuance: true,
+            credentialValues: {
+                "vc_schema": param_obj["vc_schema"],
+                "vcdate": param_obj["vcdate"],
+                "authorizedby": param_obj["authorizedby"],
+                "citizen": param_obj["citizen"],
+                "testdate": param_obj["testdate"],
+                "testresult": param_obj["testresult"],
+                "vc_message": param_obj["vc_message"]
+            }
+        }
+    }
+    console.log("Client.createCredential");
+    await client.createCredential(params);
+
+});
+
 
 
 

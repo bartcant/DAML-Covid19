@@ -18,6 +18,7 @@ app.use(parser.json());
 app.use(express.static(path.join(__dirname, 'build')))
 
 app.get('*', function (req, res) {
+    console.log(process.env)
     res.sendFile(path.join(__dirname, '/build/index.html'));
 });
 
@@ -106,7 +107,7 @@ app.post('/api/issue', cors(), async function (req, res) {
     console.log ("We are starting the credentials part");
     let params = {
         credentialOfferParameters: {
-            definitionId: process.env.CRED_DEF_ID,
+            definitionId: process.env.CRED_DEF_ID_COVIDVC,
             connectionId: connectid,
             automaticIssuance: true,
             credentialValues: {
@@ -121,6 +122,7 @@ app.post('/api/issue', cors(), async function (req, res) {
             }
         }
     }
+    console.log(params);
     console.log("Client.createCredential");
     await client.createCredential(params);
     

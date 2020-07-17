@@ -17,6 +17,8 @@ import { Main } from "@daml2js/Covid19-0.0.1/";
 
 import states from "../finalform/states"
 
+axios.defaults.baseURL = 'http://localhost:3002/';
+
 export default function TestAppointment() {
 
   const healthclinic = useParty();

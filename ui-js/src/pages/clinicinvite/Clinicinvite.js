@@ -15,7 +15,7 @@ export default function Clinicinvite() {
   const healthclinic = useParty();
   const operator = "Operator"; 
   const ledger = useLedger();
-  const assets = useStreamQuery (Main.HealthClinicInvitation);
+  const assets = useStreamQuery(Main.PartyInvitation, () => ({ party: healthclinic }));
 
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
   const [curContractId, setContractId] = React.useState('');

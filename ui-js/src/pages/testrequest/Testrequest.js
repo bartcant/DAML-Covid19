@@ -9,7 +9,7 @@ export default function TestRequest() {
   const citizen = useParty();
   const operator = "Operator"; 
   const ledger = useLedger();
-  const assets = useStreamQuery (Main.CitizenRole);
+  const assets = useStreamQuery (Main.CitizenRole, () => ({ citizen : citizen }));
 
    const exerciseRequestTest = function(cid, healthclinic ) {
     console.log("operator :" + operator);

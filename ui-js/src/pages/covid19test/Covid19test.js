@@ -31,7 +31,6 @@ export default function TestAppointment() {
 
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
   const [curContractId, setContractId] = React.useState('');
-  const [connectionId, setConnectionId] = React.useState('');
  
   const [covid19testdata, setConductForm] = React.useState({
     testdate: '',
@@ -45,9 +44,7 @@ export default function TestAppointment() {
   });
 
 
-  const handleConductModalOpen = (cid = '', c = '', citizen = '') => {
-    console.log(c)
-    setConnectionId(connectionId);
+  const handleConductModalOpen = (cid = '', citizen = '') => {
     setContractId(cid);
     setCitizen(citizen); 
     setConductModalOpen(true);
@@ -75,19 +72,18 @@ export default function TestAppointment() {
     setConductModalOpen(false);
     const citizen = covid19testdata.citizen;
     console.log("healthclinic : " + healthclinic);
-    console.log("citizen : " + curcitizen);
+    console.log("citizen : " + covid19testdata.citizen);
     console.log("statehealth : " + statehealth);
     console.log("cid: " + curContractId);
 
     const operator = "Operator"; 
-    console.log({curcitizen, healthclinic, covid19testdata});
-    const citizen = curcitizen; 
+    console.log({healthclinic, covid19testdata});
 
-    const res = queryResult.contracts.find((c) => c.payload.citizen = citizen);
-    console.log(res);
 
-    if (res.payload.verifiablecredentials.connectionid === '' || res.payload.verifiablecredentials.connectionid === undefined) {
-      alert('Empty ContractId');
+    console.log ("connectionId" + JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid)); 
+    const connectionId = JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid);
+    if (connectionId === '' || connectionId === undefined) {
+      alert('Empty ConnectionId');
       return;
     }
 
@@ -95,12 +91,8 @@ export default function TestAppointment() {
 
 // Start VC to Trinsic
 
-
-    console.log ("connectionId" + JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid)); 
-    const connectionId = JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid);
-
     console.log("start Axios here")
-    axios.post('/api/issue', covid19testdata, connectionId).then((response) => {
+    axios.post('/api/issue', {cid: connectionId, covid19testdata}).then((response) => {
 
       console.log(response);
     });
@@ -127,7 +119,7 @@ export default function TestAppointment() {
         ]}
 
         actions={[
-          ["Conduct Test", (c) => { handleConductModalOpen(c.contractId, c, c.payload.citizen); }
+          ["Conduct Test", (c) => { handleConductModalOpen(c.contractId, c.payload.citizen); }
 
 
         ]

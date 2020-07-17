@@ -81,7 +81,7 @@ export default function TestAppointment() {
 
 
     console.log ("connectionId" + JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid)); 
-    const connectionId = JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid);
+    const connectionId = queryResult.contracts[0].payload.verifiablecredentials.connectionid;
     if (connectionId === '' || connectionId === undefined) {
       alert('Empty ConnectionId');
       return;

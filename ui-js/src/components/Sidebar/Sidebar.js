@@ -70,14 +70,14 @@ function Sidebar({ location }) {
         </IconButton>
       </div>
       <List className={classes.sidebarList}>
-        <SidebarLink
+       {/*  <SidebarLink
           key="default"
           label="Experiments"
           path="/app/default"
           icon={<Home />}
           location={location}
           isSidebarOpened={isSidebarOpened}
-        />
+        /> */}
         {user.role === "Operator" && (
           <SidebarLink
             key="Network"
@@ -158,7 +158,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         )}
-        {user.role == "Operator" && (
+        {user.role == "StateHealthAgency" && (
           <SidebarLink
             key="Testlist"
             label="Test List"
@@ -168,7 +168,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         )}
-        {user.role === "Operator" && (
+        {user.role === "StateHealthAgency" && (
           <SidebarLink
             key="VCList"
             label="VC List"

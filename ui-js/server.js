@@ -85,8 +85,6 @@ const getInvite = async () => {
 app.post('/api/issue', cors(), async function (req, res) {
     const attribs = JSON.stringify(req.body);
     console.log("attribs in app.post" + attribs);
-
-    // const connectid = cache.get("alice");
     let param_obj = JSON.parse(attribs);
     const connectid = param_obj["cid"];
     console.log()
@@ -119,27 +117,27 @@ app.post('/api/issue', cors(), async function (req, res) {
 app.post('/api/immunityvc', cors(), async function (req, res) {
     const attribs = JSON.stringify(req.body);
     console.log("attribs in app.post" + attribs);
-    const connectid = JSON.stringify(req.body.connectionid);
-    console.log("connectionid" + connectid);
+    let param_obj = JSON.parse(attribs);
+    const connectid = param_obj["cid"];
     console.log()
     console.log("We are starting the credentials part");
-    let param_obj = JSON.parse(attribs);
     let params = {
         credentialOfferParameters: {
             definitionId: process.env.CRED_DEF_ID_IMMVC,
             connectionId: connectid,
             automaticIssuance: true,
             credentialValues: {
-                "vc_schema": param_obj["vc_schema"],
-                "vcdate": param_obj["vcdate"],
-                "authorizedby": param_obj["authorizedby"],
+                "vc_schema": param_obj["immunityvc"]["vc_schema"],
+                "vcdate": param_obj["immunityvc"]["vcdate"],
+                "authorizedby": param_obj["immunityvc"]["authorizedby"],
                 "citizen": param_obj["citizen"],
                 "testdate": param_obj["testdate"],
                 "testresult": param_obj["testresult"],
-                "vc_message": param_obj["vc_message"]
+                "vc_message": param_obj["immunityvc"]["vc_message"]
             }
         }
     }
+    console.log("Params :" + params);
     console.log("Client.createCredential");
     await client.createCredential(params);
 

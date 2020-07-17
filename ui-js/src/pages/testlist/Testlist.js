@@ -15,6 +15,7 @@ import { useStreamQuery, useQuery, useLedger, useParty } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
 
 import vcschemas from "../testlist/vcschemas"
+import authorizedby from "../testlist/authorizedby"
 
 axios.defaults.baseURL = 'http://localhost:3002/';
 
@@ -87,18 +88,29 @@ export default function TestList() {
     // Retrieve Connectionid for the User from CitizenRole - VerifiableCredentials
 
     console.log("connectionId" + JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid));
-    const connectionId = JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid);
-
+    const connectionId = queryResult.contracts[0].payload.verifiablecredentials.connectionid;
+    if (connectionId === '' || connectionId === undefined) {
+      alert('Empty ConnectionId');
+      return;
+    }
     // Send  VC information and ConnectionId to Trinsic Server.js
 
-    axios.post('/api/immunityvc', immunityvc, { "connectionid": connectionId }, { "citizen": curcitizen }, { "testdate": testdate }, { "testresult": testresult }).then((response) => {
+
+    console.log("start Axios here");
+    axios.post('/api/immunityvc', { cid: connectionId, immunityvc, citizen: curcitizen, testdate: testdate, testresult: testresult }).then((response) => {
+
       console.log(response);
     });
-
   }
 
   const getVCSchemas = () => {
     return vcschemas.map((each) => {
+      return <MenuItem key={each.value} value={each.value}>{each.label}</MenuItem>
+    });
+  }
+
+  const getAuthorizedBy = () => {
+    return authorizedby.map((each) => {
       return <MenuItem key={each.value} value={each.value}>{each.label}</MenuItem>
     });
   }
@@ -151,12 +163,13 @@ export default function TestList() {
           </div>
 
           <div>
-            <TextField
-              label="Authorized By"
-              placeholder="Authorized by"
+            <Select
+              labelId="demo-simple-select-label"
               value={immunityvc.authorizedby}
               onChange={(e) => handleConductChange('authorizedby', e)}
-            />
+            >
+              {getAuthorizedBy()}
+            </Select>
           </div>
         </DialogContent>
         <DialogActions>
@@ -164,7 +177,7 @@ export default function TestList() {
             Cancel
       </Button>
           <Button onClick={() => exerciseStateHealthVC()} color="primary" autoFocus>
-            Test
+            Send Credentials
       </Button>
         </DialogActions>
       </Dialog>

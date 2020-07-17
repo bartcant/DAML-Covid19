@@ -1,8 +1,10 @@
 const vcschemas = {
   IMVC: 'Immunity_Proof',
-  BusinessVC : 'Business_Card'
+  ABVC: 'Ant-Body-Proof',
+  VACVC: 'Covid19-Vaccine',
+
 }
 export default Object.keys(vcschemas).map(value => ({
-  value, 
+  value,
   label: vcschemas[value]
 }))

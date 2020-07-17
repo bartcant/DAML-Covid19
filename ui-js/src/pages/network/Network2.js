@@ -31,7 +31,7 @@ export default function Network() {
     console.log("operator :" + operator);
     console.log("citizen : " + statehealth);
     console.log("cid: "+ cid);
-    let roletype = "StateHealth"
+    let roletype = "StateHealthAgency"
     ledger.exercise(Main.Network.InviteStateHealth, cid, { operator, statehealth, roletype  } ); };
   
   const exerciseInviteInsuranceCompany = function(cid, insurancecompany ) {

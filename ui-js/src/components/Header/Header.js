@@ -28,10 +28,10 @@ function Header({ history }) {
         Portalheader = "Clinic Portal";
         break;
       case 'Operator':
-        Portalheader = "Covid19 State Surveillance Operator Portal";
+        Portalheader = "Covid19 State Surveillance  - Operator Portal";
         break;
-      case 'NCHealth':
-        Portalheader = "Covid19 State Surveillance Agency Portal";
+      case 'StateHealthAgency':
+        Portalheader = "Covid19 State Surveillance - State Health Agency Portal";
         break;
   }
   return (

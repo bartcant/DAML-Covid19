@@ -29,7 +29,7 @@ export default function TestAppointment() {
   const healthclinic = useParty();
   const statehealth = "NCHealth";
   const ledger = useLedger();
-  const assets = useStreamQuery(Main.TestAppointment);
+  const assets = useStreamQuery(Main.TestAppointment, () => ({ healthclinic: healthclinic }), );
   const queryResult = useQuery(Main.CitizenRole, () => ({ citizen: curcitizen }), [curcitizen]);
 
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
@@ -90,7 +90,7 @@ export default function TestAppointment() {
 
 
 
-    console.log("start Axios here")
+    console.log("start Axios here");
     axios.post('/api/issue', {cid: connectionId, covid19testdata}).then((response) => {
 
       console.log(response);

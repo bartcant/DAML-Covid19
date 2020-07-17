@@ -25,9 +25,8 @@ export default function CitizenUpdate() {
   const operator = "Operator"; 
   const ledger = useLedger();
 
-  const assets = useStreamQuery(Main.CitizenRole);
- 
-  // const {assets, loading} = useStreamQuery(Main.CitizenRole, () => ({citizendetails: citizendetails})) ;
+  const assets = useStreamQuery(Main.CitizenRole, () => ({ citizen: citizen }),);
+
 
 
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
@@ -90,7 +89,7 @@ export default function CitizenUpdate() {
     console.log("citizen : " + citizen);
     console.log("cid: " + curContractId);
     console.log("citizendetails: " + JSON.stringify(citizendetails));
-    let aliasCid = "test";
+
     const newcitizendetails = citizendetails;
 
     ledger.exercise(Main.CitizenRole.UpdateCitizenRegistration, curContractId, {citizen, newcitizendetails });
@@ -104,8 +103,8 @@ return (
         columns={[
             ["ContractId", "contractId"],
             ["Citizen", "payload.citizen"],
-            ["ID Type", "payload.citizendetails.id"],
-            ["Did", "payload.citizendetails.idtype"]
+            ["ID Type", "payload.citizendetails.idtype"],
+            ["ID", "payload.citizendetails.id"]
           ]}
 
         actions={[

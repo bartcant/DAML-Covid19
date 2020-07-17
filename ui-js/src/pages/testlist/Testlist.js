@@ -21,19 +21,20 @@ axios.defaults.baseURL = 'http://localhost:3002/';
 
 export default function TestList() {
 
-
+  const [curcitizen, setCitizen] = React.useState('');
   const assets = useStreamQuery(Main.Covid19Test);
-  const partyquery = useQuery(Main.CitizenRole , () => ({ citizen: "Mark" }));
+  const queryResult = useQuery(Main.CitizenRole, () => ({ citizen: curcitizen }), [curcitizen]);
   const operator = useParty();
   const ledger = useLedger();
- 
+
 
 
 
 
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
   const [curContractId, setContractId] = React.useState('');
-  const [curCitizen, setCitizen] = React.useState('');
+  const [curTestDate, setTestDate] = React.useState('');
+  const [curTestResult, setRestResult] = React.useState('');
   const [curStateHealth, setStateHealth] = React.useState('');
   const [immunityvc, setConductForm] = React.useState({
     vcdate: '',
@@ -47,10 +48,12 @@ export default function TestList() {
 
 
 
-  const handleConductModalOpen = (cid = '', citizen = '', statehealth = '') => {
+  const handleConductModalOpen = (cid = '', citizen = '', statehealth = '', testdate = '', testresult = '') => {
     setContractId(cid);
     setCitizen(citizen);
     setStateHealth(statehealth);
+    setTestDate(testdate);
+    setTestResult(testresult);
     setConductModalOpen(true);
   };
 
@@ -71,38 +74,36 @@ export default function TestList() {
   const exerciseStateHealthVC = async function () {
     setConductModalOpen(false);
 
-    console.log("citizen : " + curCitizen);
-    let citizen = curCitizen;
+    console.log("citizen : " + curcitizen);
+    let citizen = curcitizen;
     console.log("statehealth : " + curStateHealth);
     let statehealth = curStateHealth;
     console.log("cid: " + curContractId);
+    let testdate = curTestDate
+    let testresult = curTestResult
     ledger.exercise(Main.Covid19Test.SupplyVC, curContractId, { statehealth, immunityvc, operator, citizen });
-    
-  
+
+
     // Retrieve Connectionid for the User from CitizenRole - VerifiableCredentials
 
-    
-    console.log ("connectionId" + JSON.stringify(partyquery.contracts[0].payload.verifiablecredentials.connectionid)); 
-    connectionId = JSON.stringify(partyquery.contracts[0].payload.verifiablecredentials.connectionid);
-  
-    }; 
+    console.log("connectionId" + JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid));
+    const connectionId = JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid);
 
-
-
-
-   
     // Send  VC information and ConnectionId to Trinsic Server.js
-    let connectionId = ''; 
-    axios.post('/api/immunityvc', immunityvc, connectionId).then((response) => {
+
+    axios.post('/api/immunityvc', immunityvc, { "connectionid": connectionId }, { "citizen": curcitizen }, { "testdate": testdate }, { "testresult": testresult } {}).then((response) => {
       console.log(response);
     });
-  
+
+  }
 
   const getVCSchemas = () => {
     return vcschemas.map((each) => {
       return <MenuItem key={each.value} value={each.value}>{each.label}</MenuItem>
     });
   }
+
+
 
   return (
     <>
@@ -117,7 +118,7 @@ export default function TestList() {
 
         ]}
         actions={[
-          ["SupplyVC", (c) => { handleConductModalOpen(c.contractId, c.payload.citizen, c.payload.statehealth); }]
+          ["SupplyVC", (c) => { handleConductModalOpen(c.contractId, c.payload.citizen, c.payload.statehealth, c.payload.covid19testdata.testdate, c.payload.covid19testdata.testresult); }]
         ]}
 
       />

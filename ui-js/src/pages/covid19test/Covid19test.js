@@ -26,12 +26,11 @@ export default function TestAppointment() {
   const healthclinic = useParty();
   const statehealth = "NCHealth";
   const ledger = useLedger();
-  const assets = useStreamQuery (Main.TestAppointment);
-  const queryResult = useQuery(Main.CitizenRole , () => ({ citizen: curcitizen }), [curcitizen]);
+  const assets = useStreamQuery(Main.TestAppointment);
+  const queryResult = useQuery(Main.CitizenRole, () => ({ citizen: curcitizen }), [curcitizen]);
 
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
   const [curContractId, setContractId] = React.useState('');
- 
   const [covid19testdata, setConductForm] = React.useState({
     testdate: '',
     healthclinic: healthclinic,
@@ -46,7 +45,7 @@ export default function TestAppointment() {
 
   const handleConductModalOpen = (cid = '', citizen = '') => {
     setContractId(cid);
-    setCitizen(citizen); 
+    setCitizen(citizen);
     setConductModalOpen(true);
     setConductForm({
       ...covid19testdata,
@@ -65,17 +64,16 @@ export default function TestAppointment() {
     })
   }
 
-  const exercisestarttest = function() {
-   
-    
-    
+  const exercisestarttest = function () {
+
+
+
     setConductModalOpen(false);
     const citizen = covid19testdata.citizen;
     console.log("healthclinic : " + healthclinic);
     console.log("citizen : " + covid19testdata.citizen);
     console.log("statehealth : " + statehealth);
     console.log("cid: " + curContractId);
-
     const operator = "Operator"; 
     console.log({healthclinic, covid19testdata});
 
@@ -87,9 +85,7 @@ export default function TestAppointment() {
       return;
     }
 
-    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {covid19testdata, statehealth, citizen, healthclinic, operator});
 
-// Start VC to Trinsic
 
     console.log("start Axios here")
     axios.post('/api/issue', {cid: connectionId, covid19testdata}).then((response) => {
@@ -122,81 +118,81 @@ export default function TestAppointment() {
           ["Conduct Test", (c) => { handleConductModalOpen(c.contractId, c.payload.citizen); }
 
 
-        ]
+          ]
         ]}
 
-       
-
-        />
 
 
-        <Dialog
-          open={conductModalOpen}
-          onClose={handleConductModalClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"CONDUCT TEST"}</DialogTitle>
-          <DialogContent>
-            <div>
-              <TextField
-                label="TestDate"
-                placeholder="TestDate"
-                value={covid19testdata.testdate}
-                onChange={(e) => handleConductChange('testdate', e)}
-              />
-            </div>
+      />
 
 
-            <div>
-              <TextField
-                label="Test Type"
-                placeholder="Test Type"
-                value={covid19testdata.testtype}
-                onChange={(e) => handleConductChange('testtype', e)}
-              />
-            </div>
+      <Dialog
+        open={conductModalOpen}
+        onClose={handleConductModalClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"CONDUCT TEST"}</DialogTitle>
+        <DialogContent>
+          <div>
+            <TextField
+              label="TestDate"
+              placeholder="TestDate"
+              value={covid19testdata.testdate}
+              onChange={(e) => handleConductChange('testdate', e)}
+            />
+          </div>
 
-            <div>
-              <TextField
-                label="Test Number"
-                placeholder="Test Number"
-                value={covid19testdata.testnumber}
-                onChange={(e) => handleConductChange('testnumber', e)}
-              />
-            </div>
 
-            <div>
-              <TextField
-                label="Test Result"
-                placeholder="Test Result"
-                value={covid19testdata.testresult}
-                onChange={(e) => handleConductChange('testresult', e)}
-              />
-            </div>
+          <div>
+            <TextField
+              label="Test Type"
+              placeholder="Test Type"
+              value={covid19testdata.testtype}
+              onChange={(e) => handleConductChange('testtype', e)}
+            />
+          </div>
 
-            <div>
-              <Select
-                labelId="demo-simple-select-label"
-                value={covid19testdata.locationstate}
-                onChange={(e) => handleConductChange('locationstate', e)}
-              >
-                { getStates() }
-              </Select>
-            </div>
+          <div>
+            <TextField
+              label="Test Number"
+              placeholder="Test Number"
+              value={covid19testdata.testnumber}
+              onChange={(e) => handleConductChange('testnumber', e)}
+            />
+          </div>
 
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleConductModalClose} color="primary">
-              Cancel
+          <div>
+            <TextField
+              label="Test Result"
+              placeholder="Test Result"
+              value={covid19testdata.testresult}
+              onChange={(e) => handleConductChange('testresult', e)}
+            />
+          </div>
+
+          <div>
+            <Select
+              labelId="demo-simple-select-label"
+              value={covid19testdata.locationstate}
+              onChange={(e) => handleConductChange('locationstate', e)}
+            >
+              {getStates()}
+            </Select>
+          </div>
+
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleConductModalClose} color="primary">
+            Cancel
             </Button>
-            <Button onClick={() => exercisestarttest()} color="primary" autoFocus>
-              Test
+          <Button onClick={() => exercisestarttest()} color="primary" autoFocus>
+            Test
             </Button>
-          </DialogActions>
-        </Dialog>
+        </DialogActions>
+      </Dialog>
 
-      </>
+    </>
 
-    );
-  }
+  );
+}

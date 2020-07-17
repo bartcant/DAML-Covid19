@@ -62,12 +62,11 @@ export default function CitizenUpdate() {
     });
   };
 
-  const handleConductModalOpen = (cid = '') => {
+  const handleConductModalOpen = (cid = '', c) => {
     setContractId(cid);
     setConductModalOpen(true);
-   //  let citizendetails = JSON.parse(payload.citizendetails);
-   // console.log ("citizendetails retrieved :" + JSON.stringify(citizendetails));
-
+    console.log(c.payload.citizendetails);
+    setConductForm(c.payload.citizendetails);
   };
 
   const handleConductModalClose = () => {
@@ -92,8 +91,9 @@ export default function CitizenUpdate() {
     console.log("cid: " + curContractId);
     console.log("citizendetails: " + JSON.stringify(citizendetails));
     let aliasCid = "test";
+    const newcitizendetails = citizendetails;
 
-    ledger.exercise(Main.CitizenInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, aliasCid });
+    ledger.exercise(Main.CitizenRole.UpdateCitizenRegistration, curContractId, {citizen, newcitizendetails });
   }
   
 return (
@@ -109,7 +109,7 @@ return (
           ]}
 
         actions={[
-            ["Update Details", (c) => { handleConductModalOpen(c.contractId);}]
+            ["Update Details", (c) => { handleConductModalOpen(c.contractId, c);}]
         ]}
       
         />
@@ -135,7 +135,7 @@ return (
               <TextField
                 label="ID"
                 placeholder="id"
-                value={citizendetails.ssn}
+                value={citizendetails.id}
                 onChange={(e) => handleConductChange('id', e)}
               />
             </div>

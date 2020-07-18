@@ -4,6 +4,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
@@ -15,7 +16,9 @@ import { useStreamQuery, useParty, useLedger, useQuery } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
 
 
-import states from "../finalform/states"
+import states from "../finalform/states";
+import testtypes from "./testtypes";
+import testresults from "./testresults";
 
 axios.defaults.baseURL = 'http://localhost:3002/';
 
@@ -100,6 +103,17 @@ export default function TestAppointment() {
     });
   }
 
+  const getTestResults = () => {
+    return testresults.map((each) => {
+      return <MenuItem key={each.value} value={each.value}>{each.label}</MenuItem>
+    });
+  }
+
+  const getTestTypes = () => {
+    return testtypes.map((each) => {
+      return <MenuItem key={each.value} value={each.value}>{each.label}</MenuItem>
+    });
+  }
 
   return (
 
@@ -145,12 +159,15 @@ export default function TestAppointment() {
 
 
           <div>
-            <TextField
+            <Select
               label="Test Type"
               placeholder="Test Type"
+              autoWidth ="true"
               value={covid19testdata.testtype}
               onChange={(e) => handleConductChange('testtype', e)}
-            />
+            >
+              {getTestTypes()}
+            </Select>
           </div>
 
           <div>
@@ -163,17 +180,24 @@ export default function TestAppointment() {
           </div>
 
           <div>
-            <TextField
-              label="Test Result"
+          <InputLabel id="demo-simple-select-helper-label">Test Result</InputLabel>
+            <Select
+            
+              autoWidth= "true"
+              defaultValue = "Select a Test Result"
               placeholder="Test Result"
               value={covid19testdata.testresult}
               onChange={(e) => handleConductChange('testresult', e)}
-            />
+            >
+              {getTestResults()}
+            </Select>
           </div>
 
           <div>
+          <InputLabel id="demo-simple-select-helper-label">State</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
+              label="State"
+              autoWidth="true"
               value={covid19testdata.locationstate}
               onChange={(e) => handleConductChange('locationstate', e)}
             >

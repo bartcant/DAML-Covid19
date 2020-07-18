@@ -113,7 +113,8 @@ export default function Network() {
 
 
      <div>
-      <Dialog
+     
+      <Dialog fullWidth
         open={conductModalOpen}
         onClose={handleConductModalClose}
         aria-labelledby="alert-dialog-title"
@@ -157,6 +158,7 @@ export default function Network() {
                    </Button>
                </DialogActions>
           </Dialog>
+        
          </div>
        </div>       
   );

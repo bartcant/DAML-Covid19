@@ -1,6 +1,4 @@
 const testresults = {
-    SelectOne: "Select a Test Result",
-    Divider: "-----------------------",
     Pending: "Pending",
     Positive: "Positive",
     Negative: "Negative"

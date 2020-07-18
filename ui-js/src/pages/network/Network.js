@@ -62,9 +62,16 @@ export default function Network() {
   }
 
 
+  const removeSuccessMsg = () => {
+    console.log('333333333');
+    setValidate({
+      status: 0,
+      message: ''
+    });
+    // clearTimeout(timer);
+  }
 
   const exerciseInviteParty = function () {
-
     console.log("operator :" + operator);
     console.log("cid: " + curContractId);
     let roletype = partyidentity.role;
@@ -72,6 +79,7 @@ export default function Network() {
     console.log("party: " + party + " role " + roletype);
     ledger.exercise(Main.Network.InviteParty, curContractId, { operator, party, roletype })
       .then(() => {
+        const timer = setTimeout(() => removeSuccessMsg(), 3000);
         setValidate({
           status: 0,
           message: 'Party is successfully stored!'

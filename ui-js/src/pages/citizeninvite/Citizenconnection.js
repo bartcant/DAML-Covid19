@@ -157,8 +157,8 @@ function CitizenConnection() {
             <div>
 
                 <Dialog fullWidth open={qrState.qr_open} onClose={() => setQrState({ ...qrState, qr_open: false })}>
-                    <DialogTitle style={{ width: "400px" }}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scan this QR code</DialogTitle>
-                    <QRcode value={qrState.invite_url} style={{ width: "150px", margin: "0 auto", padding: "10px" }} />
+                    <DialogTitle style={{ width: "500px" }}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scan this QR code</DialogTitle>
+                    <QRcode value={qrState.invite_url} style={{ width: "130px", margin: "0 auto", padding: "5px" }} />
                     <br>
                     </br>
                 </Dialog>

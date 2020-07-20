@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useLedger } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
+import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -66,24 +67,36 @@ function CitizenConnection() {
 
     }
 
-    const onClose = () => { }
+    const onClose = () => {
+        alert("No Verifiable Connection is created. Please update your details to received your test results via email");
+    }
 
     return (
         <div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Paper style={{ display: 'flex', maxWidth: '600px', width: '100%', margin: '40px', padding: 40 }}>
                     <div style={{ display: 'flex', padding: '24px 24px', flexDirection: 'column', width: '100%' }}>
-                        <Button style={{ backgroundColor: 'blue' }}
-                            color="primary"
-                            onClick={() => onClose()}>
-                            Cancel
-                          </Button>&nbsp;
-                    <Button style={{ backgroundColor: 'blue' }}
-                            color="primary"
-                            onClick={() => onIssue()}>
-                            Create Connection
-                        </Button>
-
+                        <h3 style={{textAlign: 'center'}}> Create a Verifiable Connection <br/> for more information, check the How-To below</h3>
+                        <Grid container spacing={2}>
+                            <Grid item xs={6}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth={true}
+                                    onClick={() => onIssue()}>
+                                    Create Connection
+                                </Button>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth={true}
+                                    onClick={() => onClose()}>
+                                    Cancel
+                                </Button>
+                            </Grid>
+                        </Grid>
                     </div>
                 </Paper>
             </div>

@@ -8,6 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
 
 import axios from 'axios';
 
@@ -164,7 +165,8 @@ export default function TestAppointment() {
           </div>
 
 
-          <div>
+          <FormControl style={{width: '100%'}}>
+            <InputLabel id="demo-simple-select-helper-label">Test Type</InputLabel>
             <Select
               label="Test Type"
               placeholder="Test Type"
@@ -174,7 +176,7 @@ export default function TestAppointment() {
             >
               {getTestTypes()}
             </Select>
-          </div>
+          </FormControl>
 
           <div>
             <TextField
@@ -185,22 +187,21 @@ export default function TestAppointment() {
             />
           </div>
 
-          <div>
-          <InputLabel id="demo-simple-select-helper-label">Test Result</InputLabel>
+          <FormControl style={{width: '100%'}}>
+            <InputLabel id="demo-simple-select-helper-label">Test Result</InputLabel>
             <Select
-            
               autoWidth= "true"
-              defaultValue = "Select a Test Result"
+              defaultValue = ""
               placeholder="Test Result"
               value={covid19testdata.testresult}
               onChange={(e) => handleConductChange('testresult', e)}
             >
               {getTestResults()}
             </Select>
-          </div>
+          </FormControl>
 
-          <div>
-          <InputLabel id="demo-simple-select-helper-label">State</InputLabel>
+          <FormControl style={{width: '100%'}}>
+            <InputLabel id="demo-simple-select-helper-label">State</InputLabel>
             <Select
               label="State"
               autoWidth="true"
@@ -209,7 +210,7 @@ export default function TestAppointment() {
             >
               {getStates()}
             </Select>
-          </div>
+          </FormControl>
 
         </DialogContent>
         <DialogActions>

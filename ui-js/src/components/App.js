@@ -14,8 +14,8 @@ import rootReducer from '../reducers';
 
 // Store
 const store = createStore(
-    rootReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 export default function App() {
@@ -35,7 +35,7 @@ export default function App() {
     case 'Operator':
       theme = Themes.operator;
       break;
-    case 'NCHealth':
+    case 'StateHealthAgency':
       theme = Themes.agency;
       break;
     default:
@@ -80,11 +80,11 @@ export default function App() {
       }
       localStorage.setItem("daml.party", party);
       localStorage.setItem("daml.token", token);
-    // localStorage.setItem("party.role", role);
+      // localStorage.setItem("party.role", role);
 
       userDispatch({ type: "LOGIN_SUCCESS", token, party });
-    //  userDispatch({ type: "LOGIN_SUCCESS", token, party, role });
-      
+      //  userDispatch({ type: "LOGIN_SUCCESS", token, party, role });
+
     })
 
     return (
@@ -100,15 +100,15 @@ export default function App() {
           userState.isAuthenticated ? (
             React.createElement(component, props)
           ) : (
-            <Redirect
-              to={{
-                pathname: "/login",
-                state: {
-                  from: props.location,
-                },
-              }}
-            />
-          )
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: {
+                    from: props.location,
+                  },
+                }}
+              />
+            )
         }
       />
     );
@@ -126,8 +126,8 @@ export default function App() {
               }}
             />
           ) : (
-            React.createElement(component, props)
-          )
+              React.createElement(component, props)
+            )
         }
       />
     );

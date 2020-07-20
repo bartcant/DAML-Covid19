@@ -38,54 +38,56 @@ function Layout() {
   return (
     <DamlLedger party={user.party} token={user.token} httpBaseUrl={httpBaseUrl} wsBaseUrl={wsBaseUrl}>
       <div className={classes.root}>
-          <>
-            <Header />
-            <Sidebar />
-            <div
-              className={classnames(classes.content, {
-                [classes.contentShift]: layoutState.isSidebarOpened,
-              })}
-            >
-              <div className={classes.fakeToolbar} />
-              <Switch>
-                <Route path="/app/default" component={Default} />
-                <Route path="/app/network" component={Network} />
-              
-                <Route path="/app/clinicupdate" component={ClinicUpdate} />
-               
-                <Route path="/app/citizenupdate" component={CitizenUpdate} />
-                <Route path="/app/citizenalias" component={CitizenAlias} />
-                <Route path="/app/citizenconnection" component={CitizenConnection} />
-               
-                
-                <Route path="/app/streetcred" component={StreetCred} />
-                <Route path="/app/streetcred_C" component={StreetCredC} />
-                <Route path="/app/streetcred_S" component={StreetCredS} />
-                <Route path="/app/covid19testalt" component={Covid19TestAlt} />
-                <Route path="/app/testlist" component={TestList} />
-                <Route path="/app/finalform" component={StartFormAlt} />
-                <Route path="/app/vclist" component={VCList} />
-                <Route path="/app/welcome" component={Welcome} />
+        <>
+          <Header />
+          <Sidebar />
+          <div
+            className={classnames(classes.content, {
+              [classes.contentShift]: layoutState.isSidebarOpened,
+            })}
+          >
+            <div className={classes.fakeToolbar} />
+            <Switch>
+              <Route path="/app/default" component={Default} />
+              <Route path="/app/network" component={Network} />
 
-                { user.role === 'HealthClinic' &&
-                <Route path="/app/clinicinvite" component={ClinicInvite} />	                     
-                 }              
-                { user.role === 'Citizen' &&                 
+              <Route path="/app/clinicupdate" component={ClinicUpdate} />
+
+              <Route path="/app/citizenupdate" component={CitizenUpdate} />
+              <Route path="/app/citizenalias" component={CitizenAlias} />
+              <Route path="/app/citizenconnection" component={CitizenConnection} />
+
+
+              <Route path="/app/streetcred" component={StreetCred} />
+              <Route path="/app/streetcred_C" component={StreetCredC} />
+              <Route path="/app/streetcred_S" component={StreetCredS} />
+              <Route path="/app/covid19testalt" component={Covid19TestAlt} />
+              {user.role === 'StateHealthAgency' &&
+                <Route path="/app/testlist" component={TestList} />}
+              <Route path="/app/finalform" component={StartFormAlt} />
+              {user.role === 'StateHealthAgency' &&
+                <Route path="/app/vclist" component={VCList} />}
+              <Route path="/app/welcome" component={Welcome} />
+
+              {user.role === 'HealthClinic' &&
+                <Route path="/app/clinicinvite" component={ClinicInvite} />
+              }
+              {user.role === 'Citizen' &&
                 <Route path="/app/citizeninvite" component={CitizenInvite} />
-                }
-                { user.role === 'Citizen' &&
-                  <Route path="/app/testrequest" component={TestRequest} />
-                }
-                { user.role === 'HealthClinic' &&
-                  <Route path="/app/testappointment" component={TestAppointment} />
-                }
-                { user.role === 'HealthClinic' &&
-                  <Route path="/app/covid19test" component={Covid19Test} />
-                }
+              }
+              {user.role === 'Citizen' &&
+                <Route path="/app/testrequest" component={TestRequest} />
+              }
+              {user.role === 'HealthClinic' &&
+                <Route path="/app/testappointment" component={TestAppointment} />
+              }
+              {user.role === 'HealthClinic' &&
+                <Route path="/app/covid19test" component={Covid19Test} />
+              }
 
-              </Switch>
-            </div>
-          </>
+            </Switch>
+          </div>
+        </>
       </div>
     </DamlLedger>
   );

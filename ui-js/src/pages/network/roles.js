@@ -1,6 +1,6 @@
 const roles = {
     Citizen: 'Citizen',
-    HealthClinic: 'HealthClinic',
+    HealthClinic: 'Health Clinic',
     StateHealthAgency: 'State Health Agency',
     InsuranceCompany: 'Insurance Company'
 }

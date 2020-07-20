@@ -137,7 +137,7 @@ app.post('/api/immunityvc', cors(), async function (req, res) {
             }
         }
     }
-    console.log("Params :" + params);
+    console.log("Params :" + JSON.stringify(params));
     console.log("Client.createCredential");
     await client.createCredential(params);
 

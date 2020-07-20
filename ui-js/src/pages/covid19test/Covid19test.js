@@ -46,7 +46,7 @@ export default function TestAppointment() {
   });
 
 
-  const handleConductModalOpen = (cid = '', citizen = '') => {
+  const handleConductModalOpen = (cid = '', citizen = '' ) => {
     setContractId(cid);
     setCitizen(citizen);
     setConductModalOpen(true);
@@ -80,6 +80,12 @@ export default function TestAppointment() {
     const operator = "Operator"; 
     console.log({healthclinic, covid19testdata});
 
+    console.log("start Ledger Exercise");
+
+    
+    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {covid19testdata, statehealth, citizen, healthclinic, operator});
+    
+    console.log("finished Ledger Exercise");
 
     console.log ("connectionId" + JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid)); 
     const connectionId = queryResult.contracts[0].payload.verifiablecredentials.connectionid;

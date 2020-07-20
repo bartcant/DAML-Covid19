@@ -1,6 +1,4 @@
 const testtypes = {
-  SelectOne: "Select a Test Type",
-  Divider: "-----------------------",
   Covid: "Covid Test",
   AntiBody: "Anti-Body Test"
 }

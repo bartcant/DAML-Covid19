@@ -23,7 +23,7 @@ app.get('*', function (req, res) {
 });
 
 // WEBHOOK ENDPOINT
-app.post('/webhook', async function (req, res) {
+/* app.post('/webhook', async function (req, res) {
     try {
         console.log("got webhook" + req + "   type: " + req.body.message_type);
         if (req.body.message_type === 'new_connection') {
@@ -37,21 +37,21 @@ app.post('/webhook', async function (req, res) {
         console.log("Error in creating a connection ");
         console.log(e.message || e.toString());
     }
-});
+}); */
 
 //FRONTEND ENDPOINT for creating a connection
 app.post('/api/connection', cors(), async function (req, res) {
     const invite = await getInvite();
-    cache.add("alice", invite.connectionId);
-    console.log("Cache invite.connectionId : " + invite.connectionId);
-    console.log(invite);
+    console.log("invite.connectionId : " + invite.connectionId);
+    console.log("invite.inviteurl: " + invite.invitationUrl);
+    console.log("invite.invitation :" + invite.invitation);
 
 
     res.status(200).send({
-        invite_url: invite.invitation,
-        connectid: invite.connectionId,
-        holder_did: invite.hasOwnProperty('myDid') ? invite.myDid : '',
-        issuer_did: invite.hasOwnProperty('theirDid') ? invite.theirDid : ''
+        invite_url: invite.invitationUrl,
+        connectid: invite.connectionId
+        // holder_did: invite.hasOwnProperty('myDid') ? invite.myDid : '',
+        // issuer_did: invite.hasOwnProperty('theirDid') ? invite.theirDid : ''
     });
 
 });
@@ -110,6 +110,8 @@ app.post('/api/issue', cors(), async function (req, res) {
     console.log(params);
     console.log("Client.createCredential");
     await client.createCredential(params);
+    console.log("End of the Credential");
+    console.log("  ");
 
 });
 
@@ -137,14 +139,17 @@ app.post('/api/immunityvc', cors(), async function (req, res) {
             }
         }
     }
+
     console.log("Params :" + JSON.stringify(params));
     console.log("Client.createCredential");
     await client.createCredential(params);
+    console.log("End of the Credential");
+    console.log("  ");
 
 });
 
 
-
+console.log("process.env.CRED_DEF_ID_IMMVC" + process.env.CRED_DEF_ID_IMMVC);
 
 
 
@@ -163,7 +168,7 @@ createTerminus(server, {
 });
 
 const PORT = process.env.PORT || 3002;
-server = server.listen(PORT, async function () {
+server = server.listen(PORT/* , async function () {
     const url_val = await ngrok.connect(PORT);
     console.log("============= \n\n" + url_val + "\n\n =========");
     let response = await client.createWebhook({
@@ -175,4 +180,4 @@ server = server.listen(PORT, async function () {
 
     cache.add("webhookId", response.id);
     console.log('Listening on port %d', server.address().port);
-}); 
+} */); 

@@ -4,9 +4,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import FormControl from '@material-ui/core/FormControl';
 import Contracts from "../../components/Contracts/Contracts";
 import { useStreamQuery, useLedger, useParty } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
@@ -138,17 +140,19 @@ export default function Network() {
                   <p style={{ color: '#f44336', marginTop: '5px' }}>{formMsg.message}</p>
                 }
               </div>
-                <div>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    label="Role Type"
-                    placeholder="Role Type"
-                    value={partyidentity.role}
-                    onChange={(e) => handleConductChange('role', e)}
-                  >
+                
+                <FormControl style={{width: '100%'}}>
+                  <InputLabel id="demo-simple-select-helper-label">Test Result</InputLabel>
+                    <Select
+                       autoWidth= "true"
+                       defaultValue = ""
+                       label="Role Type"
+                       placeholder="Role Type"
+                       value={partyidentity.role}
+                       onChange={(e) => handleConductChange('role', e)}>
                     { getRoles()}
                   </Select>
-                </div>
+                </FormControl>
             </DialogContent>
 
               <DialogActions>

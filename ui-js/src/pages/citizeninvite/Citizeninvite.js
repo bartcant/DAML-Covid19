@@ -8,6 +8,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import Radio from '@material-ui/core/Radio';
@@ -23,6 +26,8 @@ import { connect } from 'react-redux'
 // import actions
 import { conductclick } from '../../actions.js';
 import { Party } from "@daml/types";
+
+import idtypes from "./idtypes"
 
 
 
@@ -58,15 +63,11 @@ function CitizenInvite({ dispatch }) {
     issuer_did: ''
   });
 
-  // const [state, setState] = React.useState({
-  //   checkedA: true
-  // });
-
-
-  // const handleChange = (event) => {
-  //   setState({ ...state, [event.target.name]: event.target.checked });
-  //   handleConductChange('hippa_accept')
-  // };
+  const getIdTypes = () => {
+    return idtypes.map((each) => {
+      return <MenuItem key={each.value} value={each.value}>{each.label}</MenuItem>
+    });
+  }
 
 
   const handleOptionChange = function (changeEvent) {
@@ -108,31 +109,31 @@ function CitizenInvite({ dispatch }) {
     console.log("alias" + JSON.stringify(alias));
 
     await ledger.exercise(Main.PartyInvitation.AcceptCitizenInvitation, curContractId, { operator, citizen, citizendetails, verifiablecredentials })
-    .then((res) => {
-      console.log(res);
-      dispatch(conductclick({
-        citizen: citizen,
-        contractId: res[0],
-        avcore: citizendetails.accept_vcoremail
-      }));
-  
-      history.push("/app/citizenalias");
-    })
-      .catch(events => {
-      let message = '';
-  
-      console.log(events.errors)
+      .then((res) => {
+        console.log(res);
+        dispatch(conductclick({
+          citizen: citizen,
+          contractId: res[0],
+          avcore: citizendetails.accept_vcoremail
+        }));
 
-      events.errors.forEach(msg => {
-        console.log(msg)
-        message += msg;
-        message += '\n';
+        history.push("/app/citizenalias");
+      })
+      .catch(events => {
+        let message = '';
+
+        console.log(events.errors)
+
+        events.errors.forEach(msg => {
+          console.log(msg)
+          message += msg;
+          message += '\n';
+        });
+        alert("Something went wrong!\n\nMessage: " + message);
+
+        return false;
       });
-      alert("Something went wrong!\n\nMessage: "+message);
-     
-      return false;
-    }); 
-    
+
   }
 
 
@@ -156,7 +157,7 @@ function CitizenInvite({ dispatch }) {
 
       <div>
 
-        
+
         <Dialog
           open={conductModalOpen}
           onClose={handleConductModalClose}
@@ -165,14 +166,18 @@ function CitizenInvite({ dispatch }) {
         >
           <DialogTitle id="alert-dialog-title">{"Citizen Registration"}</DialogTitle>
           <DialogContent>
-            <div>
-              <TextField
-                label="ID Type"
-                placeholder="ID Type"
+            <FormControl style={{ width: '100%' }}>
+              <InputLabel id="demo-simple-select-helper-label">ID Type</InputLabel>
+              <Select
+                autoWidth="true"
+                defaultValue=""
+                label="Id Type"
+                placeholder="Id Type"
                 value={citizendetails.idtype}
-                onChange={(e) => handleConductChange('idtype', e)}
-              />
-            </div>
+                onChange={(e) => handleConductChange('idtype', e)}>
+                {getIdTypes()}
+              </Select>
+            </FormControl>
 
             <div>
               <TextField
@@ -212,7 +217,7 @@ function CitizenInvite({ dispatch }) {
 
             <div>
               <FormControl>
-                <FormLabel component="legend"> Credential Type</FormLabel>
+                <FormLabel component="legend"> Preferred Communication Protocol</FormLabel>
                 <RadioGroup aria-label="Accept Type" name="accepttype" value={citizendetails.accept_vcoremail} onChange={(e) => handleConductChange('accept_vcoremail', e)}>
                   <FormControlLabel control={<Radio />} label="Email" value="email" />
                   <FormControlLabel control={<Radio />} label="Verifiable Credential" value="vc" />

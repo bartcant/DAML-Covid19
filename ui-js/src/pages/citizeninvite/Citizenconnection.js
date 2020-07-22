@@ -136,15 +136,16 @@ function CitizenConnection() {
                 holder_did: '',
                 issuer_did: ''
             };
-        
+            console.log("Start storing Connection ID");
+            ledger.exercise(Main.CitizenRole.SetVerifiableCredentials, contractId, { citizen, newverifiablecredentials });
             // setQrState({ ...qrState, qr_open: true, invite_url: "https://web.cloud.streetcred.id/link/?c_i=" + response.data.invite_url });
-            setQrState({ ...qrState, qr_open: true, invite_url: "https://chart.googleapis.com/chart?cht=qr&chl=" + response.data.invite_url + "&chs=300x300&chld=L|1"  });
+            setQrState({ ...qrState, qr_open: true, invite_url: "https://chart.googleapis.com/chart?cht=qr&chl=" + response.data.invite_url + "&chs=300x300&chld=L|1" });
             localStorage.removeItem('aciti');
             localStorage.removeItem('acid');
-            
+
             console.log("invite url" + qrState.invite_url);
         });
-       
+
 
 
         setQrState({
@@ -221,8 +222,8 @@ function CitizenConnection() {
 
                     <Dialog open={qrState.qr_open} onClose={() => setQrState({ ...qrState, qr_open: false })}>
                         <DialogTitle> Scan this QR Code </DialogTitle>
-                       {/* <QRcode value={qrState.invite_url} style={{ width: "150px", margin: "0 auto", padding: "10px" }} /> */}
-                        <img alt="Verification QR Code" src={qrState.invite_url}/>
+                        {/* <QRcode value={qrState.invite_url} style={{ width: "150px", margin: "0 auto", padding: "10px" }} /> */}
+                        <img alt="Verification QR Code" src={qrState.invite_url} />
                         <br>
                         </br>
                     </Dialog>

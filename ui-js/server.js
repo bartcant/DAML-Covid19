@@ -112,6 +112,7 @@ app.post('/api/issue', cors(), async function (req, res) {
     await client.createCredential(params);
     console.log("End of the Credential");
     console.log("  ");
+    res.status(200).send("Credentials Sent");
 
 });
 
@@ -140,16 +141,16 @@ app.post('/api/immunityvc', cors(), async function (req, res) {
         }
     }
 
-    console.log("Params :" + JSON.stringify(params));
+    console.log(params);
     console.log("Client.createCredential");
     await client.createCredential(params);
     console.log("End of the Credential");
     console.log("  ");
+    console.log("createCredential Response" + JSON.stringify(res));
+    res.status(200).send("Credentials Sent");
 
 });
 
-
-console.log("process.env.CRED_DEF_ID_IMMVC" + process.env.CRED_DEF_ID_IMMVC);
 
 
 

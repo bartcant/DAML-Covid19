@@ -14,8 +14,10 @@ const conductReducer = (state = {
   avcore: '',
 }, action) => {
   if (action.type === CONDUCT_CLICKED) {
-    localStorage.setItem('aciti', action.payload.citizen);
-    localStorage.setItem('acid', action.payload.contractId);
+    if (action.payload.avcore === 'vc') {
+      localStorage.setItem('aciti', action.payload.citizen);
+      localStorage.setItem('acid', action.payload.contractId);
+    }
     return {
       citizen: action.payload.citizen,
       healthclinic: action.payload.healthclinic,

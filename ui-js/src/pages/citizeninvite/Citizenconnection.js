@@ -140,6 +140,8 @@ function CitizenConnection() {
             };
             ledger.exercise(Main.CitizenRole.SetVerifiableCredentials, contractId, { citizen, newverifiablecredentials });
             setQrState({ ...qrState, qr_open: true, invite_url: "https://web.cloud.streetcred.id/link/?c_i=" + response.data.invite_url });
+            localStorage.removeItem('aciti');
+            localStorage.removeItem('acid');
             console.log("invite url" + qrState.invite_url);
         });
         axios.post('/api/connectionid').then((response) => {

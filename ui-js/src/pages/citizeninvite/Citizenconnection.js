@@ -136,9 +136,12 @@ function CitizenConnection() {
                 holder_did: '',
                 issuer_did: ''
             };
-            ledger.exercise(Main.CitizenRole.SetVerifiableCredentials, contractId, { citizen, newverifiablecredentials });
-           // setQrState({ ...qrState, qr_open: true, invite_url: "https://web.cloud.streetcred.id/link/?c_i=" + response.data.invite_url });
-             setQrState({ ...qrState, qr_open: true, invite_url: "https://chart.googleapis.com/chart?cht=qr&chl=" + response.data.invite_url + "&chs=300x300&chld=L|1"  });
+        
+            // setQrState({ ...qrState, qr_open: true, invite_url: "https://web.cloud.streetcred.id/link/?c_i=" + response.data.invite_url });
+            setQrState({ ...qrState, qr_open: true, invite_url: "https://chart.googleapis.com/chart?cht=qr&chl=" + response.data.invite_url + "&chs=300x300&chld=L|1"  });
+            localStorage.removeItem('aciti');
+            localStorage.removeItem('acid');
+            
             console.log("invite url" + qrState.invite_url);
         });
        

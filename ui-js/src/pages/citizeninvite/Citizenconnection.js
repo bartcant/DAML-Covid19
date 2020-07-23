@@ -32,7 +32,7 @@ axios.defaults.baseURL = 'http://localhost:3002/';
 function getSteps() {
     return ['Background', 'Download the Trinsic App from', 'Register your account and take a Tour through the Trinsic App', 'Scan the QR Code after clicking the Connect Button', 'Accept the Connection on your Phone', 'Notification of Test Results'];
 }
-  
+
 function getStepContent(step) {
     switch (step) {
         case 0:
@@ -41,10 +41,10 @@ function getStepContent(step) {
                 one of the world's go-to wallet for storing verifiable credentials. This self-sovereign identity app is
                 built entirely on open standards,including W3C specs for DIDs/Verifiable Credentials, and DIF/Aries specs for DIDComm
                  , and the open source Hyperledger Aries Framework.</p>
-                 <br></br>
-                 
+                <br></br>
+
                 <p>    For More information : <a href="https://www.trinsic.id">https://www.trinsic.id</a> </p>
-                <br/>
+                <br />
             </div>
         case 1:
             return <div>
@@ -58,7 +58,7 @@ function getStepContent(step) {
                      &nbsp;&nbsp;&nbsp;&nbsp;1. Covid19 Test <br></br>
                      &nbsp;&nbsp;&nbsp;&nbsp;2. Anti-Body Test <br></br>
                      &nbsp;&nbsp;&nbsp;&nbsp;3. Administration of Covid19 Vacine </p>
-                <br/>
+                <br />
             </div>
         case 2:
             return <div>
@@ -68,25 +68,25 @@ function getStepContent(step) {
                 <img src={trinsic2} alt="logo" style={{ width: '20%' }} />&nbsp;&nbsp;
                 <img src={trinsic3} alt="logo" style={{ width: '20%' }} />&nbsp;&nbsp;
                 <img src={trinsic4} alt="logo" style={{ width: '20%' }} />&nbsp;&nbsp;
-                <br/><br/>
+                <br /><br />
             </div>
         case 3:
             return <div>
                 <p>In the Mobile App scan the QR code to make a digital connection </p>
                 <img src={scan1} alt="logo" style={{ width: '20%' }} />&nbsp;&nbsp;
                 <img src={scan2} alt="logo" style={{ width: '20%' }} />&nbsp;&nbsp;
-                <br/><br/>
+                <br /><br />
             </div>
         case 4:
             return <div>
                 <p> The system will send a notification. Click "Accept" to accept the connection request</p>
                 <img src={scan3} alt="logo" style={{ width: '20%' }} />&nbsp;&nbsp;
-                <br/><br/>
+                <br /><br />
             </div>
         case 5:
             return <div>
                 <p> Once available the system will automatically send the "Test Result" or any other "Verifiable Credentials" to your mobile App</p>
-                <br/>
+                <br />
             </div>
         default:
             return 'Unknown step';
@@ -107,18 +107,18 @@ function CitizenConnection() {
 
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
-  
+
     const handleNext = () => {
         if (activeStep === steps.length - 1)
             handleReset()
         else
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
-  
+
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
-  
+
     const handleReset = () => {
         setActiveStep(0);
     };
@@ -129,24 +129,22 @@ function CitizenConnection() {
             contractId = localStorage.getItem('acid');
 
         if (contractId === null || contractId === null) { alert('Invalid ContractId'); }
-        axios.post('/api/connection', {
-            citizen: citizen,
-            contractId: contractId
-        }).then((response) => {
+        axios.post('/api/connection').then((response) => {
+            console.log("/api/connection reponse :" + JSON.stringify(response));
             let newverifiablecredentials = {
                 connectionid: response.data.connectid,
-                holder_did: response.data.holder_did,
-                issuer_did: response.data.issuer_did
+                holder_did: '',
+                issuer_did: ''
             };
-            ledger.exercise(Main.CitizenRole.SetVerifiableCredentials, contractId, { citizen, newverifiablecredentials });
-            setQrState({ ...qrState, qr_open: true, invite_url: "https://web.cloud.streetcred.id/link/?c_i=" + response.data.invite_url });
+        
+            // setQrState({ ...qrState, qr_open: true, invite_url: "https://web.cloud.streetcred.id/link/?c_i=" + response.data.invite_url });
+            setQrState({ ...qrState, qr_open: true, invite_url: "https://chart.googleapis.com/chart?cht=qr&chl=" + response.data.invite_url + "&chs=300x300&chld=L|1"  });
             localStorage.removeItem('aciti');
             localStorage.removeItem('acid');
+            
             console.log("invite url" + qrState.invite_url);
         });
-        axios.post('/api/connectionid').then((response) => {
-            console.log(response);
-        });
+       
 
 
         setQrState({
@@ -166,7 +164,7 @@ function CitizenConnection() {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Paper style={{ display: 'flex', maxWidth: '600px', width: '100%', margin: '40px', padding: 40 }}>
                     <div style={{ display: 'flex', padding: '24px 24px', flexDirection: 'column', width: '100%' }}>
-                        <h3 style={{textAlign: 'center'}}> Create a Verifiable Connection <br/> for more information, check the How-To below</h3>
+                        <h3 style={{ textAlign: 'center' }}> Create a Verifiable Connection <br /> for more information, check the How-To below</h3>
                         <Grid container spacing={2}>
                             <Grid item xs={6}>
                                 <Button
@@ -194,36 +192,37 @@ function CitizenConnection() {
                 <h2> How to  - Receive a Verifiable Credentials  </h2>
 
                 <Stepper activeStep={activeStep} orientation="vertical">
-                {steps.map((label, index) => (
-                    <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
-                        <StepContent>
-                            <Typography>{getStepContent(index)}</Typography>
-                            <div>
-                                <Button
-                                    disabled={activeStep === 0}
-                                    onClick={handleBack}
-                                >
-                                    Back
+                    {steps.map((label, index) => (
+                        <Step key={label}>
+                            <StepLabel>{label}</StepLabel>
+                            <StepContent>
+                                <Typography>{getStepContent(index)}</Typography>
+                                <div>
+                                    <Button
+                                        disabled={activeStep === 0}
+                                        onClick={handleBack}
+                                    >
+                                        Back
                                 </Button>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={handleNext}
-                                >
-                                    {activeStep === steps.length - 1 ? 'Reset' : 'Next'}
-                                </Button>
-                            </div>
-                        </StepContent>
-                    </Step>
-                ))}
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={handleNext}
+                                    >
+                                        {activeStep === steps.length - 1 ? 'Reset' : 'Next'}
+                                    </Button>
+                                </div>
+                            </StepContent>
+                        </Step>
+                    ))}
                 </Stepper>
 
                 <div>
 
-                    <Dialog fullWidth open={qrState.qr_open} onClose={() => setQrState({ ...qrState, qr_open: false })}>
-                        <DialogTitle style={{ width: "400px" }}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scan this QR code</DialogTitle>
-                        <QRcode value={qrState.invite_url} style={{ width: "150px", margin: "0 auto", padding: "10px" }} />
+                    <Dialog open={qrState.qr_open} onClose={() => setQrState({ ...qrState, qr_open: false })}>
+                        <DialogTitle> Scan this QR Code </DialogTitle>
+                       {/* <QRcode value={qrState.invite_url} style={{ width: "150px", margin: "0 auto", padding: "10px" }} /> */}
+                        <img alt="Verification QR Code" src={qrState.invite_url}/>
                         <br>
                         </br>
                     </Dialog>

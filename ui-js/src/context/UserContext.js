@@ -64,10 +64,13 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
   setError(false);
   setIsLoading(true);
 
+  // Local access token
   const token =
-    //  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl19fQ.7zUo-7pRVr9QO3Y1xzbbWh-Z5n36MeOuQ-x2GwS3M44"
-    //  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIkFsaWNlIl19fQ.tNx_JrnCsqLu9l6wFXbmjVB4j16PdJ2wa4TG-zx2ixQ"
+
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl0sInJlYWRBcyI6WyJPcGVyYXRvciJdfX0.JklciDh0-GzkvrPkSJ_H3sYX39LFU4C3uVWd7qsMPNo"
+
+  // ProjectDable token for Operator on Ledger nxhgy6yk92nxerri
+  // "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImRhYmwtNmEzNGI3NjMtNTU3Mi00ZjdhLWI4NjYtNzE2OGU1MDliNWVhIn0.eyJpc3MiOiJwcm9qZWN0ZGFibC5jb20vbG9naW4iLCJzdWIiOiJhdXRoMHw1ZTk5YjVmYjFiMzBlYzBjODViZTc4MjEiLCJleHAiOjE1OTU2MjE5NzIsImh0dHBzOi8vZGFtbC5jb20vbGVkZ2VyLWFwaSI6eyJhY3RBcyI6WyJsZWRnZXItcGFydHktZjY1NmY2ZWUtNjc2MS00YmYzLWE0OGYtYzk0NzdiNWE3NDM1Il0sImFwcGxpY2F0aW9uSWQiOiJEQUJMIiwibGVkZ2VySWQiOiJueGhneTZ5azkybnhlcnJpIn0sIm93bmVyIjoidXNlci1ncmFudC1lYmY1ZDgxZS03NjM4LTQxYzUtOWEzNi1kN2FhMWQzZjYxZTMiLCJwYXJ0eU5hbWUiOiJPcGVyYXRvciIsInJpZ2h0cyI6WyJyZWFkIiwid3JpdGU6Y3JlYXRlIiwid3JpdGU6ZXhlcmNpc2UiXX0.gWwTKGTgjN_bNgQ0MXEHHihumaOtbT_GFryJYi_mPiQVKoeRJYYwkVwA7WWTvDkPZDMBQzGysACzLN258hkPZb3NjcyaJ6oY-4TqTitTXk9PBl8aQzvuR5sTOYddB9oprJPt1Mj7yOS5YHCRtzUpqDK7GNoT-6xK7XT66b2ODNw"
 
   const headers = {
     "Authorization": `Bearer ${token.toString()}`,
@@ -126,7 +129,7 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
       }
       catch (err) {
         alert("Something went wrong with roletype");
-        role = party;
+        role = "Operator";
         // dispatch({ type: "LOGIN_FAILURE" });
         // setError(true);
         // setIsLoading(false);

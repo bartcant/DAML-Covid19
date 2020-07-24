@@ -77,10 +77,6 @@ const getInvite = async () => {
     }
 }
 
-
-
-
-
 // //FRONTEND ENDPOINT for issuing credentials for Covid19test
 app.post('/api/issue', cors(), async function (req, res) {
     const attribs = JSON.stringify(req.body);
@@ -116,6 +112,48 @@ app.post('/api/issue', cors(), async function (req, res) {
 
 });
 
+
+
+
+
+
+// //FRONTEND ENDPOINT for issuing credentials for Covid19 Vaccine
+app.post('/api/issuevaccine', cors(), async function (req, res) {
+    const attribs = JSON.stringify(req.body);
+    console.log("attribs in app.post" + attribs);
+    let param_obj = JSON.parse(attribs);
+    const connectid = param_obj["cid"];
+    console.log()
+    console.log("We are starting the credentials part");
+    let params = {
+        credentialOfferParameters: {
+            definitionId: process.env.CRED_DEF_ID_VACCINEVC,
+            connectionId: connectid,
+            automaticIssuance: true,
+            credentialValues: {
+                "vaccinedate": param_obj["vaccinedata"]["vaccinedate"],
+                "healthclinic": param_obj["vaccinedata"]["healthclinic"],
+                "citizen": param_obj["vaccinedata"]["citizen"],
+                "statehealth": param_obj["vaccinedata"]["statehealth"],
+                "vaccinetype": param_obj["vaccinedata"]["vaccinetype"],
+                "vaccinenumber": param_obj["vaccinedata"]["vaccinenumber"],
+
+            }
+        }
+    }
+    console.log(params);
+    console.log("Client.createCredential");
+    let response = await client.createCredential(params);
+    console.log("Credential Response : " + JSON.stringify(response));
+    console.log("End of the Credential");
+    console.log("  ");
+    res.status(200).send({
+        status: "credential sent",
+        VCresponseMessage: response
+    });
+
+});
+
 // //FRONTEND ENDPOINT for issuing credentials for ImmunityVC
 app.post('/api/immunityvc', cors(), async function (req, res) {
     const attribs = JSON.stringify(req.body);
@@ -143,11 +181,16 @@ app.post('/api/immunityvc', cors(), async function (req, res) {
 
     console.log(params);
     console.log("Client.createCredential");
-    await client.createCredential(params);
+    let response = await client.createCredential(params);
+    console.log("Credential Response : " + JSON.stringify(response));
     console.log("End of the Credential");
     console.log("  ");
     console.log("createCredential Response" + JSON.stringify(res));
-    res.status(200).send("Credentials Sent");
+    res.status(200).send({
+        status: "credential sent",
+        VCresponseMessage: response
+    });
+
 
 });
 

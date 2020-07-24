@@ -33,7 +33,7 @@ export default function App() {
       theme = Themes.citizen;
       break;
     case 'Operator':
-      theme = Themes.operator;
+      theme =Themes.operator; 
       break;
     case 'StateHealthAgency':
       theme = Themes.agency;

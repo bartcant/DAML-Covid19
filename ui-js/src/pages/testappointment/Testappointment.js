@@ -16,9 +16,19 @@ export default function TestRequest() {
     console.log("citizen : " + citizen); 
     console.log("appointmentdate : "+ appointmentdate);
     console.log("cid: "+ cid);
-    ledger.exercise(Main.TestRequest.ConfirmTestAppointment, cid, {citizen, healthclinic, operator, appointmentdate} ); };
-    
-    
+    ledger.exercise(Main.TestRequest.ConfirmTestAppointment, cid, {citizen, healthclinic, operator, appointmentdate} ); 
+    alert("An Covid19 Test Appointment has been succesfully stored on the Ledger");
+  };
+
+  const exerciseVaccine = function(cid, citizen, appointmentdate2 ) {
+    console.log("healthclinic : " + healthclinic);
+    console.log("citizen : " + citizen); 
+    console.log("appointmentdate : "+ appointmentdate2);
+    console.log("cid: "+ cid);
+    ledger.exercise(Main.TestRequest.ConfirmVaccineAppointment, cid, {citizen, healthclinic, operator, appointmentdate2} ); 
+    alert("A Vaccine Appointment has been succesfully stored on the Ledger");
+  };
+
   return (
     <>
       <Contracts
@@ -30,7 +40,8 @@ export default function TestRequest() {
         ]}
          
        actions={[
-         ["AppointmentDate", (c, appointmentdate) => { exerciseAppointment(c.contractId,c.payload.citizen, appointmentdate); },"Appointment Date" ]  
+         ["Test Appointment Date", (c, appointmentdate) => { exerciseAppointment(c.contractId,c.payload.citizen, appointmentdate); },"YYYY-MM-DD" ], 
+         ["Vaccine Appointment Date", (c, appointmentdate2) => { exerciseVaccine(c.contractId,c.payload.citizen, appointmentdate2); },"YYYY-MM-DD" ]   
         ]}
       />
     </>

@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import { useLedger } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
-import QRcode from 'qrcode.react';
 // import material-ui
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';

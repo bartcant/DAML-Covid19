@@ -17,7 +17,7 @@ export default function TestRequest() {
     console.log("citizen : " + citizen); 
     console.log("cid: "+ cid);
     ledger.exercise(Main.CitizenRole.RequestTest, cid, { operator, citizen, healthclinic} ); };
-    
+   
   
 
 

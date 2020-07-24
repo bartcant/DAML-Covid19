@@ -158,6 +158,16 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         )}
+        {user.role === "HealthClinic" && (
+          <SidebarLink
+            key="CovidVaccine"
+            label="CovidVaccine"
+            path="/app/covid19vaccine"
+            icon={<Healing />}
+            location={location}
+            isSidebarOpened={isSidebarOpened}
+          />
+        )}
         {user.role == "StateHealthAgency" && (
           <SidebarLink
             key="Testlist"

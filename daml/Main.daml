@@ -232,6 +232,14 @@ template TestRequest
           appointmentdate : Date 
         do
           create TestAppointment with citizen, healthclinic, appointmentdate, operator
+    controller operator can 
+      nonconsuming ConfirmVaccineAppointment : ContractId VaccineAppointment
+        with
+          appointmentdate2 : Date 
+        do
+          create VaccineAppointment with citizen, healthclinic, appointmentdate2, operator
+
+
 
 data Covid19TestData = Covid19TestData
  with 
@@ -244,6 +252,16 @@ data Covid19TestData = Covid19TestData
       testresult: Testresult
       locationstate: Locationstate
        deriving (Eq, Show)
+
+data VaccineData = VaccineData
+ with 
+      vaccinedate : Date      
+      healthclinic: Party 
+      citizen: Party
+      statehealth: Party
+      vaccinetype: Text
+      vaccinenumber: Int
+       deriving (Eq, Show)       
 
 template TestAppointment
   with
@@ -263,7 +281,26 @@ template TestAppointment
           statehealth : Party
         do
           create Covid19Test with covid19testdata, healthclinic, statehealth, citizen, operator
-        
+
+template VaccineAppointment
+  with
+    healthclinic : Party
+    citizen: Party
+    operator: Party
+    appointmentdate2 : Date
+
+  where
+    signatory operator
+    observer healthclinic
+
+    controller operator can 
+       Vaccine : ContractId Covid19Vaccine
+        with
+          vaccinedata :  VaccineData
+          statehealth : Party
+        do
+          create Covid19Vaccine with vaccinedata, healthclinic, statehealth, citizen, operator
+                
 
 data ImmunityVC = ImmunityVC
  with
@@ -295,6 +332,20 @@ template Covid19Test
         do
           create SupplyImmunityVC with immunityvc, statehealth , citizen, operator
 
+
+template Covid19Vaccine
+  with
+    vaccinedata : VaccineData 
+    healthclinic : Party
+    citizen : Party
+    operator : Party
+    statehealth : Party
+
+  where
+    signatory operator
+    observer citizen
+    observer statehealth
+    observer healthclinic
 
 template SupplyImmunityVC
   with

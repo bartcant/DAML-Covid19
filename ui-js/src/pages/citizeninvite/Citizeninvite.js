@@ -117,7 +117,7 @@ function CitizenInvite({ dispatch }) {
           avcore: citizendetails.accept_vcoremail
         }));
 
-        history.push("/app/citizenalias");
+        history.push("/app/citizenconnection");
       })
       .catch(events => {
         let message = '';

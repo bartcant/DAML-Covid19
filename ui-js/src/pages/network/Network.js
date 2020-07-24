@@ -114,56 +114,56 @@ export default function Network() {
       />
 
 
-     <div>
-     
-      <Dialog fullWidth
-        open={conductModalOpen}
-        onClose={handleConductModalClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Setup Parties"}</DialogTitle>
-          <DialogContent>
-          {formMsg.status === 0 && formMsg.message !== '' &&
-            <h2 style={{ color: '#2196f3', marginTop: 0 }}>{formMsg.message}</h2>
-          }
-              <div>
-            
-                <TextField
-                  label="Party"
-                  placeholder="Party"
-                  value={partyidentity.name}
-                  onChange={(e) => handleConductChange('name', e)}
-                  error={formMsg.status === 1 && formMsg.message !== ''}
-                />
-                {(formMsg.status === 1 && formMsg.message !== '') &&
-                  <p style={{ color: '#f44336', marginTop: '5px' }}>{formMsg.message}</p>
-                }
-              </div>
-                
-                <FormControl style={{width: '100%'}}>
-                  <InputLabel id="demo-simple-select-helper-label">Test Result</InputLabel>
-                    <Select
-                       autoWidth= "true"
-                       defaultValue = ""
-                       label="Role Type"
-                       placeholder="Role Type"
-                       value={partyidentity.role}
-                       onChange={(e) => handleConductChange('role', e)}>
-                    { getRoles()}
-                  </Select>
-                </FormControl>
-            </DialogContent>
+      <div>
 
-              <DialogActions>
-                
-                  <Button onClick={() => exerciseInviteParty()} color="primary" autoFocus>
-                  Setup Party
+        <Dialog fullWidth
+          open={conductModalOpen}
+          onClose={handleConductModalClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Setup Parties"}</DialogTitle>
+          <DialogContent>
+            {formMsg.status === 0 && formMsg.message !== '' &&
+              <h2 style={{ color: '#2196f3', marginTop: 0 }}>{formMsg.message}</h2>
+            }
+            <div>
+
+              <TextField
+                label="Party"
+                placeholder="Party"
+                value={partyidentity.name}
+                onChange={(e) => handleConductChange('name', e)}
+                error={formMsg.status === 1 && formMsg.message !== ''}
+              />
+              {(formMsg.status === 1 && formMsg.message !== '') &&
+                <p style={{ color: '#f44336', marginTop: '5px' }}>{formMsg.message}</p>
+              }
+            </div>
+
+            <FormControl style={{ width: '100%' }}>
+              <InputLabel id="demo-simple-select-helper-label">Party Role</InputLabel>
+              <Select
+                autoWidth="true"
+                defaultValue=""
+                label="Role Type"
+                placeholder="Role Type"
+                value={partyidentity.role}
+                onChange={(e) => handleConductChange('role', e)}>
+                {getRoles()}
+              </Select>
+            </FormControl>
+          </DialogContent>
+
+          <DialogActions>
+
+            <Button onClick={() => exerciseInviteParty()} color="primary" autoFocus>
+              Setup Party
                    </Button>
-               </DialogActions>
-          </Dialog>
-        
-         </div>
-       </div>       
+          </DialogActions>
+        </Dialog>
+
+      </div>
+    </div>
   );
 };

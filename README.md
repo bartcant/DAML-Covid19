@@ -41,7 +41,7 @@ Step1 : Building and installing DAML Postgress
         yarn install --force --frozen-lockfile
 
 
-<h2> Step 2 : Deploying DAML and UX in local environment </h2>
+<h2> Step 2A : Deploying DAML and UX in local environment </h2>
 
 1. Start DAML Sandbox in a new console window
 
@@ -99,7 +99,37 @@ The network can be initiate with pushing a JSON file via Postman
 
 4. You can verify the Network via login in as "Operator" and navigating to the Network left NavBar
 
+<h2> Step 2A : Deploying DAML to ProjectDable </h2>
 
+1. Deploy DAML Dar file  to ProjectDable
+
+        More instrictions can be found here: https://docs.projectdabl.com/quickstart/#home
+        
+2. Generate new JWT Token for "Operator
+
+        On the Managment Console create Operator as Party
+        Select the JWT token for Operator
+        
+3. Update the Token in the UserContext.js file
+
+        //local environment Token
+        // token = '
+        
+        // ProjectDable Token for Operator
+           token  = <JWT Token Here>
+           
+4. Build and zip up the UI code in ui-js directory
+
+        yarn build
+        zip -r ../covid19xxx-ui.zip build
+
+5. Upload and deploy the covid19xxx-ui.zip file to projectdable and the ledger
+
+
+6. Launch the browser based on the projectdable ledger link
+
+        example: https://nxhgy6yk92nxerri.projectdabl.com/#/login
+        
 
 
 

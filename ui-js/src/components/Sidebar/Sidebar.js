@@ -70,7 +70,7 @@ function Sidebar({ location }) {
         </IconButton>
       </div>
       <List className={classes.sidebarList}>
-       {/*  <SidebarLink
+        {/*  <SidebarLink
           key="default"
           label="Experiments"
           path="/app/default"
@@ -91,7 +91,7 @@ function Sidebar({ location }) {
         {user.role === "HealthClinic" && (
           <SidebarLink
             key="Clinicinvite"
-            label="Clinicinvite"
+            label="Clinic Invite"
             path="/app/clinicinvite"
             icon={<LocalHospital />}
             location={location}
@@ -101,7 +101,7 @@ function Sidebar({ location }) {
         {user.role === "HealthClinic" && (
           <SidebarLink
             key="Clinicupdate"
-            label="Clinicupdate"
+            label="Clinic Update"
             path="/app/clinicupdate"
             icon={<NoteAdd />}
             location={location}
@@ -111,7 +111,7 @@ function Sidebar({ location }) {
         {user.role === "Citizen" && (
           <SidebarLink
             key="Citizeninvite"
-            label="Citizeninvite"
+            label="Citizen Invite"
             path="/app/citizeninvite"
             icon={<Person />}
             location={location}
@@ -121,7 +121,7 @@ function Sidebar({ location }) {
         {user.role === "Citizen" && (
           <SidebarLink
             key="Citizenupdate"
-            label="Citizenupdate"
+            label="Citizen Update"
             path="/app/citizenupdate"
             icon={<NoteAdd />}
             location={location}
@@ -131,7 +131,7 @@ function Sidebar({ location }) {
         {user.role === "Citizen" && (
           <SidebarLink
             key="TestRequest"
-            label="TestRequest"
+            label="Test Request"
             path="/app/testrequest"
             icon={<Healing />}
             location={location}
@@ -141,7 +141,7 @@ function Sidebar({ location }) {
         {user.role === "HealthClinic" && (
           <SidebarLink
             key="TestAppointment"
-            label="TestAppointment"
+            label="Test Appointment"
             path="/app/testappointment"
             icon={<Healing />}
             location={location}
@@ -151,7 +151,7 @@ function Sidebar({ location }) {
         {user.role === "HealthClinic" && (
           <SidebarLink
             key="CovidTest"
-            label="CovidTest"
+            label="Covid Test"
             path="/app/covid19test"
             icon={<Healing />}
             location={location}
@@ -161,7 +161,7 @@ function Sidebar({ location }) {
         {user.role === "HealthClinic" && (
           <SidebarLink
             key="CovidVaccine"
-            label="CovidVaccine"
+            label="Covid Vaccine"
             path="/app/covid19vaccine"
             icon={<Healing />}
             location={location}

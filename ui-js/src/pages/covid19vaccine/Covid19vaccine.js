@@ -27,7 +27,6 @@ export default function CovidVaccine() {
   const statehealth = "NCHealth";
   const ledger = useLedger();
   const assets = useStreamQuery(Main.VaccineAppointment, () => ({ healthclinic: healthclinic }),);
- // const assets = useStreamQuery(Main.VaccineAppointment);
   const queryResult = useQuery(Main.CitizenRole, () => ({ citizen: curcitizen }), [curcitizen]);
 
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
@@ -118,11 +117,12 @@ export default function CovidVaccine() {
         columns={[
           ["ContractId", "contractId"],
           ["Citizen", "payload.citizen"],
-          ["Healthclinic", "payload.healthclinic"]
+          ["Healthclinic", "payload.healthclinic"],
+          ["Appointment Date", "payload.appointmentdate2"],
         ]}
 
         actions={[
-          ["Vaccine", (c) => { handleConductModalOpen(c.contractId, c.payload.citizen); }
+          ["Administer Vaccine", (c) => { handleConductModalOpen(c.contractId, c.payload.citizen); }
 
 
           ]
@@ -180,12 +180,11 @@ export default function CovidVaccine() {
             Cancel
             </Button>
           <Button onClick={() => exercisestartvaccine()} color="primary" autoFocus>
-            Test
+            Administer Vaccine
             </Button>
         </DialogActions>
       </Dialog>
 
     </>
-
   );
 }

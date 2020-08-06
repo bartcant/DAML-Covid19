@@ -18,7 +18,7 @@ import CitizenConnection from "../../pages/citizeninvite/Citizenconnection";
 import TestRequest from "../../pages/testrequest/Testrequest";
 import TestAppointment from "../../pages/testappointment/Testappointment";
 import Covid19Test from "../../pages/covid19test/Covid19test";
-
+import Covid19Vaccine from "../../pages/covid19vaccine/Covid19vaccine";
 // import StartForm from "../../pages/finalform/Start";
 import StreetCred from "../../pages/streetcred/Streetcred";
 import StreetCredS from "../../pages/streetcred/Streetcred_submission";
@@ -84,6 +84,9 @@ function Layout() {
               }
               {user.role === 'HealthClinic' &&
                 <Route path="/app/covid19test" component={Covid19Test} />
+              }
+              {user.role === 'HealthClinic' &&
+                <Route path="/app/covid19vaccine" component={Covid19Vaccine} />
               }
 
             </Switch>

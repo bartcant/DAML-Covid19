@@ -1,6 +1,6 @@
 const vaccinetypes = {
-  TypeA: "Vacine Moderna",
-  TypeB: "Vaccine Pfyzer"
+  Moderna: "Vacine Moderna",
+  Pfyzer: "Vaccine Pfyzer"
 }
 export default Object.keys(vaccinetypes).map(value => ({
   value,

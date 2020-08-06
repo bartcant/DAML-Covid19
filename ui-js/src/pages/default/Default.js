@@ -4,9 +4,9 @@ import { useStreamQuery, useQuery } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
 
 export default function Default() {
-  const QueryResult = useQuery(Main.CitizenInvitation); // in this case Main.CitizenInvitation is the Template with DAML contracts
-  const assets = QueryResult.contracts.map((c) => c.payload);
-  console.log("roletype : " + JSON.stringify(assets));
+  const assets = useStreamQuery(Main.VaccineAppointment); // in this case Main.CitizenInvitation is the Template with DAML contracts
+  //const assets = QueryResult.contracts.map((c) => c.payload);
+  //console.log("roletype : " + JSON.stringify(assets));
 
   // Further useQuery filtering
   // https://docs.daml.com/app-dev/bindings-ts/daml-react/index.html
@@ -82,12 +82,12 @@ export default function Default() {
 
   return (
     <>
-      {/*  <Contracts
+       <Contracts
         contracts={assets.contracts}
          
     
        
-       />  */}
+       /> 
     </>
   );
 }

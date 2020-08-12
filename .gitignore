@@ -2,3 +2,4 @@
 node_modules
 .daml
 daml2js
+ui-js/node_modules

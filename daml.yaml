@@ -1,0 +1,18 @@
+sdk-version: 1.3.0
+name: Covid19
+source: daml
+parties:
+- Alice
+- Operator
+- NCHealth
+- AtriumHealth
+- BCBSHealth
+version: 0.0.1
+dependencies:
+- daml-prim
+- daml-stdlib
+- daml-trigger
+- daml-script
+sandbox-options:
+- --wall-clock-time
+- --ledgerid=Covid19

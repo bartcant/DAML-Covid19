@@ -1,0 +1,109 @@
+
+module Registration where
+
+data CitizenInfo = CitizenInfo with
+
+  idtype : Text
+  id : Text
+  firstname : Text
+  lastname : Text
+  email : Text
+  accept_vcoremail: Text
+  hippa_accept : Bool
+  insurance_id : Text
+
+
+   deriving (Eq, Show)
+
+data CitizenKey = CitizenKey with
+  citizen : Party
+   deriving (Eq, Show)
+
+template AliasCitizen
+  with
+    citizen : Party  -- user's party identifier
+    alias : Text  -- user's preferred public name
+    healthclinic : Party
+    statehealth : Party
+    operator : Party
+
+  where
+    signatory  operator
+    observer healthclinic, statehealth, citizen
+    key citizen : Party
+    maintainer key
+    controller operator can
+      nonconsuming SetAlias : ContractId AliasCitizen with
+         newAlias : Text
+       do
+         create this with alias = newAlias
+ 
+      
+
+
+template CitizenRegistration
+  with
+    registrationCid : CitizenKey
+    registrationData : CitizenInfo
+    aliasCid : ContractId AliasCitizen
+  where
+    signatory registrationCid.citizen
+
+    key registrationCid : CitizenKey
+    maintainer key.citizen
+
+    controller registrationCid.citizen can 
+      nonconsuming Register : ContractId CitizenRegistration with
+        newRegistrationCid : CitizenKey
+        newRegistrationData : CitizenInfo
+       do
+        (citizenCid, citizenaliasdata) <- fetchByKey @ AliasCitizen newRegistrationCid.citizen
+        create CitizenRegistration with
+          registrationCid = newRegistrationCid 
+          registrationData = newRegistrationData
+          aliasCid = citizenCid
+  
+   
+
+      nonconsuming UpdateRegistration : ContractId CitizenRegistration with
+          newCitizenDetails : CitizenInfo
+       do
+         (oldRegistrationCid, oldRegistrationData) <- fetchByKey @CitizenRegistration (key this)
+         archive oldRegistrationCid
+         (citizenCid, citizenaliasdata) <- fetchByKey @ AliasCitizen registrationCid.citizen
+         create CitizenRegistration with 
+            registrationCid = key oldRegistrationData
+            registrationData = newCitizenDetails
+            aliasCid = citizenCid
+
+
+          
+  
+example = scenario do
+  alice <- getParty "Alice"
+  bob <- getParty "Bob"
+  atriumhealth <- getParty "AtriumHealth"
+  operator <- getParty "Operator"
+  nchealth <- getParty "NCHealth"
+
+ -- Setting and Updating Alice  and Bob Alias
+
+  alicealias <- submit alice do
+    create AliasCitizen with  citizen = alice ; alias = "AliceAlias" ; healthclinic = atriumhealth ; operator = operator ; statehealth = nchealth
+
+  let newAlias = "AliceAlias2"
+
+  updatealicealias <- submit alice do exercise alicealias UpdateAlias with newAlias
+
+  bobalias <- submit bob do
+    create AliasCitizen with  citizen = bob ; alias = "AliceBob" ; healthclinic = atriumhealth ; operator = operator ; statehealth = nchealth
+
+
+
+  
+
+  
+
+ 
+
+

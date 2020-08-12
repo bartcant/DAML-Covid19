@@ -1,0 +1,379 @@
+-- Copyright (c) 2020 Rethink Ledgers LLC. All rights reserved.
+
+module Main where
+
+data Locationstate = NC | SC | GA  | FL 
+  deriving (Eq, Show)
+
+data Testresult = Positive | Negative | Pending
+  deriving (Eq, Show)
+
+data Roletype = Citizen | HealthClinic | StateHealthAgency | InsuranceCompany
+  deriving (Eq, Show)
+
+data CitizenDetails = CitizenDetails
+ with 
+      idtype : Text      
+      id : Text 
+      firstname: Text
+      lastname: Text
+      email: Text
+      accept_vcoremail: Text
+      hippa_accept: Bool
+      insurance_id: Text
+
+       deriving (Eq, Show)
+
+
+data VerifiableCredentials = VerifiableCredentials
+  with
+      connectionid : Text
+      holder_did : Text
+      issuer_did : Text
+
+        deriving (Eq, Show)
+      
+
+data HealthClinicDetails = HealthClinicDetails
+ with 
+      id : Text      
+      did: Text
+      hcname: Text
+      hcaddress: Text
+      hctel: Text
+      hccontactname: Text
+      hccontactemail: Text
+      hccontacttel: Text
+
+       deriving (Eq, Show)
+
+
+template Network
+  with
+   operator : Party
+  where
+   signatory operator
+
+
+   controller operator can 
+    nonconsuming InviteParty : ContractId PartyInvitation
+      with 
+        party : Party
+        roletype : Roletype
+
+      do
+        create PartyInvitation with party, operator, roletype
+
+
+
+
+template PartyInvitation
+  with
+    operator : Party
+    party : Party
+    roletype : Roletype
+  where
+    signatory operator
+    observer party
+
+    key (operator, party) : (Party, Party)
+    maintainer key._1
+
+
+    controller operator can
+     nonconsuming AcceptCitizenInvitation : ContractId CitizenRole
+      with
+       citizendetails : CitizenDetails
+       verifiablecredentials : VerifiableCredentials
+       citizen : Party
+
+      do
+       create CitizenRole with citizen, operator, citizendetails, verifiablecredentials
+
+    controller operator can
+     nonconsuming AcceptHealthClinicInvitation : ContractId HealthClinicRole
+        with
+        healthclinicdetails : HealthClinicDetails
+        healthclinic : Party
+      do
+       create HealthClinicRole with healthclinic, operator, healthclinicdetails
+
+
+    controller operator can
+     nonconsuming AcceptStateAgencyInvitation : ContractId StateAgencyRole
+        with
+      
+        stateagency : Party
+      do
+       create StateAgencyRole with stateagency, operator
+
+
+template HealthClinicRole
+  with 
+    operator : Party
+    healthclinic : Party
+    healthclinicdetails : HealthClinicDetails
+  where
+    signatory operator
+    observer healthclinic
+
+    key (operator, healthclinic) : (Party, Party)
+    maintainer key._1
+
+    controller operator can
+     UpdateRegistration : ContractId HealthClinicRole
+        with
+        newhealthclinicdetails : HealthClinicDetails
+      do
+       create this with 
+        healthclinic = healthclinic
+        operator = operator
+        healthclinicdetails = newhealthclinicdetails
+
+template CitizenRole
+  with 
+    operator : Party
+    citizen : Party
+    citizendetails : CitizenDetails
+    verifiablecredentials : VerifiableCredentials
+  where
+    signatory operator
+    observer citizen
+
+    key (operator, citizen) : (Party, Party)
+    maintainer key._1
+
+    controller operator can 
+      nonconsuming RequestTest : ContractId TestRequest
+        with
+          healthclinic: Party
+
+        do
+          create TestRequest with healthclinic, citizen, operator
+
+      nonconsuming UpdateCitizenRegistration : ContractId CitizenRole
+        with
+         newcitizendetails : CitizenDetails
+        
+        do  
+          archive self
+          create this with citizendetails = newcitizendetails
+
+      nonconsuming SetVerifiableCredentials : ContractId CitizenRole
+        with
+          newverifiablecredentials : VerifiableCredentials
+          
+        do  
+          archive self
+          create this with verifiablecredentials = newverifiablecredentials
+      
+
+
+template StateAgencyRole
+  with 
+    operator : Party
+    stateagency : Party
+  where
+    signatory operator
+    observer stateagency
+
+    key (operator, stateagency) : (Party, Party)
+    maintainer key._1
+
+
+
+template InsuranceCompanyRole
+  with 
+    operator : Party
+    insurancecompany : Party
+    roletype : Roletype
+  where
+    signatory operator
+    observer insurancecompany
+
+    key (operator, insurancecompany) : (Party, Party)
+    maintainer key._1
+
+template AliasCitizen
+  with
+    citizen : Party  -- user's party identifier
+    alias : Text  -- user's preferred public name
+    healthclinic : Party
+    statehealth : Party
+    operator : Party
+
+  where
+    signatory  operator
+    observer healthclinic, statehealth, citizen
+    
+    key (operator, citizen) : (Party, Party)
+    maintainer key._1
+
+
+    controller operator can
+      nonconsuming SetAlias : ContractId AliasCitizen with
+         newAlias : Text
+       do
+         create this with alias = newAlias
+
+template TestRequest
+  with 
+    operator : Party
+    healthclinic : Party
+    citizen: Party
+  where
+    signatory operator
+    observer citizen
+    observer healthclinic
+
+    controller operator can 
+      nonconsuming ConfirmTestAppointment : ContractId TestAppointment
+        with
+          appointmentdate : Date 
+        do
+          create TestAppointment with citizen, healthclinic, appointmentdate, operator
+    controller operator can 
+      nonconsuming ConfirmVaccineAppointment : ContractId VaccineAppointment
+        with
+          appointmentdate2 : Date 
+        do
+          create VaccineAppointment with citizen, healthclinic, appointmentdate2, operator
+
+
+
+data Covid19TestData = Covid19TestData
+ with 
+      testdate : Date      
+      healthclinic: Party 
+      citizen: Party
+      statehealth: Party
+      testtype: Text
+      testnumber: Int
+      testresult: Testresult
+      locationstate: Locationstate
+       deriving (Eq, Show)
+
+data VaccineData = VaccineData
+ with 
+      vaccinedate : Date      
+      healthclinic: Party 
+      citizen: Party
+      statehealth: Party
+      vaccinetype: Text
+      vaccinenumber: Int
+       deriving (Eq, Show)       
+
+template TestAppointment
+  with
+    healthclinic : Party
+    citizen: Party
+    operator: Party
+    appointmentdate : Date
+
+  where
+    signatory operator
+    observer healthclinic
+
+    controller operator can 
+       Covid19TestAppointment : ContractId Covid19Test
+        with
+          covid19testdata :  Covid19TestData
+          statehealth : Party
+        do
+          create Covid19Test with covid19testdata, healthclinic, statehealth, citizen, operator
+
+template VaccineAppointment
+  with
+    healthclinic : Party
+    citizen: Party
+    operator: Party
+    appointmentdate2 : Date
+
+  where
+    signatory operator
+    observer healthclinic
+
+    controller operator can 
+       Vaccine : ContractId Covid19Vaccine
+        with
+          vaccinedata :  VaccineData
+          statehealth : Party
+        do
+          create Covid19Vaccine with vaccinedata, healthclinic, statehealth, citizen, operator
+                
+
+data ImmunityVC = ImmunityVC
+ with
+      vcdate : Date      
+      vc_schema : Text
+      authorizedby : Text
+      vc_message : Text
+       deriving (Eq, Show)
+
+
+template Covid19Test
+  with
+    covid19testdata : Covid19TestData 
+    healthclinic : Party
+    citizen : Party
+    operator : Party
+    statehealth : Party
+
+  where
+    signatory operator
+    observer citizen
+    observer statehealth
+    observer healthclinic
+
+    controller operator can 
+       nonconsuming SupplyVC : ContractId SupplyImmunityVC
+        with
+          immunityvc : ImmunityVC 
+        do
+          create SupplyImmunityVC with immunityvc, statehealth , citizen, operator
+
+
+template Covid19Vaccine
+  with
+    vaccinedata : VaccineData 
+    healthclinic : Party
+    citizen : Party
+    operator : Party
+    statehealth : Party
+
+  where
+    signatory operator
+    observer citizen
+    observer statehealth
+    observer healthclinic
+
+template SupplyImmunityVC
+  with
+    immunityvc : ImmunityVC 
+    statehealth : Party
+    citizen : Party
+    operator : Party
+  where
+    signatory operator
+    observer statehealth
+    observer citizen
+
+   
+  
+
+setup = scenario do
+  operator <- getParty "Operator"
+  atriumhealth <- getParty "AtriumHealth"
+  alice <- getParty "Alice"
+
+  submit operator do
+    create PartyInvitation with party = atriumhealth ; operator = operator ; roletype = HealthClinic
+  submit operator do
+    create PartyInvitation with party = alice ; operator = operator ; roletype = Citizen
+
+  let citizendetails = CitizenDetails with idtype = "text" ; id= ""; firstname = "John" ;  lastname =  "Doe"; email = "john.doe@email.com" ; accept_vcoremail = "vc"; hippa_accept =  True;insurance_id = ""
+  let verifiablecredentials = VerifiableCredentials with connectionid ="" ; holder_did = "", issuer_did = ""
+  submit operator do
+    create CitizenRole with  citizen = alice ; operator = operator ; citizendetails = citizendetails ; verifiablecredentials = verifiablecredentials
+
+

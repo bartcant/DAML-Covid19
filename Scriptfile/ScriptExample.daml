@@ -1,0 +1,33 @@
+
+
+daml 1.2
+
+module ScriptExample where
+
+import Daml.Script
+import Main
+
+data LedgerParties = LedgerParties with
+  alice : Party
+  operator : Party
+  atriumhealth : Party
+
+
+initialize: LedgerParties -> Script ()
+initialize parties = do
+
+  networkCid <- submit parties.operator do createCmd Network with operator = parties.operator
+  healthClinicCid <- submit parties.operator do exerciseCmd networkCid InviteHealthClinic with healthclinic = parties.atriumhealth ; roletype = HealthClinic
+
+  pure ()
+
+{- test : Script () 
+  test = do
+
+  alice <- allocateParty "Alice"
+  operator <- allocateParty "Operator"
+  atriumhealth <- allocateParty "AtriumHealth"
+  let parties = LedgerParties alice operator atriumhealth
+  initilizae parties
+  proposals <- query @InviteHealthClinic operator
+  asserrEq [HealthClinic operator] (map snd proposals) -}

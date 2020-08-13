@@ -1,5 +1,7 @@
 import React from "react";
-import axios from 'axios';
+// import axios from 'axios';
+import axiosClient from '../../axiosClient';
+
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -17,7 +19,7 @@ import { Main } from "@daml2js/Covid19-0.0.1/";
 import vcschemas from "../testlist/vcschemas"
 import authorizedby from "../testlist/authorizedby"
 
-axios.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
+// axiosClient.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 
 export default function TestList() {
@@ -97,7 +99,7 @@ export default function TestList() {
 
 
     console.log("start Axios here");
-    axios.post('/api/immunityvc', { cid: connectionId, immunityvc, citizen: curcitizen, testdate: testdate, testresult: testresult }).then((response) => {
+    axiosClient.post('/api/immunityvc', { cid: connectionId, immunityvc, citizen: curcitizen, testdate: testdate, testresult: testresult }).then((response) => {
 
       console.log(response);
     });

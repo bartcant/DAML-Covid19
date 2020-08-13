@@ -10,7 +10,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 
-import axios from 'axios';
+// import axios from 'axios';
+import axiosClient from '../../axiosClient';
 
 import Contracts from "../../components/Contracts/Contracts";
 import { useStreamQuery, useParty, useLedger, useQuery } from "@daml/react";
@@ -21,7 +22,7 @@ import states from "../finalform/states";
 import testtypes from "./testtypes";
 import testresults from "./testresults";
 
-axios.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
+// axiosClient.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 export default function TestAppointment() {
 
@@ -98,7 +99,7 @@ export default function TestAppointment() {
 
 
     console.log("start Axios here");
-    axios.post('/api/issue', {cid: connectionId, covid19testdata}).then((response) => {
+    axiosClient.post('/api/issue', {cid: connectionId, covid19testdata}).then((response) => {
 
       console.log(response);
     });

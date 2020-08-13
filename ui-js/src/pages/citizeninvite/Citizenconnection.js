@@ -1,5 +1,7 @@
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import axiosClient from '../../axiosClient';
+
 import { useLedger } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
 // import material-ui
@@ -26,7 +28,7 @@ import scan1 from "./trinsic/scan1.png";
 import scan2 from "./trinsic/scan2.png";
 import scan3 from "./trinsic/scan3.png";
 
-axios.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
+// axiosClient.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 function getSteps() {
     return ['Background', 'Download the Trinsic App from', 'Register your account and take a Tour through the Trinsic App', 'Scan the QR Code after clicking the Connect Button', 'Accept the Connection on your Phone', 'Notification of Test Results'];
@@ -128,7 +130,7 @@ function CitizenConnection() {
             contractId = localStorage.getItem('acid');
 
         if (contractId === null || contractId === null) { alert('Invalid ContractId'); }
-        axios.post('/api/connection').then((response) => {
+        axiosClient.post('/api/connection').then((response) => {
             console.log("/api/connection reponse :" + JSON.stringify(response));
             let newverifiablecredentials = {
                 connectionid: response.data.connectid,

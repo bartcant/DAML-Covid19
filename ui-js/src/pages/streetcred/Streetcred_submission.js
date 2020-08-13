@@ -1,4 +1,6 @@
-import axios from 'axios';
+// import axios from 'axios';
+import axiosClient from '../../axiosClient';
+
 import React, { Component } from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import { TextField } from "@material-ui/core";
 
 
-axios.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
+// axiosClient.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 export default class StreetCredS extends Component {
     state = {
@@ -38,7 +40,7 @@ export default class StreetCredS extends Component {
         }
         console.log(CovidResult)
         console.log("start Axios here")
-        axios.post('/api/issue', CovidResult).then((response) => {
+        axiosClient.post('/api/issue', CovidResult).then((response) => {
             console.log(response);
         });
     

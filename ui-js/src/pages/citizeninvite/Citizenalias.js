@@ -9,7 +9,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import axios from 'axios';
+// import axios from 'axios';
+import axiosClient from '../../axiosClient';
 
 // redirect
 import { useHistory } from "react-router-dom";
@@ -18,7 +19,7 @@ import { connect } from 'react-redux'
 // import actions
 import { conductclick } from '../../actions.js';
 
-axios.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
+// axiosClient.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 function CreateAlias({avcore, dispatch}) {
 

@@ -1,4 +1,6 @@
-import axios from 'axios';
+// import axios from 'axios';
+import axiosClient from '../../axiosClient';
+
 import React, { Component } from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,7 +11,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import QRcode from 'qrcode.react';
 
-axios.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
+// axiosClient.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 export default class StreetCredC extends Component {
     state = {
@@ -22,7 +24,7 @@ export default class StreetCredC extends Component {
     onIssue = () => {
         
         console.log("start Axios here")
-        axios.post('/api/connection').then((response) => {
+        axiosClient.post('/api/connection').then((response) => {
             console.log(response);
             this.setState({ invite_url: "https://web.cloud.streetcred.id/link/?c_i=" + response.data.invite_url });
             console.log("invite url" + this.state.invite_url);

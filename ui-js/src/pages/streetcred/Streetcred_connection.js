@@ -9,7 +9,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import QRcode from 'qrcode.react';
 
-axios.defaults.baseURL = 'http://localhost:3002/';
+axios.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 export default class StreetCredC extends Component {
     state = {

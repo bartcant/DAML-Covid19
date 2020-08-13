@@ -26,7 +26,7 @@ import scan1 from "./trinsic/scan1.png";
 import scan2 from "./trinsic/scan2.png";
 import scan3 from "./trinsic/scan3.png";
 
-axios.defaults.baseURL = 'http://localhost:3002/';
+axios.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 function getSteps() {
     return ['Background', 'Download the Trinsic App from', 'Register your account and take a Tour through the Trinsic App', 'Scan the QR Code after clicking the Connect Button', 'Accept the Connection on your Phone', 'Notification of Test Results'];

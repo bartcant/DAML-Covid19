@@ -21,7 +21,7 @@ import states from "../finalform/states";
 import testtypes from "./testtypes";
 import testresults from "./testresults";
 
-axios.defaults.baseURL = 'http://localhost:3002/';
+axios.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 export default function TestAppointment() {
 

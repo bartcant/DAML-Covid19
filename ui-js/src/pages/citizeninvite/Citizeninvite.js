@@ -191,16 +191,16 @@ function CitizenInvite({ dispatch }) {
 
             <div>
               <TextField
-                label="lastname"
-                placeholder="lastname"
+                label="Last Name"
+                placeholder="Last Name"
                 value={citizendetails.lastname}
                 onChange={(e) => handleConductChange('lastname', e)}
               />
             </div>
             <div>
               <TextField
-                label="firstname"
-                placeholder="firstname"
+                label="First Name"
+                placeholder="First Name"
                 value={citizendetails.firstname}
                 onChange={(e) => handleConductChange('firstname', e)}
               />
@@ -208,8 +208,8 @@ function CitizenInvite({ dispatch }) {
 
             <div>
               <TextField
-                label="email"
-                placeholder="email"
+                label="Email"
+                placeholder="Email"
                 value={citizendetails.email}
                 onChange={(e) => handleConductChange('email', e)}
               />
@@ -234,7 +234,7 @@ function CitizenInvite({ dispatch }) {
                     value={citizendetails.hippa_accept}
                   />
                 }
-                label="AcceptHippa"
+                label="Accept Hipaa"
 
 
               />
@@ -242,8 +242,8 @@ function CitizenInvite({ dispatch }) {
 
             <div>
               <TextField
-                label="insuranceid"
-                placeholder="Insurance id"
+                label="Insurance Id"
+                placeholder="Insurance Id"
                 value={citizendetails.insurance_id}
                 onChange={(e) => handleConductChange('insurance_id', e)}
               />

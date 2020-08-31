@@ -19,8 +19,6 @@ import { Main } from "@daml2js/Covid19-0.0.1/";
 import vcschemas from "../testlist/vcschemas"
 import authorizedby from "../testlist/authorizedby"
 
-// axiosClient.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
-
 
 export default function TestList() {
 

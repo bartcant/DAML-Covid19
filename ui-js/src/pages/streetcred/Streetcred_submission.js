@@ -11,7 +11,6 @@ import Button from '@material-ui/core/Button';
 import { TextField } from "@material-ui/core";
 
 
-// axiosClient.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 export default class StreetCredS extends Component {
     state = {

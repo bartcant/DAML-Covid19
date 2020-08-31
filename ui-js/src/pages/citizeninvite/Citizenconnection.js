@@ -28,7 +28,6 @@ import scan1 from "./trinsic/scan1.jpg";
 import scan2 from "./trinsic/scan2.jpg";
 import scan3 from "./trinsic/scan3.jpg";
 
-// axiosClient.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 function getSteps() {
     return ['Background', 'Download the Trinsic App from', 'Register your account and take a Tour through the Trinsic App', 'Scan the QR Code after clicking the Connect Button', 'Accept the Connection on your Phone', 'Notification of Test Results'];
@@ -130,6 +129,7 @@ function CitizenConnection() {
             contractId = localStorage.getItem('acid');
 
         if (contractId === null || contractId === null) { alert('Invalid ContractId'); }
+        console.log("axiosClient baseUrl : " + axiosClient.defaults.baseURL);
         axiosClient.post('/api/connection').then((response) => {
             console.log("/api/connection reponse :" + JSON.stringify(response));
             let newverifiablecredentials = {

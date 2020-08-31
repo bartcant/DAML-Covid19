@@ -20,13 +20,13 @@ import { connect } from 'react-redux';
 
 // Trinsic media
 import trinsicwallet from "./trinsic/trinsicwallet.jpg";
-import trinsic1 from "./trinsic/trinsic1.png";
-import trinsic2 from "./trinsic/trinsic2.png";
-import trinsic3 from "./trinsic/trinsic3.png";
-import trinsic4 from "./trinsic/trinsic4.png";
-import scan1 from "./trinsic/scan1.png";
-import scan2 from "./trinsic/scan2.png";
-import scan3 from "./trinsic/scan3.png";
+import trinsic1 from "./trinsic/trinsic1.jpg";
+import trinsic2 from "./trinsic/trinsic2.jpg";
+import trinsic3 from "./trinsic/trinsic3.jpg";
+import trinsic4 from "./trinsic/trinsic4.jpg";
+import scan1 from "./trinsic/scan1.jpg";
+import scan2 from "./trinsic/scan2.jpg";
+import scan3 from "./trinsic/scan3.jpg";
 
 // axiosClient.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 

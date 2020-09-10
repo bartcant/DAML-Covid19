@@ -12,8 +12,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { TextField } from "@material-ui/core";
 import QRcode from 'qrcode.react';
 
-axiosClient.defaults.baseURL = 'http:/';
-
 export default class StreetCred extends Component {
     state = {
 

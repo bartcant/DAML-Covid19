@@ -124,7 +124,7 @@ export default function TestList() {
         columns={[
           ["ContractId", "contractId"],
           ["Citizen", "payload.citizen"],
-          ["HealthClinic", "payload.healthclinic"],
+          ["Health Clinic", "payload.healthclinic"],
           ["Test Date", "payload.covid19testdata.testdate"],
           ["Test Result ", "payload.covid19testdata.testresult"]
 
@@ -146,7 +146,7 @@ export default function TestList() {
           <div>
             <TextField
               label="VC Date"
-              placeholder="VC  Date"
+              placeholder="VC Date"
               value={immunityvc.vcdate}
               onChange={(e) => handleConductChange('vcdate', e)}
             />

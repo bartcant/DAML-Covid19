@@ -1,6 +1,6 @@
 const vcschemas = {
   IMVC: 'Immunity_Proof',
-  ABVC: 'Ant-Body-Proof',
+  ABVC: 'Anti-Body-Proof',
   VACVC: 'Covid19-Vaccine',
 
 }

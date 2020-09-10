@@ -188,33 +188,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         )}
-        {/* 
-          <SidebarLink
-          key="StreetCred"
-          label="StreetCred"
-          path="/app/streetcred"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-      />
 
-        <SidebarLink
-          key="StreetCredC"
-          label="StreetCredC"
-          path="/app/streetcred_C"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-      />
-
-        <SidebarLink
-          key="StreetCredS"
-          label="StreetCredS"
-          path="/app/streetcred_S"
-          icon={(<EditSharp />)}
-          location={location}
-          isSidebarOpened={isSidebarOpened}
-      /> */}
       </List>
     </Drawer>
   );

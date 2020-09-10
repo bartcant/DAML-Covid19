@@ -13,8 +13,8 @@ https://docs.google.com/document/d/1AdekheWp4MGCXcCUA7thlD_u6XDi-yA3HvEB288owJY/
 
 Step1 : Building and installing DAML Postgress 
 
-1. install DAML SDK
-        For more information :
+1. install DAML SDK (currently 1.14)
+        For more information :https://docs.daml.com/getting-started/installation.html
 
 2. install Postgress for local persistance layer with daml
         For more information :
@@ -27,7 +27,7 @@ Step1 : Building and installing DAML Postgress
 
         daml build
 
-        note: if you rebuilding, then deleted first your .daml and daml2js folders
+        note: if you are rebuilding, then deleted first your .daml and daml2js folders
 4. UX code generation:
 
         daml codegen js -o daml2js .daml/dist/covid19-0.0.1.dar
@@ -70,6 +70,15 @@ daml json-api --ledger-host localhost --ledger-port 6865  --http-port 7575 --max
 4. Start Frontend and Backend solution in a new console window in ui-js directory
 
         cd ui-js
+        
+        verify the Token file to contain the correct Local  Environment Token or daily token for Projectdable.com. For Daily tokens for ProjectDanble check JWT token @ https://console.projectdabl.com/ledger/<ledger-d>/ledger-settings
+        
+Local EnvironmentToken = 
+       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl0sInJlYWRBcyI6WyJPcGVyYXRvciJdfX0.JklciDh0-GzkvrPkSJ_H3sYX39LFU4C3uVWd7qsMPNo"
+        
+        Verify the authentication token in the following file scr/context/UserContext.js
+        
+                                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl0sInJlYWRBcyI6WyJPcGVyYXRvciJdfX0.JklciDh0-GzkvrPkSJ_H3sYX39LFU4C3uVWd7qsMPNo"
 
         yarn run start
 
@@ -82,7 +91,7 @@ The network can be initiate with pushing a JSON file via Postman
 
 2. Authentication:
 
-        bearer token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl19fQ.7zUo-7pRVr9QO3Y1xzbbWh-Z5n36MeOuQ-x2GwS3M44
+        bearer token :  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl0sInJlYWRBcyI6WyJPcGVyYXRvciJdfX0.JklciDh0-GzkvrPkSJ_H3sYX39LFU4C3uVWd7qsMPNo"
 
 3. Send Post instruction 
 
@@ -128,12 +137,32 @@ The network can be initiate with pushing a JSON file via Postman
 
 6. Launch the browser based on the projectdable ledger link
 
-        example: https://nxhgy6yk92nxerri.projectdabl.com/#/login
+        locak environment : Localhost:3000
+        
+        Project Dabble
+
+        example: https://<ledger-id>.projectdabl.com/#/login
         
 
 
 
+<h2> Local Server for Trinsic or AWS Server </h2>
 
+For any intgertaion with Trinsic you have 2 options:
+
+1. Local Node.js Server
+     local Node.js server files must be installed and started
+      ui-js/server.js
+      ui-js/.env 
+       ui-js/scr/AxiosClient.js
+            baseURL: 'localhost:5002'
+      
+
+2. AWS Server
+     local EC2 instance and Loadbalancer must be started
+     ui-js/scr/AxiosClient.js
+        baseURL: 'https://daml-covid19.vcredserver.com/'
+      
 
 
 <h2>For quick reference on DAML: </h2>

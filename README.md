@@ -38,7 +38,7 @@ Step1 : Building and installing DAML Postgress
 
 1. Start DAML Sandbox in a new console window
 
-        daml sandbox .daml\dist\Covid19-0.0.1.dar --ledgerid Covid19 --sql-backend-jdbcurl "jdbc:postgresql://localhost/test?user=Bart&password=password"
+        daml sandbox .daml/dist/Covid19-0.0.1.dar --ledgerid Covid19 --sql-backend-jdbcurl "jdbc:postgresql://localhost/test?user=Bart&password=password"
 
 2. Make Static Content sub-directory 
 
@@ -54,6 +54,8 @@ Note: In order to be able to retrieve filtered contracts through the JSON-API a 
 To achieve this, execute the following command before making any transactions in the ledger
 
 daml json-api --ledger-host localhost --ledger-port 6865  --http-port 7575 --max-inbound-message-size 4194304 --package-reload-interval 5s --application-id HTTP-JSON-API-Gateway --static-content "prefix=static,directory=./static-content"  --access-token-file ./token/token   --query-store-jdbc-config "driver=org.postgresql.Driver,url=jdbc:postgresql://localhost:5432/test?&ssl=false,user=Bart,password=password,createSchema=true"
+
+daml json-api --ledger-host localhost --ledger-port 6865  --http-port 7575 --max-inbound-message-size 4194304 --package-reload-interval 5s --application-id HTTP-JSON-API-Gateway --static-content "prefix=static,directory=./static-content"  --query-store-jdbc-config "driver=org.postgresql.Driver,url=jdbc:postgresql://localhost:5432/test?&ssl=false,user=Bart,password=password,createSchema=true"
 
 After the command has completed, then you can start up the JSON-API the regular way:
 

@@ -57,6 +57,10 @@ daml json-api --ledger-host localhost --ledger-port 6865  --http-port 7575 --max
 
 This now links to token authorization file which can be found in ./token directory
 
+The token file must include the correct JWT token
+
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl0sInJlYWRBcyI6WyJPcGVyYXRvciJdfX0.JklciDh0-GzkvrPkSJ_H3sYX39LFU4C3uVWd7qsMPNo"
+
 Note: In order to be able to retrieve filtered contracts through the JSON-API a new Schema must be created. 
 To achieve this, execute the following command before making any transactions in the ledger
 
@@ -71,11 +75,6 @@ daml json-api --ledger-host localhost --ledger-port 6865  --http-port 7575 --max
 
         cd ui-js
         
-        verify the Token file to contain the correct Local  Environment Token or daily token for Projectdable.com. For Daily tokens for ProjectDanble check JWT token @ https://console.projectdabl.com/ledger/<ledger-d>/ledger-settings
-        
-Local EnvironmentToken = 
-       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl0sInJlYWRBcyI6WyJPcGVyYXRvciJdfX0.JklciDh0-GzkvrPkSJ_H3sYX39LFU4C3uVWd7qsMPNo"
-        
         Verify the authentication token in the following file scr/context/UserContext.js
         
                                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl0sInJlYWRBcyI6WyJPcGVyYXRvciJdfX0.JklciDh0-GzkvrPkSJ_H3sYX39LFU4C3uVWd7qsMPNo"
@@ -83,17 +82,17 @@ Local EnvironmentToken =
         yarn run start
 
 
-<h2> Initiation of the Network </h2>
+5.  Initiation of a Local Network 
 
-The network can be initiate with pushing a JSON file via Postman
+     The network can be initiate with pushing a JSON file via Postman
 
-1. Download and install Postman
+        1. Download and install Postman
 
-2. Authentication:
+        2. Authentication:
 
         bearer token :  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl0sInJlYWRBcyI6WyJPcGVyYXRvciJdfX0.JklciDh0-GzkvrPkSJ_H3sYX39LFU4C3uVWd7qsMPNo"
 
-3. Send Post instruction 
+        3. Send Post instruction 
 
         POST localhost:7575/v1/create
 
@@ -106,7 +105,7 @@ The network can be initiate with pushing a JSON file via Postman
                  }
         }
 
-4. You can verify the Network via login in as "Operator" and navigating to the Network left NavBar
+        4. You can verify the Network via login in as "Operator" and navigating to the Network left NavBar
 
 <h2> Step 2A : Deploying DAML to ProjectDable </h2>
 
@@ -118,11 +117,10 @@ The network can be initiate with pushing a JSON file via Postman
 
         On the Managment Console create Operator as Party
         Select the JWT token for Operator
+
+        Note: This token changes daily and therefore the new token needs to be updated daily in the source code
         
 3. Update the Token in the UserContext.js file
-
-        //local environment Token
-        // token = '
         
         // ProjectDable Token for Operator
            token  = <JWT Token Here>
@@ -137,30 +135,62 @@ The network can be initiate with pushing a JSON file via Postman
 
 6. Launch the browser based on the projectdable ledger link
 
-        locak environment : Localhost:3000
-        
-        Project Dabble
 
         example: https://<ledger-id>.projectdabl.com/#/login
+
+7. Setup the initial Contract as Live Data
+
+        Goto https://<ledger-id>.projectdabl.com/#/livedata
+
+        Select Operator and a new Contract
+
+        Select Newtork COntract with Operator = Operator
+
+        Note : this creates the starting contract for the Network
         
+8. Login into 
+
+        https://<ledger-id>.projectdabl.com/#/login
+
+        enter Operator as "Login" and Enter
+        Navigate to the Network screen and you should see a first Contract in the list screen
 
 
+<h2> 3A  Configuration for Local Node.js Trinsic Server </h2>
 
-<h2> Local Server for Trinsic or AWS Server </h2>
-
-For any intgertaion with Trinsic you have 2 options:
+For any intgertaion with Trinsic you have 2 options: a locl Node.js server or a hosted AWS Node.js server on EC2
 
 1. Local Node.js Server
-     local Node.js server files must be installed and started
+     the following local Node.js server files must be available
+
       ui-js/server.js
-      ui-js/.env 
-       ui-js/scr/AxiosClient.js
-            baseURL: 'localhost:5002'
-      
+      ui-js/.env  Note: This file will be provided seperatly
+      ui-js/scr/AxiosClient.js
+            baseURL: 'http://localhost:3002/'
+
+2.  Validate that the Node.js server is stared locally
+
+        in package.json the following entries must be available in "script"
+
+        "start": "run-p server frontend",
+        "server": "node server.js --exec nodemon",
+
+      also can validate using  <id>ngrok.io where <id> can be found upon startup of the node.js server
+
+ 
+
+
+<h2> 3B  Configuration for Trinsic Server  hosted on AWS </h2>
 
 2. AWS Server
-     local EC2 instance and Loadbalancer must be started
+     Note : local EC2 instance and Loadbalancer must be started
+
+     Source Code can be found at https://github.com/bartcant/TrinsicServer
+
+     The following configuration must be updated 
+
      ui-js/scr/AxiosClient.js
+
         baseURL: 'https://daml-covid19.vcredserver.com/'
       
 

@@ -25,7 +25,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux'
 // import actions
 import { conductclick } from '../../actions.js';
-import { Party } from "@daml/types";
+// import { Party } from "@daml/types";
 
 import idtypes from "./idtypes"
 
@@ -53,11 +53,11 @@ function CitizenInvite({ dispatch }) {
     hippa_accept: true,
     insurance_id: ''
   });
-  const [alias, setConductAlias] = React.useState({
+  const [alias] = React.useState({
     alias: ''
   });
 
-  const [verifiablecredentials, setConductVC] = React.useState({
+  const [verifiablecredentials] = React.useState({
     connectionid: '',
     holder_did: '',
     issuer_did: ''
@@ -70,11 +70,11 @@ function CitizenInvite({ dispatch }) {
   }
 
 
-  const handleOptionChange = function (changeEvent) {
+  /* const handleOptionChange = function (changeEvent) {
     this.setState({
       selectedOption: changeEvent.target.value
     });
-  };
+  }; */
 
   const handleConductModalOpen = (cid = '') => {
     setContractId(cid);

@@ -1,5 +1,5 @@
 import React from "react";
-import { createToken, dablLoginUrl } from "../config";
+import { dablLoginUrl } from "../config";
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
@@ -96,12 +96,12 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
     return fetch('//' + siteSubDomain() + url, options);
   }
 
-  const fetchPublicToken = async () => {
+  /* const fetchPublicToken = async () => {
     const response = await fetch('//' + siteSubDomain('/api/ledger/') + '/public/token', { method: 'POST' });
     const jsonResp = await response.json();
     const accessToken = jsonResp['access_token'];
     return accessToken;
-  }
+  } */
 
 
 
@@ -109,7 +109,7 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
   if (!!party) {
     // NEW CODE HERE TO RETRIEVE ROLE FROM CITIZEN (Role data element)
 
-    let failedStatus = false;
+    // let failedStatus = false;
     const fetchUpdate = async () => {
       console.log("insidefetch");
       try {

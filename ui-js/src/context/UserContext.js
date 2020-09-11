@@ -148,18 +148,20 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
     // const role = localStorage.getItem("daml.party",party)
     localStorage.setItem("daml.role", role);
 
-
-
-    dispatch({ type: "LOGIN_SUCCESS", token, party, role });
-    console.log("role" + role);
+    
     setError(null);
     setIsLoading(false);
 
+    dispatch({ type: "LOGIN_SUCCESS", token, party, role });
+    console.log("role : " + role);
+
     history.push("/app");
   } else {
-    dispatch({ type: "LOGIN_FAILURE" });
+    
     setError(true);
     setIsLoading(false);
+
+    dispatch({ type: "LOGIN_FAILURE" });
   }
 }
 

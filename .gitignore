@@ -7,3 +7,4 @@ navigator.log
 /ui-js/yarn.lock
 .env
 /ui-js/scr/pages/streetcred/.env
+README.md

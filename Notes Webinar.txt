@@ -1,0 +1,9 @@
+
+Topics for Bart to elaborate :  
+General problems facing healthcare industry: disparate systems, software providers connecting between many independent participants,  need for standards FHIR, etc
+Classical pre-blockchain situation: everyone has its own database and connects with others to drive their business forward
+Challenges around security, privacy
+In the context for Covid19 : 
+need to support pop-up test centers, future opportunities for self-test or tests outside medical facilities, 
+Minimum expected digital experience, which is completely lacking
+Real-time transmission of data. 

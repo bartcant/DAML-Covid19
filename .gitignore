@@ -1,5 +1,18 @@
+<<<<<<< HEAD
 *.log
 node_modules
 .daml
 daml2js
 ui-js/node_modules
+=======
+/.daml
+/ui-js/build
+/ui-js/node_modules
+/daml2js
+sandbox.log
+navigator.log
+/ui-js/yarn.lock
+.env
+/ui-js/scr/pages/streetcred/.env
+README.md
+>>>>>>> fc6e5cb907703b7f1c36289e1db8953e33a85e20

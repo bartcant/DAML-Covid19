@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Drawer, IconButton, List } from "@material-ui/core";
 import {
-  Home,
+  // Home,
   ArrowBack,
   EditSharp,
   LocalHospital,
@@ -168,7 +168,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         )}
-        {user.role == "StateHealthAgency" && (
+        {user.role === "StateHealthAgency" && (
           <SidebarLink
             key="Testlist"
             label="Test List"

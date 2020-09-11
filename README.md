@@ -45,7 +45,7 @@ Step1 : Building and installing DAML Postgress
 
 1. Start DAML Sandbox in a new console window
 
-        daml sandbox .daml\dist\Covid19-0.0.1.dar --ledgerid Covid19 --sql-backend-jdbcurl "jdbc:postgresql://localhost/test?user=Bart&password=password"
+        daml sandbox .daml/dist/Covid19-0.0.1.dar --ledgerid Covid19 --sql-backend-jdbcurl "jdbc:postgresql://localhost/test?user=Bart&password=password"
 
 2. Make Static Content sub-directory 
 

@@ -10,14 +10,14 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 // import axios from 'axios';
-import axiosClient from '../../axiosClient';
+// import axiosClient from '../../axiosClient';
 
 // redirect
 import { useHistory } from "react-router-dom";
 // redux connect
 import { connect } from 'react-redux'
 // import actions
-import { conductclick } from '../../actions.js';
+// import { conductclick } from '../../actions.js';
 
 
 
@@ -40,9 +40,9 @@ function CreateAlias({avcore, dispatch}) {
 
 
 
-  const handleConductModalOpen = (cid = '') => {
+  /* const handleConductModalOpen = (cid = '') => {
     setConductModalOpen(true);
-  };
+  }; */
 
 
   const handleConductModalClose = () => {

@@ -33,6 +33,7 @@ function Header({ history }) {
       case 'StateHealthAgency':
         Portalheader = "Covid19 State Surveillance - State Health Agency Portal";
         break;
+      default:
   }
   return (
 

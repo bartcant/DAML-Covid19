@@ -144,7 +144,7 @@ export default function Network() {
             <FormControl style={{ width: '100%' }}>
               <InputLabel id="demo-simple-select-helper-label">Party Role</InputLabel>
               <Select
-                autoWidth="true"
+                autoWidth={true}
                 defaultValue=""
                 label="Role Type"
                 placeholder="Role Type"

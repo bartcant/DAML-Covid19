@@ -107,7 +107,7 @@ daml json-api --ledger-host localhost --ledger-port 6865  --http-port 7575 --max
 
         4. You can verify the Network via login in as "Operator" and navigating to the Network left NavBar
 
-<h2> Step 2A : Deploying DAML to ProjectDable </h2>
+<h2> Step 2B : Deploying DAML to ProjectDable </h2>
 
 1. Deploy DAML Dar file  to ProjectDable
 

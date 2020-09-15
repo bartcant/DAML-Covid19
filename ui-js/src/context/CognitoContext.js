@@ -1,10 +1,10 @@
-import React from "react";
+// import React from "react";
 import {
   AuthenticationDetails,
   CognitoUserPool,
-  CognitoUserAttribute,
+//   CognitoUserAttribute,
   CognitoUser,
-  CognitoUserSession,
+//   CognitoUserSession,
 } from "amazon-cognito-identity-js";
 import { POOL_DATA } from "./../config";
 

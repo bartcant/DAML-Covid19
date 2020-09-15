@@ -141,8 +141,8 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
 
 
     // cognito log in
-    let token = await cognitoLogIn(party, userToken);
-    if (!token) {
+    let cognitoToken = await cognitoLogIn(party, userToken);
+    if (!cognitoToken) {
     
       setError(true);
       setIsLoading(false);
@@ -151,7 +151,7 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
       return ;
     }
 
-    console.log("[loginUser] before fetchUpdate", token);
+    console.log("[loginUser] before fetchUpdate", cognitoToken);
     await fetchUpdate();
 
     // if (failedStatus) return;

@@ -1,5 +1,6 @@
 import React from "react";
 import { dablLoginUrl } from "../config";
+import { cognitoLogIn } from "./CognitoContext";
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
@@ -113,6 +114,7 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
     const fetchUpdate = async () => {
       console.log("insidefetch");
       try {
+
         const contractResponse = await post('/v1/query', {
           body: JSON.stringify({
             "templateIds": ["Main:PartyInvitation"],
@@ -137,6 +139,19 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
       }
     };
 
+
+    // cognito log in
+    let token = await cognitoLogIn(party, userToken);
+    if (!token) {
+    
+      setError(true);
+      setIsLoading(false);
+  
+      dispatch({ type: "LOGIN_FAILURE" });
+      return ;
+    }
+
+    console.log("[loginUser] before fetchUpdate", token);
     await fetchUpdate();
 
     // if (failedStatus) return;

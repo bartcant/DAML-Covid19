@@ -202,3 +202,8 @@ https://docs.daml.com/1.1.1/
 https://docs.daml.com/1.1.1/json-api/index.html
 
 
+
+<h2>AWS Cognito</h2>
+
+Set up Pool Id, App client id in ui-js/src/config.js
+

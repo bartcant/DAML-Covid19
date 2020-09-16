@@ -26,6 +26,7 @@ loginUrl.unshift('login')
 
 export const dablLoginUrl = loginUrl.join('.') + (window.location.port ? ':' + window.location.port : '') + '/auth/login?ledgerId=' + ledgerId;
 
+export const isUserPoolAuth = false;
 export const POOL_DATA = {
     UserPoolId: 'us-east-2_BAoMJofNU',
     ClientId: '3iqplmamurqosi3ero55n25t1d',

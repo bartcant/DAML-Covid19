@@ -1,5 +1,6 @@
 sdk-version: 1.4.0
 name: Covid19
+name: ScriptExample
 source: daml
 parties:
 - Alice
@@ -16,4 +17,5 @@ dependencies:
 sandbox-options:
 - --wall-clock-time
 - --ledgerid=Covid19
+
 init-script: ScriptExample:initializeFixed

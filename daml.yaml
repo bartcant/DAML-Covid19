@@ -16,3 +16,4 @@ dependencies:
 sandbox-options:
 - --wall-clock-time
 - --ledgerid=Covid19
+init-script: ScriptExample:initializeFixed

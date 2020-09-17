@@ -196,7 +196,8 @@ function CitizenConnection() {
                         <Step key={label}>
                             <StepLabel>{label}</StepLabel>
                             <StepContent>
-                                <Typography>{getStepContent(index)}</Typography>
+                                <Typography component={'div'}>{getStepContent(index)}</Typography>
+                                {/* <div>{getStepContent(index)}</div> */}
                                 <div>
                                     <Button
                                         disabled={activeStep === 0}

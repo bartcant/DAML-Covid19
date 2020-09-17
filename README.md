@@ -30,7 +30,7 @@ Step1 : Building and installing DAML Postgress
         note: if you are rebuilding, then deleted first your .daml and daml2js folders
 4. UX code generation:
 
-        daml codegen js -o daml2js .daml/dist/covid19-0.0.1.dar
+        daml codegen js -o daml2js .daml/dist/Covid19-0.0.1.dar
 
 5. Change to ui-js directory
 
@@ -202,3 +202,13 @@ https://docs.daml.com/1.1.1/
 https://docs.daml.com/1.1.1/json-api/index.html
 
 
+
+<h2>AWS Cognito</h2>
+
+Set up Pool Id, App client id in ui-js/src/config.js
+
+
+
+<h2>Init Script Running</h2>
+
+daml script --dar .daml/dist/Covid19-0.0.1.dar --script-name ScriptExample:initializeFixed --ledger-host localhost --ledger-port 6865

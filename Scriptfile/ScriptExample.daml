@@ -1,40 +1,33 @@
 
-{-# LANGUAGE ApplicativeDo #-}
 
+daml 1.2
 
 module ScriptExample where
 
 import Daml.Script
 import Main
 
-
 data LedgerParties = LedgerParties with
+  alice : Party
   operator : Party
-  citizen1 : Party
-  citizen2 : Party
-  healthclinic : Party
-  statehealth : Party
-  insurance : Party
+  atriumhealth : Party
 
 
-initialize : LedgerParties -> Script ()
+initialize: LedgerParties -> Script ()
 initialize parties = do
+
   networkCid <- submit parties.operator do createCmd Network with operator = parties.operator
-  citizenCid1 <- submit parties.operator do exerciseCmd networkCid InviteParty with party = parties.citizen1 ; roletype = Citizen
-  citizenCid2 <- submit parties.operator do exerciseCmd networkCid InviteParty with party = parties.citizen2 ; roletype = Citizen
-  healthClinicCid <- submit parties.operator do exerciseCmd networkCid InviteParty with party = parties.healthclinic ; roletype = HealthClinic
-  stateHealthCid <- submit parties.operator do exerciseCmd networkCid InviteParty with party = parties.statehealth ; roletype = StateHealthAgency
-  insuranceCid <- submit parties.operator do exerciseCmd networkCid InviteParty with party = parties.insurance ; roletype = InsuranceCompany
+  healthClinicCid <- submit parties.operator do exerciseCmd networkCid InviteHealthClinic with healthclinic = parties.atriumhealth ; roletype = HealthClinic
+
   pure ()
 
+{- test : Script () 
+  test = do
 
-initializeFixed : Script ()
-initializeFixed = do
-  operator <- allocatePartyWithHint "Operator" (PartyIdHint "Operator")
-  citizen1 <- allocatePartyWithHint "Alice" (PartyIdHint "Alice")
-  citizen2 <- allocatePartyWithHint "Bob" (PartyIdHint "Bob")
-  healthclinic <- allocatePartyWithHint "Novant" (PartyIdHint "Novant")
-  statehealth <- allocatePartyWithHint "Statehealth" (PartyIdHint "Statehealth")
-  insurance <- allocatePartyWithHint "Insurance" (PartyIdHint "Insurance")
-  let parties = LedgerParties operator citizen1 citizen2 healthclinic statehealth insurance
-  initialize parties
+  alice <- allocateParty "Alice"
+  operator <- allocateParty "Operator"
+  atriumhealth <- allocateParty "AtriumHealth"
+  let parties = LedgerParties alice operator atriumhealth
+  initilizae parties
+  proposals <- query @InviteHealthClinic operator
+  asserrEq [HealthClinic operator] (map snd proposals) -}

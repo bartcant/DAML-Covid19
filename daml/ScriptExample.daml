@@ -1,0 +1,40 @@
+
+{-# LANGUAGE ApplicativeDo #-}
+
+
+module ScriptExample where
+
+import Daml.Script
+import Main
+
+
+data LedgerParties = LedgerParties with
+  operator : Party
+  citizen1 : Party
+  citizen2 : Party
+  healthclinic : Party
+  statehealth : Party
+  insurance : Party
+
+
+initialize : LedgerParties -> Script ()
+initialize parties = do
+  networkCid <- submit parties.operator do createCmd Network with operator = parties.operator
+  citizenCid1 <- submit parties.operator do exerciseCmd networkCid InviteParty with party = parties.citizen1 ; roletype = Citizen
+  citizenCid2 <- submit parties.operator do exerciseCmd networkCid InviteParty with party = parties.citizen2 ; roletype = Citizen
+  healthClinicCid <- submit parties.operator do exerciseCmd networkCid InviteParty with party = parties.healthclinic ; roletype = HealthClinic
+  stateHealthCid <- submit parties.operator do exerciseCmd networkCid InviteParty with party = parties.statehealth ; roletype = StateHealthAgency
+  insuranceCid <- submit parties.operator do exerciseCmd networkCid InviteParty with party = parties.insurance ; roletype = InsuranceCompany
+  pure ()
+
+
+initializeFixed : Script ()
+initializeFixed = do
+  operator <- allocatePartyWithHint "Operator" (PartyIdHint "Operator")
+  citizen1 <- allocatePartyWithHint "Alice" (PartyIdHint "Alice")
+  citizen2 <- allocatePartyWithHint "Bob" (PartyIdHint "Bob")
+  healthclinic <- allocatePartyWithHint "Novant" (PartyIdHint "Novant")
+  statehealth <- allocatePartyWithHint "Statehealth" (PartyIdHint "Statehealth")
+  insurance <- allocatePartyWithHint "Insurance" (PartyIdHint "Insurance")
+  let parties = LedgerParties operator citizen1 citizen2 healthclinic statehealth insurance
+  initialize parties

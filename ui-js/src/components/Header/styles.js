@@ -20,7 +20,7 @@ export default makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    backgroundColor: theme.appBar.backgroundColor,
+    backgroundColor: (theme.appBar)?theme.appBar.backgroundColor:'#536DFE',
   },
   appBarCitizen: {
     width: "100vw",

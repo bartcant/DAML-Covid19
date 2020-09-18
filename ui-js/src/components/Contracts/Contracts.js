@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactJson from "react-json-view";
-import { Grid, Table, TableHead, TableRow, TableCell, TableBody, TextField, Button } from "@material-ui/core";
+import { Grid, Table, TableHead, TableRow, TableCell, TableBody, TextField, Button, Select, MenuItem, FormControl, InputLabel } from "@material-ui/core";
 import { useStyles } from "./styles";
 
 export default function Contracts({ contracts, columns, actions=[] }) {
@@ -25,6 +25,12 @@ export default function Contracts({ contracts, columns, actions=[] }) {
     return getByPath(data, split);
   }
 
+  const getSelectOptions = (datas) => {
+    return datas.map((each) => {
+      return <MenuItem key={each.value} value={each.value}>{each.label}</MenuItem>
+    });
+  }
+
   return (
     <>
       <Grid container spacing={4}>
@@ -39,7 +45,7 @@ export default function Contracts({ contracts, columns, actions=[] }) {
           </TableHead>
           <TableBody>
             {contracts.map((c, i) => (
-              <TableRow key={i} className={classes.tableRow}>
+              <TableRow key={i} className={classes.tableRow} style={{ verticalAlign: 'middle' }}>
                 { columns.map(col => (<TableCell key={col[0]} className={classes.tableCell}>{getValue(c, col[1])}</TableCell>)) }
                 { isDefault
                     ? (<TableCell key="payload" className={classes.tableCell}>
@@ -48,19 +54,35 @@ export default function Contracts({ contracts, columns, actions=[] }) {
                     : <></> }
                 { actions.map(action => (
                   <TableCell key={action[0]} className={classes.tableCell}>
-                      { action.length > 2
-                        ? <TextField
-                            InputProps={{ classes: { underline: classes.textFieldUnderline, input: classes.textField } }}
-                            onChange={handleChange(action[2])}
-                            onKeyDown={e => {
-                              if (e.key === "Enter") {
-                                action[1](c, state[action[2]]);
-                                e.target.value = "";
-                              }
-                            }}
-                            placeholder={action[2]}
-                          />
-                        : <></> }
+                      { action.length > 4 && action[3] === "select"
+                        ? <FormControl style={{ minWidth: '150px' }}>
+                            <InputLabel id="demo-simple-select-helper-label">{action[2]}</InputLabel>
+                            <Select
+                              autoWidth={true}
+                              defaultValue=""
+                              label={action[2]}
+                              placeholder={action[2]}
+                              style={{ marginRight: '10px' }}
+                              onChange={handleChange(action[2])}
+                              >
+                              {getSelectOptions(action[4])}
+                            </Select>
+                          </FormControl>
+                        : (
+                          action.length > 2
+                            ? <TextField
+                                InputProps={{ classes: { underline: classes.textFieldUnderline, input: classes.textField } }}
+                                onChange={handleChange(action[2])}
+                                onKeyDown={e => {
+                                  if (e.key === "Enter") {
+                                    action[1](c, state[action[2]]);
+                                    e.target.value = "";
+                                  }
+                                }}
+                                placeholder={action[2]}
+                              />
+                            : <></>
+                        ) }
                       <Button
                         color="primary"
                         size="small"

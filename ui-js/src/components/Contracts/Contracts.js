@@ -26,6 +26,7 @@ export default function Contracts({ contracts, columns, actions=[] }) {
   }
 
   const getSelectOptions = (datas) => {
+    // console.log("[getSelectOptions]", datas);
     return datas.map((each) => {
       return <MenuItem key={each.value} value={each.value}>{each.label}</MenuItem>
     });

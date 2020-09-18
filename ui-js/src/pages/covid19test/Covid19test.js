@@ -170,7 +170,7 @@ export default function TestAppointment() {
             <Select
               label="Test Type"
               placeholder="Test Type"
-              autoWidth="true"
+              autoWidth={true}
               value={covid19testdata.testtype}
               onChange={(e) => handleConductChange('testtype', e)}
             >
@@ -190,7 +190,7 @@ export default function TestAppointment() {
           <FormControl style={{ width: '100%' }}>
             <InputLabel id="demo-simple-select-helper-label">Test Result</InputLabel>
             <Select
-              autoWidth="true"
+              autoWidth={true}
               defaultValue=""
               placeholder="Test Result"
               value={covid19testdata.testresult}
@@ -204,7 +204,7 @@ export default function TestAppointment() {
             <InputLabel id="demo-simple-select-helper-label">State</InputLabel>
             <Select
               label="State"
-              autoWidth="true"
+              autoWidth={true}
               value={covid19testdata.locationstate}
               onChange={(e) => handleConductChange('locationstate', e)}
             >

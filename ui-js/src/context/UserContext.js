@@ -125,13 +125,16 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
         const citizenContractResponse = await contractResponse.json();
         if (citizenContractResponse.status === 200) {
           role = citizenContractResponse.result[0].payload.roletype
-          console.log(role);
+          console.log("[fetchUpdate] role", role);
         }
-
+        else {
+          role = "Operator";
+        }
       }
       catch (err) {
         alert("Something went wrong with roletype");
         role = "Operator";
+        console.log("[fetchUpdate] error role is Operator");
         // dispatch({ type: "LOGIN_FAILURE" });
         // setError(true);
         // setIsLoading(false);

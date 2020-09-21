@@ -275,12 +275,13 @@ template TestAppointment
     observer healthclinic
 
     controller operator can 
-       Covid19TestAppointment : ContractId Covid19Test
+      Covid19TestAppointment : ContractId Covid19Test
         with
           covid19testdata :  Covid19TestData
           statehealth : Party
         do
           create Covid19Test with covid19testdata, healthclinic, statehealth, citizen, operator
+
 
 template VaccineAppointment
   with
@@ -326,11 +327,18 @@ template Covid19Test
     observer healthclinic
 
     controller operator can 
-       nonconsuming SupplyVC : ContractId SupplyImmunityVC
+      nonconsuming SupplyVC : ContractId SupplyImmunityVC
         with
           immunityvc : ImmunityVC 
         do
           create SupplyImmunityVC with immunityvc, statehealth , citizen, operator
+
+      nonconsuming UpdateCovid19Test : ContractId Covid19Test
+        with
+          newcovid19TestData : Covid19TestData
+        do  
+          archive self
+          create this with covid19testdata = newcovid19TestData
 
 
 template Covid19Vaccine

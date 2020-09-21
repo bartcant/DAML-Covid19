@@ -21,7 +21,9 @@ export default function TestRequest() {
    
 
   // get HealthClinicRoles
-  const healthclinics = useStreamQuery(Main.HealthCliniRole);
+  const healthclinic = useParty();
+  // const healthclinics = useStreamQuery(Main.HealthCliniRole);
+  const healthclinics = useStreamQuery(Main.PartyInvitation, () => ({ party: healthclinic }));
   const getOptionsFromHealthClinics = () => {
     const resultList = healthclinics.contracts.map(hc => {
       return {label : hc.party, value : hc.party};

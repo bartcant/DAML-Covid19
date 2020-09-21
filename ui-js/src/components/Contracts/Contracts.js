@@ -46,7 +46,7 @@ export default function Contracts({ contracts, columns, actions=[] }) {
           </TableHead>
           <TableBody>
             {contracts.map((c, i) => (
-              <TableRow key={i} className={classes.tableRow} style={{ verticalAlign: 'middle' }}>
+              <TableRow key={i} className={classes.tableRow}>
                 { columns.map(col => (<TableCell key={col[0]} className={classes.tableCell}>{getValue(c, col[1])}</TableCell>)) }
                 { isDefault
                     ? (<TableCell key="payload" className={classes.tableCell}>

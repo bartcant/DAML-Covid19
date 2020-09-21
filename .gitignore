@@ -8,3 +8,4 @@ navigator.log
 .env
 /ui-js/scr/pages/streetcred/.env
 README.md
+/env

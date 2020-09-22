@@ -16,9 +16,21 @@ export default function TestRequest() {
     console.log("healthclinic : " + healthclinic);
     console.log("citizen : " + citizen); 
     console.log("cid: "+ cid);
+    // console.log("assets.contracts: ", assets.contracts);
     ledger.exercise(Main.CitizenRole.RequestTest, cid, { operator, citizen, healthclinic} ); };
    
-  
+
+  // get HealthClinicRoles
+  const roletype = "HealthClinic";
+  // const healthclinics = useStreamQuery(Main.HealthCliniRole);
+  const healthclinics = useStreamQuery(Main.PartyInvitation, () => ({ roletype: roletype }));
+  const getOptionsFromHealthClinics = () => {
+    const resultList = healthclinics.contracts.map(hc => {
+      return {label : hc.payload.party, value : hc.payload.party};
+    });
+    console.log("[getOptionsFromHealthClinics] healthclinics is", healthclinics, resultList);
+    return resultList;
+  };
 
 
   return (
@@ -34,7 +46,17 @@ export default function TestRequest() {
          ]}
          
        actions={[
-         ["Test Request", (c, healthclinic) => { exerciseRequestTest(c.contractId, healthclinic); }, "Healthclinic"], 
+         [
+          "Test Request", 
+          (c, healthclinic) => { exerciseRequestTest(c.contractId, healthclinic); }, 
+          "Healthclinic", 
+          "select", 
+          getOptionsFromHealthClinics(),
+          // healthclinics.contracts.map(hc => {
+          //   return {label : hc.party, value : hc.party};
+          // }),
+          // [{label:'aa',value:'av'}],
+         ], 
         ]}
         />
       </>

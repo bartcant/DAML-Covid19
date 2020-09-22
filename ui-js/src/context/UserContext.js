@@ -1,5 +1,5 @@
 import React from "react";
-import { dablLoginUrl, isUserPoolAuth } from "../config";
+import { dablLoginUrl } from "../config";
 import { cognitoLogIn } from "./CognitoContext";
 
 var UserStateContext = React.createContext();
@@ -125,9 +125,11 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
         const citizenContractResponse = await contractResponse.json();
         if (citizenContractResponse.status === 200) {
           role = citizenContractResponse.result[0].payload.roletype
-          console.log(role);
+          console.log("[fetchUpdate] role", role);
         }
-
+        else {
+          role = "Operator";
+        }
       }
       catch (err) {
         alert("Something went wrong with roletype");
@@ -139,23 +141,19 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
       }
     };
 
-
-    if (isUserPoolAuth) {
-
-      // cognito log in
-      let cognitoToken = await cognitoLogIn(party, userToken);
-      if (!cognitoToken) {
-      
-        setError(true);
-        setIsLoading(false);
     
-        dispatch({ type: "LOGIN_FAILURE" });
-        return ;
-      }
-
-      console.log("[loginUser] before fetchUpdate", cognitoToken);
-
+    // cognito log in
+    let cognitoToken = await cognitoLogIn(party, userToken);
+    if (!cognitoToken) {
+    
+      setError(true);
+      setIsLoading(false);
+  
+      dispatch({ type: "LOGIN_FAILURE" });
+      return ;
     }
+
+    console.log("[loginUser] before fetchUpdate", cognitoToken);
 
     await fetchUpdate();
 

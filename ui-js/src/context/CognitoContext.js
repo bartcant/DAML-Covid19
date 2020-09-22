@@ -6,11 +6,14 @@ import {
   CognitoUser,
 //   CognitoUserSession,
 } from "amazon-cognito-identity-js";
-import { POOL_DATA } from "./../config";
+import { POOL_DATA, isUserPoolAuth } from "./../config";
 
 
 
 async function cognitoLogIn(username, password) {
+
+    if (!isUserPoolAuth) return "skip coginto";
+
     const userPool = new CognitoUserPool(POOL_DATA);
 
     var authenticationData = {
@@ -60,6 +63,9 @@ async function cognitoLogIn(username, password) {
 
 
 function cognitoSignUp(username, callback) {
+
+    if (!isUserPoolAuth) return callback("skip coginto");
+
     // default password
     const password = '1qazXSW@';
 
@@ -95,6 +101,9 @@ function cognitoSignUp(username, callback) {
 
 
 function changePassword(username, oldPassword, newPassword, callback) {
+
+    if (!isUserPoolAuth) return callback("skip coginto");
+    
     const userPool = new CognitoUserPool(POOL_DATA);
 
     var userData = {

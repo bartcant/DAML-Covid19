@@ -15,4 +15,8 @@ navigator.log
 .env
 /ui-js/scr/pages/streetcred/.env
 README.md
+<<<<<<< HEAD
 >>>>>>> fc6e5cb907703b7f1c36289e1db8953e33a85e20
+=======
+/env
+>>>>>>> 9ce180b923aca017b54dc20843e4a8bb70a49259

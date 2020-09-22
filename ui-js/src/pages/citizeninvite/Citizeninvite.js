@@ -169,7 +169,7 @@ function CitizenInvite({ dispatch }) {
             <FormControl style={{ width: '100%' }}>
               <InputLabel id="demo-simple-select-helper-label">ID Type</InputLabel>
               <Select
-                autoWidth="true"
+                autoWidth={true}
                 defaultValue=""
                 label="Id Type"
                 placeholder="Id Type"

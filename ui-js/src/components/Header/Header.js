@@ -70,14 +70,14 @@ function Header({ history }) {
         <Typography variant="h6" weight="medium">User: {userState.party}</Typography>
         <IconButton
           color="inherit"
-          aria-haspopup="true"
+          aria-haspopup={true}
           onClick={reload}
           className={classes.headerMenuButton}
         >
           <Refresh classes={{ root: classes.headerIcon }} />
         </IconButton>
         <IconButton
-          aria-haspopup="true"
+          aria-haspopup={true}
           color="inherit"
           className={classes.headerMenuButton}
           aria-controls="profile-menu"

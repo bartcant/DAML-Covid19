@@ -212,3 +212,12 @@ Set up Pool Id, App client id in ui-js/src/config.js
 <h2>Init Script Running</h2>
 
 daml script --dar .daml/dist/Covid19-0.0.1.dar --script-name ScriptExample:initializeFixed --ledger-host localhost --ledger-port 6865
+
+
+<h2>python bot</h2>
+
+pip install -r requirements.txt
+
+deployment bot
+
+make setup

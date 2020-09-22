@@ -156,7 +156,7 @@ export default function CovidVaccine() {
             <Select
               label="Vaccine Type"
               placeholder="Vaccine Type"
-              autoWidth="true"
+              autoWidth={true}
               value={vaccinedata.vaccinetype}
               onChange={(e) => handleConductChange('vaccinetype', e)}
             >

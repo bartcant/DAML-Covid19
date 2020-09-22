@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from '@material-ui/core/FormControl';
 import Contracts from "../../components/Contracts/Contracts";
-// import { cognitoSignUp } from "../../context/CognitoContext";
+import { cognitoSignUp } from "../../context/CognitoContext";
 import { useStreamQuery, useLedger, useParty } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
 
@@ -80,6 +80,7 @@ export default function Network() {
     let roletype = partyidentity.role;
     let party = partyidentity.name;
     console.log("party: " + party + " role " + roletype);
+<<<<<<< HEAD
     ledger.exercise(Main.Network.InviteParty, curContractId, { operator, party, roletype })
       .then(() => {
         const timer = setTimeout(() => removeSuccessMsg(), 3000);
@@ -95,6 +96,41 @@ export default function Network() {
           message: 'Error: Invalid Party'
         });
       });
+=======
+
+    
+    // coginto register
+    cognitoSignUp(party, function(user) {
+
+      if (user) {
+        // success
+        console.log("[exerciseInviteParty] cognito regiter success", user);
+
+        ledger.exercise(Main.Network.InviteParty, curContractId, { operator, party, roletype })
+              .then(() => {
+                // const timer = setTimeout(() => removeSuccessMsg(), 3000);
+                setValidate({
+                  status: 0,
+                  message: 'Party is successfully stored!'
+                });
+              })
+              .catch((error) => {
+                console.log("error: " + error);
+                setValidate({
+                  status: 1,
+                  message: 'Error: Invalid Party'
+                });
+              });
+
+      }
+      else {
+        // fail
+        console.log("[exerciseInviteParty] cognito regiter failed");
+      }
+
+    });
+    
+>>>>>>> 9ce180b923aca017b54dc20843e4a8bb70a49259
     console.log("Party Registered: " + party + "with the following  roletype :" + roletype);
   };
 

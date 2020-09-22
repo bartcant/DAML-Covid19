@@ -1,8 +1,12 @@
 import React from "react";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { createToken, dablLoginUrl } from "../config";
 =======
 import { dablLoginUrl, isUserPoolAuth } from "../config";
+=======
+import { dablLoginUrl } from "../config";
+>>>>>>> 9ce180b923aca017b54dc20843e4a8bb70a49259
 import { cognitoLogIn } from "./CognitoContext";
 >>>>>>> 6b78261d92f4c965e6f47e969d5562217d50f0b7
 
@@ -134,9 +138,11 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
         const citizenContractResponse = await contractResponse.json();
         if (citizenContractResponse.status === 200) {
           role = citizenContractResponse.result[0].payload.roletype
-          console.log(role);
+          console.log("[fetchUpdate] role", role);
         }
-
+        else {
+          role = "Operator";
+        }
       }
       catch (err) {
         alert("Something went wrong with roletype");
@@ -148,23 +154,19 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
       }
     };
 
-
-    if (isUserPoolAuth) {
-
-      // cognito log in
-      let cognitoToken = await cognitoLogIn(party, userToken);
-      if (!cognitoToken) {
-      
-        setError(true);
-        setIsLoading(false);
     
-        dispatch({ type: "LOGIN_FAILURE" });
-        return ;
-      }
-
-      console.log("[loginUser] before fetchUpdate", cognitoToken);
-
+    // cognito log in
+    let cognitoToken = await cognitoLogIn(party, userToken);
+    if (!cognitoToken) {
+    
+      setError(true);
+      setIsLoading(false);
+  
+      dispatch({ type: "LOGIN_FAILURE" });
+      return ;
     }
+
+    console.log("[loginUser] before fetchUpdate", cognitoToken);
 
     await fetchUpdate();
 

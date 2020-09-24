@@ -229,8 +229,15 @@ daml script --dar .daml/dist/Covid19-0.0.1.dar --script-name ScriptExample:initi
 
 <h2>python bot</h2>
 
+Install Python 3.0
+Install Poetry
+
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+
 pip install -r requirements.txt
 
 deployment bot
 
 make setup
+
+

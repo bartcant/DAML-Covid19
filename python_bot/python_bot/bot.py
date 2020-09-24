@@ -25,6 +25,7 @@ def main():
         logging.info(f'user_bot for party {client} is ready')
         contracts = await event.acs_find_nonempty('Main.Covid19Test')
         logging.info(contracts)
+        return dazl.exercise(contracts[0], 'UpdateCovid19Test', {})
         
 
     @client.ledger_created('Main.Covid19Test')

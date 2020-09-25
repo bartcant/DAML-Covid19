@@ -41,6 +41,19 @@ Step1 : Building and installing DAML Postgress
         yarn install --force --frozen-lockfile
 
 
+<h2> Step 2B : Deploying DAML with Initialization script </h2>
+
+1. DAML Script
+
+        We created an onboarding script in /Scriptfile folder calledScriptExample.dam
+
+2. Run Script
+
+        To initialize the network You can call: 
+
+        daml script --dar .daml/dist/Covid19-0.0.1.dar --script-name ScriptExample:initializeFixed --ledger-host localhost --ledger-port 6865
+
+
 <h2> Step 2A : Deploying DAML and UX in local environment </h2>
 
 1. Start DAML Sandbox in a new console window
@@ -107,7 +120,7 @@ daml json-api --ledger-host localhost --ledger-port 6865  --http-port 7575 --max
 
         4. You can verify the Network via login in as "Operator" and navigating to the Network left NavBar
 
-<h2> Step 2A : Deploying DAML to ProjectDable </h2>
+<h2> Step 2B : Deploying DAML to ProjectDable </h2>
 
 1. Deploy DAML Dar file  to ProjectDable
 
@@ -216,6 +229,11 @@ daml script --dar .daml/dist/Covid19-0.0.1.dar --script-name ScriptExample:initi
 
 <h2>python bot</h2>
 
+Install Python 3.0
+Install Poetry
+
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+
 pip install -r requirements.txt
 
 deployment bot
@@ -225,4 +243,5 @@ make setup
 run bot
 
 python python_bot/python_bot/bot.py
+
 

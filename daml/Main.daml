@@ -1,6 +1,7 @@
 -- Copyright (c) 2020 Rethink Ledgers LLC. All rights reserved.
 
 module Main where
+import DA.Date
 
 data Locationstate = NC | SC | GA  | FL 
   deriving (Eq, Show)
@@ -340,6 +341,21 @@ template Covid19Test
           archive self
           create this with covid19testdata = newcovid19TestData
 
+      nonconsuming UpdateTestResult : ContractId Covid19Test
+        do
+          archive self
+          -- assert(this.covid19testdata.testresult == Pending)
+          create this with 
+            covid19testdata = Covid19TestData with
+              testdate = covid19testdata.testdate   
+              healthclinic = covid19testdata.healthclinic
+              citizen = covid19testdata.citizen
+              statehealth = covid19testdata.statehealth
+              testtype = covid19testdata.testtype
+              testnumber = covid19testdata.testnumber
+              testresult = Negative
+              locationstate = covid19testdata.locationstate
+
 
 template Covid19Vaccine
   with
@@ -373,15 +389,77 @@ setup = scenario do
   operator <- getParty "Operator"
   atriumhealth <- getParty "AtriumHealth"
   alice <- getParty "Alice"
+  nchealth <- getParty "NCHealth"
 
-  submit operator do
+  health_party <- submit operator do
     create PartyInvitation with party = atriumhealth ; operator = operator ; roletype = HealthClinic
-  submit operator do
+  alice_party <- submit operator do
     create PartyInvitation with party = alice ; operator = operator ; roletype = Citizen
 
   let citizendetails = CitizenDetails with idtype = "text" ; id= ""; firstname = "John" ;  lastname =  "Doe"; email = "john.doe@email.com" ; accept_vcoremail = "vc"; hippa_accept =  True;insurance_id = ""
-  let verifiablecredentials = VerifiableCredentials with connectionid ="" ; holder_did = "", issuer_did = ""
-  submit operator do
-    create CitizenRole with  citizen = alice ; operator = operator ; citizendetails = citizendetails ; verifiablecredentials = verifiablecredentials
+  let verifiablecredentials = VerifiableCredentials with connectionid ="" ; holder_did = "" ; issuer_did = ""
+  
+  -- alice_role <- submit operator do
+  --   create CitizenRole with  citizen = alice ; operator = operator ; citizendetails = citizendetails ; verifiablecredentials = verifiablecredentials
+  
+  alice_role <- submit operator do
+    exercise alice_party AcceptCitizenInvitation
+      with
+       citizendetails = citizendetails
+       verifiablecredentials = verifiablecredentials
+       citizen = alice
+  
+  let healthclinicdetails = HealthClinicDetails with  id = "healthId" ; did = "d_id" ; hcname = "Atrium" ; hcaddress = "" ; hctel = "" ; hccontactname = "" ; hccontactemail = "" ; hccontacttel = ""
+  
+  -- atriumhealth_role <- submit operator do
+  --   create HealthClinicRole with 
+  --     healthclinic = atriumhealth
+  --     operator = operator
+  --     healthclinicdetails = healthclinicdetails
+  
+  atriumhealth_role <- submit operator do
+    exercise health_party AcceptHealthClinicInvitation
+      with
+        healthclinicdetails = healthclinicdetails
+        healthclinic = atriumhealth
 
+  req_test <- submit operator do
+    exercise alice_role RequestTest
+        with
+          healthclinic = atriumhealth
+  
+  test_appointment <- submit operator do
+    exercise req_test ConfirmTestAppointment
+        with
+          appointmentdate = date 2020 Sep 01
+        
+  covid19_test <- submit operator do
+    exercise test_appointment Covid19TestAppointment
+        with
+          covid19testdata = Covid19TestData  with 
+            testdate = date 2020 Sep 02
+            healthclinic = atriumhealth
+            citizen = alice
+            statehealth = nchealth
+            testtype = "covid19"
+            testnumber = 123
+            testresult = Pending
+            locationstate = NC
+          statehealth = nchealth
+
+  -- submit operator do
+  --   exercise covid19_test UpdateCovid19Test
+  --       with
+  --         newcovid19TestData = Covid19TestData  with 
+  --           testdate = date 2020 Sep 02
+  --           healthclinic = atriumhealth
+  --           citizen = alice
+  --           statehealth = nchealth
+  --           testtype = "covid19"
+  --           testnumber = 123
+  --           testresult = Negative
+  --           locationstate = NC
+
+  submit operator do
+    exercise covid19_test UpdateTestResult
 

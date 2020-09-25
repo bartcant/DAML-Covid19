@@ -343,7 +343,8 @@ template Covid19Test
 
       nonconsuming UpdateTestResult : ContractId Covid19Test
         do
-          assert(this.covid19testdata.testresult == Pending)
+          archive self
+          -- assert(this.covid19testdata.testresult == Pending)
           create this with 
             covid19testdata = Covid19TestData with
               testdate = covid19testdata.testdate   
@@ -446,19 +447,19 @@ setup = scenario do
             locationstate = NC
           statehealth = nchealth
 
-  submit operator do
-    exercise covid19_test UpdateCovid19Test
-        with
-          newcovid19TestData = Covid19TestData  with 
-            testdate = date 2020 Sep 02
-            healthclinic = atriumhealth
-            citizen = alice
-            statehealth = nchealth
-            testtype = "covid19"
-            testnumber = 123
-            testresult = Negative
-            locationstate = NC
-
   -- submit operator do
-  --   exercise covid19_test UpdateTestResult
+  --   exercise covid19_test UpdateCovid19Test
+  --       with
+  --         newcovid19TestData = Covid19TestData  with 
+  --           testdate = date 2020 Sep 02
+  --           healthclinic = atriumhealth
+  --           citizen = alice
+  --           statehealth = nchealth
+  --           testtype = "covid19"
+  --           testnumber = 123
+  --           testresult = Negative
+  --           locationstate = NC
+
+  submit operator do
+    exercise covid19_test UpdateTestResult
 

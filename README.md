@@ -221,3 +221,8 @@ pip install -r requirements.txt
 deployment bot
 
 make setup
+
+run bot
+
+python python_bot/python_bot/bot.py
+

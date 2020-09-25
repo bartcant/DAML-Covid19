@@ -36,13 +36,24 @@ def main():
         newData = event.cdata['covid19testdata']
         newData['testresult'] = 'Negative'
         logging.info(newData)
+        # 1st option
+        # using UpdateCovid19Test choice
         return dazl.exercise(event.cid, 'UpdateCovid19Test', {
             'newcovid19TestData' : newData,
             })
+        # 2nd option
+        # using UpdateTestResult choice
+        # return dazl.exercise(event.cid, 'UpdateTestResult', {})
 
     @client.ledger_exercised('Main.Covid19Test','UpdateCovid19Test')
     def on_updated(event):
         logging.info("[on_updated]")
+        logging.info(event.cid)
+        logging.info(event.cdata)
+
+    @client.ledger_exercised('Main.Covid19Test','UpdateTestResult')
+    def on_updated_result(event):
+        logging.info("[on_updated_result]")
         logging.info(event.cid)
         logging.info(event.cdata)
 

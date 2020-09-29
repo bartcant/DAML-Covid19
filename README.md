@@ -242,6 +242,6 @@ make setup
 
 run bot
 
-python python_bot/python_bot/bot.py
+python python_bot/bot.py
 
 

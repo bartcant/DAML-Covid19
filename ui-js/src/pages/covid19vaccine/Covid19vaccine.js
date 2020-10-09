@@ -10,14 +10,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 
-// import axios from 'axios';
-import axiosClient from '../../axiosClient';
+import axios from 'axios';
 
 import Contracts from "../../components/Contracts/Contracts";
 import { useStreamQuery, useParty, useLedger, useQuery } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
 import vaccinetypes from "./vaccinetypes";
 
+axios.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 export default function CovidVaccine() {
 
@@ -92,7 +92,7 @@ export default function CovidVaccine() {
 
 
     console.log("start Axios here");
-    axiosClient.post('/api/issuevaccine', { cid: connectionId, vaccinedata }).then((response) => {
+    axios.post('/api/issuevaccine', { cid: connectionId, vaccinedata }).then((response) => {
 
       console.log(response);
     });

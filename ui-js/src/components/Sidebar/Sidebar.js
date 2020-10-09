@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Drawer, IconButton, List } from "@material-ui/core";
 import {
-  // Home,
+  Home,
   ArrowBack,
   EditSharp,
   LocalHospital,
@@ -168,7 +168,7 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         )}
-        {user.role === "StateHealthAgency" && (
+        {user.role == "StateHealthAgency" && (
           <SidebarLink
             key="Testlist"
             label="Test List"
@@ -188,7 +188,33 @@ function Sidebar({ location }) {
             isSidebarOpened={isSidebarOpened}
           />
         )}
+        {/* 
+          <SidebarLink
+          key="StreetCred"
+          label="StreetCred"
+          path="/app/streetcred"
+          icon={(<EditSharp />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+      />
 
+        <SidebarLink
+          key="StreetCredC"
+          label="StreetCredC"
+          path="/app/streetcred_C"
+          icon={(<EditSharp />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+      />
+
+        <SidebarLink
+          key="StreetCredS"
+          label="StreetCredS"
+          path="/app/streetcred_S"
+          icon={(<EditSharp />)}
+          location={location}
+          isSidebarOpened={isSidebarOpened}
+      /> */}
       </List>
     </Drawer>
   );

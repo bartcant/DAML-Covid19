@@ -55,11 +55,11 @@ export default function CitizenUpdate() {
   };
 
 
-  /* const handleOptionChange = function (changeEvent) {
+  const handleOptionChange = function (changeEvent) {
     this.setState({
       selectedOption: changeEvent.target.value
     });
-  }; */
+  };
 
   const handleConductModalOpen = (cid = '', c) => {
     setContractId(cid);

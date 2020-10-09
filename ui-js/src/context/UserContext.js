@@ -1,6 +1,14 @@
 import React from "react";
+<<<<<<< HEAD
+<<<<<<< HEAD
+import { createToken, dablLoginUrl } from "../config";
+=======
+import { dablLoginUrl, isUserPoolAuth } from "../config";
+=======
 import { dablLoginUrl } from "../config";
+>>>>>>> 9ce180b923aca017b54dc20843e4a8bb70a49259
 import { cognitoLogIn } from "./CognitoContext";
+>>>>>>> 6b78261d92f4c965e6f47e969d5562217d50f0b7
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
@@ -67,11 +75,16 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
 
   // Local access token
   const token =
-    // local environment token
+
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJDb3ZpZDE5IiwiYXBwbGljYXRpb25JZCI6ImZvb2JhciIsImFjdEFzIjpbIk9wZXJhdG9yIl0sInJlYWRBcyI6WyJPcGVyYXRvciJdfX0.JklciDh0-GzkvrPkSJ_H3sYX39LFU4C3uVWd7qsMPNo"
 
+<<<<<<< HEAD
+  // ProjectDable token for Operator on Ledger nxhgy6yk92nxerri
+  // "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImRhYmwtNmEzNGI3NjMtNTU3Mi00ZjdhLWI4NjYtNzE2OGU1MDliNWVhIn0.eyJpc3MiOiJwcm9qZWN0ZGFibC5jb20vbG9naW4iLCJzdWIiOiJhdXRoMHw1ZTk5YjVmYjFiMzBlYzBjODViZTc4MjEiLCJleHAiOjE1OTU2MjE5NzIsImh0dHBzOi8vZGFtbC5jb20vbGVkZ2VyLWFwaSI6eyJhY3RBcyI6WyJsZWRnZXItcGFydHktZjY1NmY2ZWUtNjc2MS00YmYzLWE0OGYtYzk0NzdiNWE3NDM1Il0sImFwcGxpY2F0aW9uSWQiOiJEQUJMIiwibGVkZ2VySWQiOiJueGhneTZ5azkybnhlcnJpIn0sIm93bmVyIjoidXNlci1ncmFudC1lYmY1ZDgxZS03NjM4LTQxYzUtOWEzNi1kN2FhMWQzZjYxZTMiLCJwYXJ0eU5hbWUiOiJPcGVyYXRvciIsInJpZ2h0cyI6WyJyZWFkIiwid3JpdGU6Y3JlYXRlIiwid3JpdGU6ZXhlcmNpc2UiXX0.gWwTKGTgjN_bNgQ0MXEHHihumaOtbT_GFryJYi_mPiQVKoeRJYYwkVwA7WWTvDkPZDMBQzGysACzLN258hkPZb3NjcyaJ6oY-4TqTitTXk9PBl8aQzvuR5sTOYddB9oprJPt1Mj7yOS5YHCRtzUpqDK7GNoT-6xK7XT66b2ODNw"
+=======
   // ProjectDable token for Operator on Ledger ecjcay92kqxdsdpd
   // "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImRhYmwtZGY4NDdlODAtYzVlZS00OTViLThmY2ItMzM0YjdlYjM3OTkyIn0.eyJpc3MiOiJwcm9qZWN0ZGFibC5jb20vbG9naW4iLCJzdWIiOiJhdXRoMHw1ZjVmYTkwNjc1NGRlYTAwNzdjY2M2NDgiLCJleHAiOjE2MDAyMDI1NjksImh0dHBzOi8vZGFtbC5jb20vbGVkZ2VyLWFwaSI6eyJhY3RBcyI6WyJsZWRnZXItcGFydHktMzdlOGIzZjktNjg4Mi00NjEwLTk1NzQtNTY1YmJmYzQzODBlIl0sImFwcGxpY2F0aW9uSWQiOiJEQUJMIiwibGVkZ2VySWQiOiJ4eHc4Y2dxeHI1NzNsOWJ4In0sIm93bmVyIjoidXNlci1ncmFudC05NmRmZmYwMy1hYTE5LTQzNmUtOTQ5NC1kMWI0NWUzMDZkOTAiLCJwYXJ0eU5hbWUiOiJPcGVyYXRvciIsInJpZ2h0cyI6WyJyZWFkIiwid3JpdGU6Y3JlYXRlIiwid3JpdGU6ZXhlcmNpc2UiXX0.mt51NXDQsvRjMKt_CosAcWwSYSI1TZT1COTSrt6k2n45YVcWXPwkLa67cK9P7TypWUSZ0TKV-kcL7QHuxsdZOROsx84jTfQuywR4akxVkDVtt_GEFlsEr-cTDD_1YegRonWPuw9GCBUSQGLuK7up9DoExT9vTzEfKhJw-8rJz3w"
+>>>>>>> 6b78261d92f4c965e6f47e969d5562217d50f0b7
 
   const headers = {
     "Authorization": `Bearer ${token.toString()}`,
@@ -97,12 +110,12 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
     return fetch('//' + siteSubDomain() + url, options);
   }
 
-  /* const fetchPublicToken = async () => {
+  const fetchPublicToken = async () => {
     const response = await fetch('//' + siteSubDomain('/api/ledger/') + '/public/token', { method: 'POST' });
     const jsonResp = await response.json();
     const accessToken = jsonResp['access_token'];
     return accessToken;
-  } */
+  }
 
 
 
@@ -110,7 +123,7 @@ async function loginUser(dispatch, party, userToken, history, setIsLoading, setE
   if (!!party) {
     // NEW CODE HERE TO RETRIEVE ROLE FROM CITIZEN (Role data element)
 
-    // let failedStatus = false;
+    let failedStatus = false;
     const fetchUpdate = async () => {
       console.log("insidefetch");
       try {

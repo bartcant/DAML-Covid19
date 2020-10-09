@@ -1,7 +1,5 @@
 import React from 'react';
-// import axios from 'axios';
-import axiosClient from '../../axiosClient';
-
+import axios from 'axios';
 import { useLedger } from "@daml/react";
 import { Main } from "@daml2js/Covid19-0.0.1/";
 // import material-ui
@@ -20,14 +18,15 @@ import { connect } from 'react-redux';
 
 // Trinsic media
 import trinsicwallet from "./trinsic/trinsicwallet.jpg";
-import trinsic1 from "./trinsic/trinsic1.jpg";
-import trinsic2 from "./trinsic/trinsic2.jpg";
-import trinsic3 from "./trinsic/trinsic3.jpg";
-import trinsic4 from "./trinsic/trinsic4.jpg";
-import scan1 from "./trinsic/scan1.jpg";
-import scan2 from "./trinsic/scan2.jpg";
-import scan3 from "./trinsic/scan3.jpg";
+import trinsic1 from "./trinsic/trinsic1.png";
+import trinsic2 from "./trinsic/trinsic2.png";
+import trinsic3 from "./trinsic/trinsic3.png";
+import trinsic4 from "./trinsic/trinsic4.png";
+import scan1 from "./trinsic/scan1.png";
+import scan2 from "./trinsic/scan2.png";
+import scan3 from "./trinsic/scan3.png";
 
+axios.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 function getSteps() {
     return ['Background', 'Download the Trinsic App from', 'Register your account and take a Tour through the Trinsic App', 'Scan the QR Code after clicking the Connect Button', 'Accept the Connection on your Phone', 'Notification of Test Results'];
@@ -129,8 +128,7 @@ function CitizenConnection() {
             contractId = localStorage.getItem('acid');
 
         if (contractId === null || contractId === null) { alert('Invalid ContractId'); }
-        console.log("axiosClient baseUrl : " + axiosClient.defaults.baseURL);
-        axiosClient.post('/api/connection').then((response) => {
+        axios.post('/api/connection').then((response) => {
             console.log("/api/connection reponse :" + JSON.stringify(response));
             let newverifiablecredentials = {
                 connectionid: response.data.connectid,
@@ -139,6 +137,7 @@ function CitizenConnection() {
             };
             console.log("Start storing Connection ID");
             ledger.exercise(Main.CitizenRole.SetVerifiableCredentials, contractId, { citizen, newverifiablecredentials });
+            // setQrState({ ...qrState, qr_open: true, invite_url: "https://web.cloud.streetcred.id/link/?c_i=" + response.data.invite_url });
             setQrState({ ...qrState, qr_open: true, invite_url: "https://chart.googleapis.com/chart?cht=qr&chl=" + response.data.invite_url + "&chs=300x300&chld=L|1" });
             localStorage.removeItem('aciti');
             localStorage.removeItem('acid');

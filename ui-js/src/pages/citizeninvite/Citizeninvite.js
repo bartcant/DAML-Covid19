@@ -25,7 +25,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux'
 // import actions
 import { conductclick } from '../../actions.js';
-// import { Party } from "@daml/types";
+import { Party } from "@daml/types";
 
 import idtypes from "./idtypes"
 
@@ -53,11 +53,11 @@ function CitizenInvite({ dispatch }) {
     hippa_accept: true,
     insurance_id: ''
   });
-  const [alias] = React.useState({
+  const [alias, setConductAlias] = React.useState({
     alias: ''
   });
 
-  const [verifiablecredentials] = React.useState({
+  const [verifiablecredentials, setConductVC] = React.useState({
     connectionid: '',
     holder_did: '',
     issuer_did: ''
@@ -70,11 +70,11 @@ function CitizenInvite({ dispatch }) {
   }
 
 
-  /* const handleOptionChange = function (changeEvent) {
+  const handleOptionChange = function (changeEvent) {
     this.setState({
       selectedOption: changeEvent.target.value
     });
-  }; */
+  };
 
   const handleConductModalOpen = (cid = '') => {
     setContractId(cid);
@@ -191,16 +191,16 @@ function CitizenInvite({ dispatch }) {
 
             <div>
               <TextField
-                label="Last Name"
-                placeholder="Last Name"
+                label="lastname"
+                placeholder="lastname"
                 value={citizendetails.lastname}
                 onChange={(e) => handleConductChange('lastname', e)}
               />
             </div>
             <div>
               <TextField
-                label="First Name"
-                placeholder="First Name"
+                label="firstname"
+                placeholder="firstname"
                 value={citizendetails.firstname}
                 onChange={(e) => handleConductChange('firstname', e)}
               />
@@ -208,8 +208,8 @@ function CitizenInvite({ dispatch }) {
 
             <div>
               <TextField
-                label="Email"
-                placeholder="Email"
+                label="email"
+                placeholder="email"
                 value={citizendetails.email}
                 onChange={(e) => handleConductChange('email', e)}
               />
@@ -234,7 +234,7 @@ function CitizenInvite({ dispatch }) {
                     value={citizendetails.hippa_accept}
                   />
                 }
-                label="Accept Hipaa"
+                label="AcceptHippa"
 
 
               />
@@ -242,8 +242,8 @@ function CitizenInvite({ dispatch }) {
 
             <div>
               <TextField
-                label="Insurance Id"
-                placeholder="Insurance Id"
+                label="insuranceid"
+                placeholder="Insurance id"
                 value={citizendetails.insurance_id}
                 onChange={(e) => handleConductChange('insurance_id', e)}
               />

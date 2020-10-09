@@ -20,9 +20,9 @@ import TestAppointment from "../../pages/testappointment/Testappointment";
 import Covid19Test from "../../pages/covid19test/Covid19test";
 import Covid19Vaccine from "../../pages/covid19vaccine/Covid19vaccine";
 // import StartForm from "../../pages/finalform/Start";
-// import StreetCred from "../../pages/streetcred/Streetcred";
-// import StreetCredS from "../../pages/streetcred/Streetcred_submission";
-// import StreetCredC from "../../pages/streetcred/Streetcred_connection";
+import StreetCred from "../../pages/streetcred/Streetcred";
+import StreetCredS from "../../pages/streetcred/Streetcred_submission";
+import StreetCredC from "../../pages/streetcred/Streetcred_connection";
 import Covid19TestAlt from "../../pages/covid19test/Covid19test_alt";
 import StartFormAlt from "../../pages/finalform/Start_alt";
 import TestList from "../../pages/testlist/Testlist";
@@ -58,6 +58,10 @@ function Layout() {
               <Route path="/app/citizenalias" component={CitizenAlias} />
               <Route path="/app/citizenconnection" component={CitizenConnection} />
 
+
+              <Route path="/app/streetcred" component={StreetCred} />
+              <Route path="/app/streetcred_C" component={StreetCredC} />
+              <Route path="/app/streetcred_S" component={StreetCredS} />
               <Route path="/app/covid19testalt" component={Covid19TestAlt} />
               {user.role === 'StateHealthAgency' &&
                 <Route path="/app/testlist" component={TestList} />}

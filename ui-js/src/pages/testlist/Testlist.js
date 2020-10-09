@@ -1,7 +1,5 @@
 import React from "react";
-// import axios from 'axios';
-import axiosClient from '../../axiosClient';
-
+import axios from 'axios';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -18,6 +16,8 @@ import { Main } from "@daml2js/Covid19-0.0.1/";
 
 import vcschemas from "../testlist/vcschemas"
 import authorizedby from "../testlist/authorizedby"
+
+axios.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 
 export default function TestList() {
@@ -97,7 +97,7 @@ export default function TestList() {
 
 
     console.log("start Axios here");
-    axiosClient.post('/api/immunityvc', { cid: connectionId, immunityvc, citizen: curcitizen, testdate: testdate, testresult: testresult }).then((response) => {
+    axios.post('/api/immunityvc', { cid: connectionId, immunityvc, citizen: curcitizen, testdate: testdate, testresult: testresult }).then((response) => {
 
       console.log(response);
     });
@@ -124,7 +124,7 @@ export default function TestList() {
         columns={[
           ["ContractId", "contractId"],
           ["Citizen", "payload.citizen"],
-          ["Health Clinic", "payload.healthclinic"],
+          ["HealthClinic", "payload.healthclinic"],
           ["Test Date", "payload.covid19testdata.testdate"],
           ["Test Result ", "payload.covid19testdata.testresult"]
 
@@ -146,7 +146,7 @@ export default function TestList() {
           <div>
             <TextField
               label="VC Date"
-              placeholder="VC Date"
+              placeholder="VC  Date"
               value={immunityvc.vcdate}
               onChange={(e) => handleConductChange('vcdate', e)}
             />

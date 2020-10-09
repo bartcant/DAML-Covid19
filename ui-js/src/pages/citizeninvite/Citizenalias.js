@@ -9,17 +9,16 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-// import axios from 'axios';
-// import axiosClient from '../../axiosClient';
+import axios from 'axios';
 
 // redirect
 import { useHistory } from "react-router-dom";
 // redux connect
 import { connect } from 'react-redux'
 // import actions
-// import { conductclick } from '../../actions.js';
+import { conductclick } from '../../actions.js';
 
-
+axios.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 function CreateAlias({avcore, dispatch}) {
 
@@ -40,9 +39,9 @@ function CreateAlias({avcore, dispatch}) {
 
 
 
-  /* const handleConductModalOpen = (cid = '') => {
+  const handleConductModalOpen = (cid = '') => {
     setConductModalOpen(true);
-  }; */
+  };
 
 
   const handleConductModalClose = () => {

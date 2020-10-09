@@ -10,8 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 
-// import axios from 'axios';
-import axiosClient from '../../axiosClient';
+import axios from 'axios';
 
 import Contracts from "../../components/Contracts/Contracts";
 import { useStreamQuery, useParty, useLedger, useQuery } from "@daml/react";
@@ -22,6 +21,7 @@ import states from "../finalform/states";
 import testtypes from "./testtypes";
 import testresults from "./testresults";
 
+axios.defaults.baseURL = 'http://ec2-18-191-142-47.us-east-2.compute.amazonaws.com/';
 
 export default function TestAppointment() {
 
@@ -30,7 +30,7 @@ export default function TestAppointment() {
   const healthclinic = useParty();
   const statehealth = "NCHealth";
   const ledger = useLedger();
-  const assets = useStreamQuery(Main.TestAppointment, () => ({ healthclinic: healthclinic }),);
+  const assets = useStreamQuery(Main.TestAppointment, () => ({ healthclinic: healthclinic }), );
   const queryResult = useQuery(Main.CitizenRole, () => ({ citizen: curcitizen }), [curcitizen]);
 
   const [conductModalOpen, setConductModalOpen] = React.useState(false);
@@ -47,7 +47,7 @@ export default function TestAppointment() {
   });
 
 
-  const handleConductModalOpen = (cid = '', citizen = '') => {
+  const handleConductModalOpen = (cid = '', citizen = '' ) => {
     setContractId(cid);
     setCitizen(citizen);
     setConductModalOpen(true);
@@ -78,17 +78,17 @@ export default function TestAppointment() {
     console.log("citizen : " + covid19testdata.citizen);
     console.log("statehealth : " + statehealth);
     console.log("cid: " + curContractId);
-    const operator = "Operator";
-    console.log({ healthclinic, covid19testdata });
+    const operator = "Operator"; 
+    console.log({healthclinic, covid19testdata});
 
     console.log("start Ledger Exercise");
 
-
-    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, { covid19testdata, statehealth, citizen, healthclinic, operator });
-
+    
+    ledger.exercise(Main.TestAppointment.Covid19TestAppointment, curContractId, {covid19testdata, statehealth, citizen, healthclinic, operator});
+    
     console.log("finished Ledger Exercise");
 
-    console.log("connectionId" + JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid));
+    console.log ("connectionId" + JSON.stringify(queryResult.contracts[0].payload.verifiablecredentials.connectionid)); 
     const connectionId = queryResult.contracts[0].payload.verifiablecredentials.connectionid;
     if (connectionId === '' || connectionId === undefined) {
       alert('Empty ConnectionId');
@@ -98,7 +98,7 @@ export default function TestAppointment() {
 
 
     console.log("start Axios here");
-    axiosClient.post('/api/issue', { cid: connectionId, covid19testdata }).then((response) => {
+    axios.post('/api/issue', {cid: connectionId, covid19testdata}).then((response) => {
 
       console.log(response);
     });
@@ -165,12 +165,16 @@ export default function TestAppointment() {
           </div>
 
 
-          <FormControl style={{ width: '100%' }}>
+          <FormControl style={{width: '100%'}}>
             <InputLabel id="demo-simple-select-helper-label">Test Type</InputLabel>
             <Select
               label="Test Type"
               placeholder="Test Type"
+<<<<<<< HEAD
+              autoWidth ="true"
+=======
               autoWidth={true}
+>>>>>>> 9ce180b923aca017b54dc20843e4a8bb70a49259
               value={covid19testdata.testtype}
               onChange={(e) => handleConductChange('testtype', e)}
             >
@@ -187,11 +191,16 @@ export default function TestAppointment() {
             />
           </div>
 
-          <FormControl style={{ width: '100%' }}>
+          <FormControl style={{width: '100%'}}>
             <InputLabel id="demo-simple-select-helper-label">Test Result</InputLabel>
             <Select
+<<<<<<< HEAD
+              autoWidth= "true"
+              defaultValue = ""
+=======
               autoWidth={true}
               defaultValue=""
+>>>>>>> 9ce180b923aca017b54dc20843e4a8bb70a49259
               placeholder="Test Result"
               value={covid19testdata.testresult}
               onChange={(e) => handleConductChange('testresult', e)}
@@ -200,7 +209,7 @@ export default function TestAppointment() {
             </Select>
           </FormControl>
 
-          <FormControl style={{ width: '100%' }}>
+          <FormControl style={{width: '100%'}}>
             <InputLabel id="demo-simple-select-helper-label">State</InputLabel>
             <Select
               label="State"

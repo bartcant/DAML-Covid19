@@ -170,11 +170,7 @@ export default function TestAppointment() {
             <Select
               label="Test Type"
               placeholder="Test Type"
-<<<<<<< HEAD
-              autoWidth ="true"
-=======
               autoWidth={true}
->>>>>>> 9ce180b923aca017b54dc20843e4a8bb70a49259
               value={covid19testdata.testtype}
               onChange={(e) => handleConductChange('testtype', e)}
             >
@@ -194,13 +190,8 @@ export default function TestAppointment() {
           <FormControl style={{width: '100%'}}>
             <InputLabel id="demo-simple-select-helper-label">Test Result</InputLabel>
             <Select
-<<<<<<< HEAD
-              autoWidth= "true"
-              defaultValue = ""
-=======
               autoWidth={true}
               defaultValue=""
->>>>>>> 9ce180b923aca017b54dc20843e4a8bb70a49259
               placeholder="Test Result"
               value={covid19testdata.testresult}
               onChange={(e) => handleConductChange('testresult', e)}
